@@ -3,7 +3,7 @@ MAKEFLAGS	+=	--no-print-directory
 
 # -I flag is used for specifying include directories to the compiler, and -L is used for specifying library directories to the linker. The -l option is used with the linker to specify the name of the library to link against
 
-NAME	:=	fractol
+NAME	:=	cub3d
 CC		:=	cc
 LIBMLX	:=	./MLX42
 CFLAGS	:=	-Wextra -Wall -Wunreachable-code -Ofast -I./include -I$(LIBMLX)/include/MLX42
@@ -50,8 +50,14 @@ valgrind:	all
 all:	prebuild $(NAME)
 
 prebuild:
-	git submodule update --init --recursive
-	sed -i "s/(VERSION 3.18.0)/(VERSION 3.16.0)/" ./MLX42/CMakeLists.txt
+	@if [ ! -d "$(LIBMLX)" ]; then \
+		echo "Adding MLX42 submodule..."; \
+		@git submodule add git@github.com:codam-coding-college/MLX42.git MLX42; \
+		@git submodule update --init --recursive; \
+	else \
+		echo "MLX42 submodule already exists."; \
+	fi
+	@sed -i "s/(VERSION 3.18.0)/(VERSION 3.16.0)/" ./MLX42/CMakeLists.txt
 	@echo "Building MLX42..."
 	@cd $(LIBMLX) && cmake -B build && cmake --build build -j4
 
