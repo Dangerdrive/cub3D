@@ -1,7 +1,4 @@
-# Makefile Configuration
 MAKEFLAGS	+=	--no-print-directory
-
-# -I flag is used for specifying include directories to the compiler, and -L is used for specifying library directories to the linker. The -l option is used with the linker to specify the name of the library to link against
 
 NAME	:=	cub3d
 CC		:=	cc
@@ -21,21 +18,14 @@ ifeq ($(UNAME_S),Darwin)
 	endif
 endif
 
+#flags para Windows 11 (precisa testar)
+ifeq ($(OS),Windows_NT)
+    LDFLAGS :=	-lglfw3 -lopengl32 -lgdi32 -L$(LIBMLX)/build
+endif
+
 LEAKS	:=	valgrind --leak-check=full --show-leak-kinds=all --suppressions=./MLX42/suppress.sup ./fractol mandelbrot
-# Update the SRCS variable to point to the new location of your source files
-SRCS	:=	src/colors.c \
-			src/f_julia.c \
-			src/f_julia_glitch.c \
-			src/f_mandelbrot.c \
-			src/f_mandelbrot_glitch.c \
-			src/f_tricorn.c \
-			src/f_tricorn_glitch.c \
-			src/fractal_init.c \
-			src/hooks.c \
-			src/main.c \
-			src/math.c \
-			src/messages.c \
-			src/string_utils.c
+
+SRCS	:=	src/main.c
 
 OBJDIR	:=	obj
 OBJS	:=	$(SRCS:src/%.c=$(OBJDIR)/%.o)
@@ -79,4 +69,4 @@ fclean: clean
 re:	fclean all
 
 run:	all
-	@./fractol mandelbrot
+	@./$(NAME)

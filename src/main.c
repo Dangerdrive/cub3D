@@ -1,59 +1,78 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: fde-alen <fde-alen@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/07 17:49:57 by fde-alen          #+#    #+#             */
-/*   Updated: 2023/10/18 12:06:25 by fde-alen         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+#include "cub3d.h"
 
-#include "fractol.h"
+static mlx_image_t* image;
 
-/**
- * @brief Function to check the input and initialize the fractal.
- *
- * @param data The data struct
- */
-static bool	check_input(int argc, char **argv, t_fractal *fractal)
+// -----------------------------------------------------------------------------
+
+int32_t ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a)
 {
-	if (argc == 2 && !strncmp(argv[1], "mandelbrot", 10))
-		fractal_init(fractal, MANDELBROT, 0, 0);
-	else if (argc == 4 && !strncmp(argv[1], "julia", 5))
-	{
-		if (ft_atod(argv[2]) >= -2.0 && ft_atod(argv[2]) <= 2.0
-			&& ft_atod(argv[3]) >= -2.0 && ft_atod(argv[3]) <= 2.0)
-			fractal_init(fractal, JULIA, ft_atod(argv[2]), ft_atod(argv[3]));
-		else
-			return (false);
-	}
-	else if (argc == 2 && !strncmp(argv[1], "tricorn", 7))
-		fractal_init(fractal, TRICORN, 0, 0);
-	else
-		return (false);
-	return (true);
+    return (r << 24 | g << 16 | b << 8 | a);
 }
 
-int	main(int argc, char **argv)
+void ft_randomize(void* param)
 {
-	t_fractal		fractal;
+	(void)param;
+	for (uint32_t i = 0; i < image->width; ++i)
+	{
+		for (uint32_t y = 0; y < image->height; ++y)
+		{
+			uint32_t color = ft_pixel(
+				rand() % 0xFF, // R
+				rand() % 0xFF, // G
+				rand() % 0xFF, // B
+				rand() % 0xFF  // A
+			);
+			mlx_put_pixel(image, i, y, color);
+		}
+	}
+}
 
-	if (check_input(argc, argv, &fractal))
+void ft_hook(void* param)
+{
+	mlx_t* mlx = param;
+
+	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
+		mlx_close_window(mlx);
+	if (mlx_is_key_down(mlx, MLX_KEY_UP))
+		image->instances[0].y -= 5;
+	if (mlx_is_key_down(mlx, MLX_KEY_DOWN))
+		image->instances[0].y += 5;
+	if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
+		image->instances[0].x -= 5;
+	if (mlx_is_key_down(mlx, MLX_KEY_RIGHT))
+		image->instances[0].x += 5;
+}
+
+// -----------------------------------------------------------------------------
+
+int32_t main(void)
+{
+	mlx_t* mlx;
+
+	// Gotta error check this stuff
+	if (!(mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true)))
 	{
-		update_render(&fractal);
-		mlx_loop_hook(fractal.mlx, keyhook, &fractal);
-		mlx_scroll_hook(fractal.mlx, &scrollhook, &fractal);
-		mlx_cursor_hook(fractal.mlx, &cursorhook, &fractal);
-		mlx_loop(fractal.mlx);
+		puts(mlx_strerror(mlx_errno));
+		return(EXIT_FAILURE);
 	}
-	else
+	if (!(image = mlx_new_image(mlx, 128, 128)))
 	{
-		param_error();
-		return (EXIT_FAILURE);
+		mlx_close_window(mlx);
+		puts(mlx_strerror(mlx_errno));
+		return(EXIT_FAILURE);
 	}
-	mlx_delete_image(fractal.mlx, fractal.img);
-	mlx_terminate(fractal.mlx);
+	if (mlx_image_to_window(mlx, image, 0, 0) == -1)
+	{
+		mlx_close_window(mlx);
+		puts(mlx_strerror(mlx_errno));
+		return(EXIT_FAILURE);
+	}
+	
+	mlx_loop_hook(mlx, ft_randomize, mlx);
+	mlx_loop_hook(mlx, ft_hook, mlx);
+
+	mlx_loop(mlx);
+	mlx_terminate(mlx);
 	return (EXIT_SUCCESS);
 }
+
