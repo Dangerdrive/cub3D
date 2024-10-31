@@ -25,7 +25,8 @@ endif
 
 LEAKS	:=	valgrind --leak-check=full --show-leak-kinds=all --suppressions=./MLX42/suppress.sup ./fractol mandelbrot
 
-SRCS	:=	src/main.c
+SRCS	:=	src/main.c \
+			src/validations/validate_map.c
 
 OBJDIR	:=	obj
 OBJS	:=	$(SRCS:src/%.c=$(OBJDIR)/%.o)
@@ -40,6 +41,7 @@ valgrind:	all
 all:	prebuild $(NAME)
 
 prebuild:
+	@git submodule update --init --recursive;
 	@if [ ! -d "$(LIBMLX)" ]; then \
 		echo "Adding MLX42 submodule..."; \
 		@git submodule add git@github.com:codam-coding-college/MLX42.git MLX42; \
@@ -69,4 +71,4 @@ fclean: clean
 re:	fclean all
 
 run:	all
-	@./$(NAME)
+	@./$(NAME) maps/map_sample.cub

@@ -57,6 +57,8 @@ int32_t main(void)
 {
 	mlx_t* mlx;
 
+	
+
 	// Gotta error check this stuff
 	if (!(mlx = mlx_init(WIDTH, HEIGHT, "CUB3D", true)))
 	{
