@@ -6,7 +6,7 @@
 /*   By: fde-alen <fde-alen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:20:58 by fde-alen          #+#    #+#             */
-/*   Updated: 2024/10/30 16:35:28 by fde-alen         ###   ########.fr       */
+/*   Updated: 2024/11/01 15:24:19 by fde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,12 @@
 # include <string.h>   // for strerror
 # include <math.h>
 # include <MLX42.h>
+
+typedef enum e_bool
+{
+	FALSE,
+	TRUE
+}			t_bool;
 
 #endif
 
