@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: fde-alen <fde-alen@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/25 13:20:58 by fde-alen          #+#    #+#             */
-/*   Updated: 2024/11/01 15:24:19 by fde-alen         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 //---------------------------------------------------------------------------
 #ifndef CUB3D_H
 # define CUB3D_H
@@ -45,12 +33,39 @@
 # include <string.h>   // for strerror
 # include <math.h>
 # include <MLX42.h>
+# include <libft.h>
 
 typedef enum e_bool
 {
 	FALSE,
 	TRUE
 }			t_bool;
+
+typedef struct s_data
+{
+	struct s_map	*map;
+
+}				t_data;
+
+typedef struct s_map
+{
+	int 			**map_array;
+	char			*no_path;
+	char			*so_path;
+	char			*we_path;
+	char			*ea_path;
+	uint32_t		ceiling_color;
+	uint32_t		floor_color;
+
+}				t_map;
+
+
+
+/* validations*/
+void			exit_error(char *msg);
+void			check_map(char *map_path);
+void			check_args(int argc, char **argv);
+
 
 #endif
 

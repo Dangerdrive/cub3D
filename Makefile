@@ -3,8 +3,13 @@ MAKEFLAGS	+=	--no-print-directory
 NAME	:=	cub3d
 CC		:=	cc
 LIBMLX	:=	./MLX42
-CFLAGS	:=	-Wextra -Wall -Wunreachable-code -Ofast -I./include -I$(LIBMLX)/include/MLX42
+LIBFT	:=	./libft/libft.a
+CFLAGS	:=	-Wextra -Wall -Wunreachable-code -Ofast -I./include -I$(LIBMLX)/include/MLX42 -I./libft
+
+
+
 UNAME_S :=	$(shell uname -s)
+
 
 ifeq ($(UNAME_S),Linux)
 	LDFLAGS :=	-ldl -lglfw -pthread -lm -L$(LIBMLX)/build
@@ -26,7 +31,8 @@ endif
 LEAKS	:=	valgrind --leak-check=full --show-leak-kinds=all --suppressions=./MLX42/suppress.sup ./fractol mandelbrot
 
 SRCS	:=	src/main.c \
-			src/validations/validate_map.c
+			src/validations/validate_map.c \
+			src/validations/validate_args.c
 
 OBJDIR	:=	obj
 OBJS	:=	$(SRCS:src/%.c=$(OBJDIR)/%.o)
@@ -53,14 +59,17 @@ prebuild:
 	@echo "Building MLX42..."
 	@cd $(LIBMLX) && cmake -B build && cmake --build build -j4
 
-$(NAME): $(OBJS)
-	@$(CC) $(OBJS) -o $(NAME) -L$(LIBMLX) -lmlx42 $(LDFLAGS)
+$(NAME): $(OBJS) $(LIBFT)
+	@$(CC) $(OBJS) -o $(NAME) -L$(LIBMLX) -lmlx42 -L$(LIBFT) -lft $(LDFLAGS) 
 
 $(OBJDIR)/%.o: src/%.c | $(OBJDIR)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(OBJDIR):
 	@mkdir -p $(OBJDIR)
+
+$(LIBFT):
+	@make -C ./libft/
 
 clean:
 	@rm -rf $(OBJDIR) $(NAME)
