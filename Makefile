@@ -3,7 +3,7 @@ MAKEFLAGS	+=	--no-print-directory
 NAME	:=	cub3d
 CC		:=	cc
 LIBMLX	:=	./MLX42
-CFLAGS	:=	-Wextra -Wall -Wunreachable-code -Ofast -I./include -I$(LIBMLX)/include/MLX42
+CFLAGS	:=	-Wextra -Wall -Wunreachable-code -g -Ofast -I./include -I$(LIBMLX)/include/MLX42
 UNAME_S :=	$(shell uname -s)
 
 ifeq ($(UNAME_S),Linux)
@@ -25,7 +25,7 @@ endif
 
 LEAKS	:=	valgrind --leak-check=full --show-leak-kinds=all --suppressions=./MLX42/suppress.sup ./fractol mandelbrot
 
-SRCS	:=	src/main.c
+SRCS	:=	src/main.c src/vectors.c
 
 OBJDIR	:=	obj
 OBJS	:=	$(SRCS:src/%.c=$(OBJDIR)/%.o)

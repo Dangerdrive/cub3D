@@ -38,6 +38,13 @@
 # define GRAY	0x808080FF
 # define BROWN 	0xA52A2AFF
 
+# define PI (acos(0)*2)
+# define DEG2RAD (acos(0)/90)
+# define RAD2DEG (90/acos(0))
+
+#define mapWidth 24
+#define mapHeight 24
+
 # include <fcntl.h>    // for open
 # include <unistd.h>   // for close, read, write
 # include <stdlib.h>   // for malloc, free, exit
@@ -45,6 +52,37 @@
 # include <string.h>   // for strerror
 # include <math.h>
 # include <MLX42.h>
+
+typedef struct vector_s
+{
+	double	x;
+	double	y;
+}	vector_t;
+
+typedef struct data_s
+{
+	mlx_t*	mlx;
+	mlx_image_t*	img;
+	double fov;
+	double speed;
+	double rot_speed;
+	vector_t pos;  //x and y start position
+	vector_t dir; //initial direction vector
+	vector_t plane; //the 2d raycaster version of camera plane
+}	data_t;
+
+// vectors.c
+vector_t	vec_new(double x, double y);
+vector_t	vec_add(vector_t vec1, vector_t vec2);
+vector_t	vec_sub(vector_t vec1, vector_t vec2);
+vector_t	vec_scale(vector_t vec, double scalar);
+vector_t	vec_rotate(vector_t vec, double angle); // Positive angle: clock-wise rotation
+double		vec_dot(vector_t vec1, vector_t vec2);
+double		vec_length(vector_t vec);
+vector_t	vec_normal(vector_t vec);
+void		vec_print(vector_t vec);
+double		vec_angle(vector_t vec1, vector_t vec2);
+vector_t	vec_func(double (*func)(double*), size_t vec_amt, ...);
 
 #endif
 
