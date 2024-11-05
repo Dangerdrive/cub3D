@@ -76,29 +76,28 @@ int worldMap[mapWidth][mapHeight]=
 // rayDir
 double	getDeltaDist(double* vals)
 {
-	return (vals[0] == 0) ? 1e30 : fabs(1 / vals[0]);
+	return (vals[0] == 0) ? INFINITY : fabs(1 / vals[0]);
 }
 
 // rayDir, pos, mapPos, deltaDist
 double	getSideDist(double* vals)
 {
 	double	ret;
+	ret = vals[2] - vals[1] + 1;
 	if(vals[0] < 0)
-		ret = (vals[1] - vals[2]) * vals[3];
-	else
-		ret = (vals[2] + 1.0 - vals[1]) * vals[3];
-	return ret;
+		ret = 1 - ret;
+	return ret * vals[3];
 }
 
 void verLine(int x, long drawStart, long drawEnd, long color, data_t* data)
 {
-	int	i;
-	int height = labs(drawEnd - drawStart) + 1;
-	i = 0;
-	while (i < height)
+	int	y;
+
+	y = drawStart;
+	while (y <= drawEnd)
 	{
-		mlx_put_pixel(data->img, x, drawStart + i, color);
-		i++;
+		mlx_put_pixel(data->img, x, y, color);
+		y++;
 	}
 }
 
@@ -152,11 +151,19 @@ void ft_loop(void* param)
           mapPos.y += step.y;
           side = 1;
         }
+		if (HEIGHT / (sideDist.x - deltaDist.x) < 1
+		&& HEIGHT / (sideDist.y - deltaDist.y) < 1)
+			break;
+		if(mapPos.x < 0 || mapPos.x >= mapWidth
+		|| mapPos.y < 0 || mapPos.y >= mapHeight)
+			continue;
         if(worldMap[(long)mapPos.x][(long)mapPos.y] > 0) hit = 1;
       }
       if(side == 0) perpWallDist = (sideDist.x - deltaDist.x);
       else          perpWallDist = (sideDist.y - deltaDist.y);
       long lineHeight = (long)(HEIGHT / perpWallDist);
+	  if (lineHeight < 1)
+	  	continue;
       long drawStart = -lineHeight / 2 + HEIGHT / 2;
       if(drawStart < 0) drawStart = 0;
       long drawEnd = lineHeight / 2 + HEIGHT / 2;
@@ -173,7 +180,7 @@ void ft_loop(void* param)
       if(side == 1) {color = color / 2;}
       verLine(x, drawStart, drawEnd, color, data);
     }
-	mlx_image_to_window(data->mlx, data->img, 0, 0);
+	// mlx_image_to_window(data->mlx, data->img, 0, 0);
 	printf("%f FPS\n", 1/data->mlx->delta_time);
 }
 
@@ -238,6 +245,8 @@ int32_t main(void)
 	data->pos = vec_new(22, 12);
 	data->dir = vec_new(-1, 0);
 	data->plane = vec_rotate(vec_scale(data->dir, data->fov), 90);
+
+	mlx_image_to_window(data->mlx, data->img, 0, 0);
 
 	mlx_loop_hook(mlx, ft_input, data);
 	mlx_loop_hook(mlx, ft_loop, data);
