@@ -66,6 +66,8 @@ typedef struct data_s
 	double fov;
 	double speed;
 	double rot_speed;
+	long	ceil_color;
+	long	floor_color;
 	vector_t pos;  //x and y start position
 	vector_t dir; //initial direction vector
 	vector_t plane; //the 2d raycaster version of camera plane

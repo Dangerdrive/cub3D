@@ -102,12 +102,27 @@ void verLine(int x, long drawStart, long drawEnd, long color, data_t* data)
 	}
 }
 
+void	ft_clear_image(data_t* data)
+{
+	long	i;
+	long	color;
+
+	color = data->ceil_color;
+	i = 0;
+	while (i < data->img->width * data->img->height)
+	{
+		if (i == WIDTH * HEIGHT / 2)
+			color = data->floor_color;
+		mlx_put_pixel(data->img, i % WIDTH, i / HEIGHT, color);
+		i++;
+	}
+}
+
 void ft_loop(void* param)
 {
 	data_t* data = param;
 
-	mlx_delete_image(data->mlx, data->img);
-	data->img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
+	ft_clear_image(data);
     for(int x = 0; x < WIDTH; x++)
     {
       double cameraX = 2 * x / (double)WIDTH - 1;
@@ -151,7 +166,7 @@ void ft_loop(void* param)
       {
         case 1:  color = TOMATO; break;
         case 2:  color = GREEN;  break;
-        case 3:  color = AQUA;   break;
+        case 3:  color = VIOLET; break;
         case 4:  color = WHITE;  break;
         default: color = YELLOW; break;
       }
@@ -179,13 +194,13 @@ void ft_input(void* param)
 	if (mlx_is_key_down(data->mlx, MLX_KEY_D))
 		dir = vec_add(dir, vec_new(1, 0));
 	if (mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
-		rot += 90 * data->rot_speed;
+		rot += 90;
 	if (mlx_is_key_down(data->mlx, MLX_KEY_LEFT))
-		rot -= 90 * data->rot_speed;
-	data->dir = vec_rotate(data->dir, rot);
+		rot -= 90;
+	data->dir = vec_rotate(data->dir, rot * data->rot_speed * data->mlx->delta_time);
 	data->plane = vec_rotate(vec_scale(data->dir, data->fov), 90);
 	if (dir.x != 0 || dir.y != 0)
-		data->pos = vec_add(data->pos, vec_scale(vec_rotate(data->dir, vec_angle(dir, vec_new(0, -1))), data->speed));
+		data->pos = vec_add(data->pos, vec_scale(vec_rotate(data->dir, vec_angle(dir, vec_new(0, -1))), data->speed * data->mlx->delta_time));
 }
 
 // -----------------------------------------------------------------------------
@@ -195,7 +210,6 @@ int32_t main(void)
 	data_t*	data = malloc(sizeof(data_t));
 	mlx_t* mlx;
 
-	// Gotta error check this stuff
 	if (!(mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true)))
 	{
 		puts(mlx_strerror(mlx_errno));
@@ -217,16 +231,14 @@ int32_t main(void)
 	data->mlx = mlx;
 	data->img = mlx_new_image(mlx, WIDTH, HEIGHT);
 	data->fov = 0.66;
-	data->speed = 0.2;
-	data->rot_speed = 0.05;
-	data->pos = vec_new(22, 12);  //x and y start position
-	data->dir = vec_new(-1, 0); //initial direction vector
-	data->plane = vec_rotate(vec_scale(data->dir, data->fov), 90); //the 2d raycaster version of camera plane
-	// data->time = 0; //time of current frame
-	// data->oldTime = 0; //time of previous frame
+	data->speed = 7;
+	data->rot_speed = 1.5;
+	data->ceil_color = AQUA;
+	data->floor_color = BROWN;
+	data->pos = vec_new(22, 12);
+	data->dir = vec_new(-1, 0);
+	data->plane = vec_rotate(vec_scale(data->dir, data->fov), 90);
 
-	// mlx_loop_hook(mlx, ft_randomize, mlx);
-	// mlx_loop_hook(mlx, ft_hook, mlx);
 	mlx_loop_hook(mlx, ft_input, data);
 	mlx_loop_hook(mlx, ft_loop, data);
 
@@ -234,10 +246,5 @@ int32_t main(void)
 	free(data);
 	mlx_terminate(mlx);
 	return (EXIT_SUCCESS);
-	// vector_t	unit;
-	// vector_t	other;
-	// unit = vec_new(0, 1);
-	// other = vec_new(1, 2);
-	// vec_print(vec_func(a_plus_2b, 2, unit, other));
 }
 

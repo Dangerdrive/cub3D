@@ -82,7 +82,7 @@ vector_t vec_func(double (*func)(double*), size_t vec_amt, ...)
 	vecs_x = malloc(vec_amt * sizeof(double));
 	vecs_y = malloc(vec_amt * sizeof(double));
 	i = 0;
-	while (i++ <= vec_amt)
+	while (i++ < vec_amt)
 	{
 		vecs_x[i-1] = va_arg(va_x, vector_t).x;
 		vecs_y[i-1] = va_arg(va_y, vector_t).y;
