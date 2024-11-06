@@ -76,7 +76,7 @@ int worldMap[mapWidth][mapHeight]=
 // rayDir
 double	getDeltaDist(double* vals)
 {
-	return (vals[0] == 0) ? INFINITY : fabs(1 / vals[0]);
+	return fabs(1 / vals[0]);
 }
 
 // rayDir, pos, mapPos, deltaDist
@@ -93,10 +93,15 @@ void verLine(int x, long drawStart, long drawEnd, long color, data_t* data)
 {
 	int	y;
 
-	y = drawStart;
-	while (y <= drawEnd)
+	y = 0;
+	while (y < HEIGHT)
 	{
-		mlx_put_pixel(data->img, x, y, color);
+		if (drawStart <= y && y < drawEnd)
+			mlx_put_pixel(data->img, x, y, color);
+		else if (y <= HEIGHT / 2)
+			mlx_put_pixel(data->img, x, y, data->ceil_color);
+		else
+			mlx_put_pixel(data->img, x, y, data->floor_color);
 		y++;
 	}
 }
@@ -121,7 +126,6 @@ void ft_loop(void* param)
 {
 	data_t* data = param;
 
-	ft_clear_image(data);
     for(int x = 0; x < WIDTH; x++)
     {
       double cameraX = 2 * x / (double)WIDTH - 1;
@@ -134,6 +138,7 @@ void ft_loop(void* param)
       vector_t step = vec_new(1, 1);
       int hit = 0;
       int side;
+	  bool in_wall = worldMap[(long)mapPos.x][(long)mapPos.y] > 0;
 	  if (rayDir.x < 0) step.x = -1;
 	  if (rayDir.y < 0) step.y = -1;
       sideDist = vec_func(getSideDist, 4, rayDir, data->pos, mapPos, deltaDist);
@@ -151,23 +156,33 @@ void ft_loop(void* param)
           mapPos.y += step.y;
           side = 1;
         }
-		if (HEIGHT / (sideDist.x - deltaDist.x) < 1
-		&& HEIGHT / (sideDist.y - deltaDist.y) < 1)
+		if ((HEIGHT / (sideDist.x - deltaDist.x) < 1)
+		&& (HEIGHT / (sideDist.y - deltaDist.y) < 1))
 			break;
-		if(mapPos.x < 0 || mapPos.x >= mapWidth
-		|| mapPos.y < 0 || mapPos.y >= mapHeight)
+		if(!in_wall && (mapPos.x < 0 || mapPos.x >= mapWidth
+		|| mapPos.y < 0 || mapPos.y >= mapHeight))
 			continue;
-        if(worldMap[(long)mapPos.x][(long)mapPos.y] > 0) hit = 1;
+        if (!in_wall && worldMap[(long)mapPos.x][(long)mapPos.y] > 0) hit = 1;
+		if (in_wall && (worldMap[(long)mapPos.x][(long)mapPos.y] == 0
+		|| mapPos.x < 0 || mapPos.x >= mapWidth
+		|| mapPos.y < 0 || mapPos.y >= mapHeight)) {
+			hit = 1;
+			if (side == 0) mapPos.x -= step.x;
+			else mapPos.y -= step.y;
+		}
       }
       if(side == 0) perpWallDist = (sideDist.x - deltaDist.x);
       else          perpWallDist = (sideDist.y - deltaDist.y);
       long lineHeight = (long)(HEIGHT / perpWallDist);
-	  if (lineHeight < 1)
-	  	continue;
       long drawStart = -lineHeight / 2 + HEIGHT / 2;
       if(drawStart < 0) drawStart = 0;
       long drawEnd = lineHeight / 2 + HEIGHT / 2;
       if(drawEnd >= HEIGHT) drawEnd = HEIGHT - 1;
+	  if (lineHeight < 1)
+	  {
+		verLine(x, drawStart, drawEnd, 0, data);
+	  	continue;
+	  }
       long color;
       switch(worldMap[(long)mapPos.x][(long)mapPos.y])
       {
@@ -180,8 +195,14 @@ void ft_loop(void* param)
       if(side == 1) {color = color / 2;}
       verLine(x, drawStart, drawEnd, color, data);
     }
-	// mlx_image_to_window(data->mlx, data->img, 0, 0);
-	printf("%f FPS\n", 1/data->mlx->delta_time);
+	data->time += data->mlx->delta_time;
+	data->frames += 1;
+	if ((long)data->time >= 5)
+	{
+		printf("%li FPS\n", (long)(data->frames / data->time));
+		data->time -= 5;
+		data->frames = 0;
+	}
 }
 
 void ft_input(void* param)
@@ -208,6 +229,14 @@ void ft_input(void* param)
 	data->plane = vec_rotate(vec_scale(data->dir, data->fov), 90);
 	if (dir.x != 0 || dir.y != 0)
 		data->pos = vec_add(data->pos, vec_scale(vec_rotate(data->dir, vec_angle(dir, vec_new(0, -1))), data->speed * data->mlx->delta_time));
+	if (data->pos.x <= 0)
+		data->pos.x = nexttoward(1, mapWidth) - 1;
+	if (data->pos.y <= 0)
+		data->pos.y = nexttoward(1, mapWidth) - 1;
+	if (data->pos.x >= mapWidth)
+		data->pos.x = nexttoward(mapWidth, 0);
+	if (data->pos.y >= mapHeight)
+		data->pos.y = nexttoward(mapHeight, 0);
 }
 
 // -----------------------------------------------------------------------------
@@ -240,6 +269,8 @@ int32_t main(void)
 	data->fov = 0.66;
 	data->speed = 7;
 	data->rot_speed = 1.5;
+	data->time = 0;
+	data->frames = 0;
 	data->ceil_color = AQUA;
 	data->floor_color = BROWN;
 	data->pos = vec_new(22, 12);

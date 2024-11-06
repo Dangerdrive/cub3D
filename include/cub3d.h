@@ -66,6 +66,8 @@ typedef struct data_s
 	double fov;
 	double speed;
 	double rot_speed;
+	double time;
+	long	frames;
 	long	ceil_color;
 	long	floor_color;
 	vector_t pos;  //x and y start position
