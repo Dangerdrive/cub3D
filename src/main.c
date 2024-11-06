@@ -34,6 +34,12 @@ int32_t ft_shadow(int32_t pixel)
 	return ft_pixel(ft_get_r(pixel) / 2, ft_get_g(pixel) / 2, ft_get_b(pixel) / 2, ft_get_a(pixel));
 }
 
+int32_t ft_image_pixel(mlx_texture_t* img, long x, long y)
+{
+	long pos = 4 * (y * texWidth + x);
+	return ft_pixel(img->pixels[pos], img->pixels[pos+1], img->pixels[pos+2], img->pixels[pos+3]);
+}
+
 void ft_randomize(void* param)
 {
 	(void)param;
@@ -114,15 +120,24 @@ double	getSideDist(double* vals)
 	return ret * vals[3];
 }
 
-void verLine(int x, long drawStart, long drawEnd, long color, data_t* data)
+void verLine(int x, long texX, long lineHeight, data_t* data, mlx_texture_t* texture)
 {
 	int	y;
-
+	
+    long drawStart = -lineHeight / 2 + HEIGHT / 2;
+    // if(drawStart < 0) drawStart = 0;
+    long drawEnd = lineHeight / 2 + HEIGHT / 2;
+    // if(drawEnd >= HEIGHT) drawEnd = HEIGHT - 1;
 	y = 0;
 	while (y < HEIGHT)
 	{
 		if (drawStart <= y && y < drawEnd)
-			mlx_put_pixel(data->img, x, y, color);
+		{
+			long texY = (y - drawStart) * ((double)texHeight / lineHeight);
+			// if (x < 20)
+			// 	printf("x: %i, y: %i, texX: %li, texY: %li\n", x, y, texX, texY);
+			mlx_put_pixel(data->img, x, y, ft_image_pixel(texture, texX, texY));
+		}
 		else if (y <= HEIGHT / 2)
 			mlx_put_pixel(data->img, x, y, data->ceil_color);
 		else
@@ -199,26 +214,14 @@ void ft_loop(void* param)
       if(side == 0) perpWallDist = (sideDist.x - deltaDist.x);
       else          perpWallDist = (sideDist.y - deltaDist.y);
       long lineHeight = (long)(HEIGHT / perpWallDist);
-      long drawStart = -lineHeight / 2 + HEIGHT / 2;
-      if(drawStart < 0) drawStart = 0;
-      long drawEnd = lineHeight / 2 + HEIGHT / 2;
-      if(drawEnd >= HEIGHT) drawEnd = HEIGHT - 1;
-	  if (lineHeight < 1)
-	  {
-		verLine(x, drawStart, drawEnd, 0, data);
-	  	continue;
-	  }
-      long color;
-      switch(worldMap[(long)mapPos.x][(long)mapPos.y])
-      {
-        case 1:  color = TOMATO; break;
-        case 2:  color = GREEN;  break;
-        case 3:  color = VIOLET; break;
-        case 4:  color = WHITE;  break;
-        default: color = YELLOW; break;
-      }
-      if(side == 1) {color = ft_shadow(color);}
-      verLine(x, drawStart, drawEnd, color, data);
+	  double wallX;
+	  if (side == 0) wallX = (data->pos.y + perpWallDist * rayDir.y);
+	  else           wallX = (data->pos.x + perpWallDist * rayDir.x);
+	  wallX -= (long)wallX;
+	  long texX = (wallX * texWidth);
+    //   if(side == 0 && rayDir.x < 0) texX = texWidth - texX - 1;
+    //   if(side == 1 && rayDir.y < 0) texX = texWidth - texX - 1;
+      verLine(x, texX, lineHeight, data, data->tex);
     }
 	data->time += data->mlx->delta_time;
 	data->frames += 1;
@@ -291,6 +294,7 @@ int32_t main(void)
 
 	data->mlx = mlx;
 	data->img = mlx_new_image(mlx, WIDTH, HEIGHT);
+	data->tex = mlx_load_png("/nfs/homes/aliferre/Desktop/Projetos 42/cub3d/textures/placeholder.png");
 	data->fov = 0.66;
 	data->speed = 7;
 	data->rot_speed = 1.5;
@@ -302,8 +306,22 @@ int32_t main(void)
 	data->dir = vec_new(-1, 0);
 	data->plane = vec_rotate(vec_scale(data->dir, data->fov), 90);
 
-	mlx_image_to_window(data->mlx, data->img, 0, 0);
+	// for (int x = 0; x < texWidth * 5; x++)
+	// {
+	// 	// for (int y = 0; y < texHeight; y++)
+	// 	// {
+	// 	// 	long color = ft_image_pixel(data->tex, x, y);
+	// 	// 	printf("(%i, %i): (%i, %i, %i, %i)\n", x, y, ft_get_r(color), ft_get_g(color), ft_get_b(color), ft_get_a(color));
+	// 	// 	mlx_put_pixel(data->img, 2*x, 2*y, color);
+	// 	// 	mlx_put_pixel(data->img, 2*x+1, 2*y, color);
+	// 	// 	mlx_put_pixel(data->img, 2*x, 2*y+1, color);
+	// 	// 	mlx_put_pixel(data->img, 2*x+1, 2*y+1, color);
+	// 	// }
+	// 	verLine(x, x / 5, texHeight * 5 + x * 2, data, data->tex);
+	// }
 
+	mlx_image_to_window(data->mlx, data->img, 0, 0);
+	
 	mlx_loop_hook(mlx, ft_input, data);
 	mlx_loop_hook(mlx, ft_loop, data);
 

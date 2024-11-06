@@ -44,6 +44,8 @@
 
 #define mapWidth 24
 #define mapHeight 24
+#define texWidth 64
+#define texHeight 64
 
 # include <fcntl.h>    // for open
 # include <unistd.h>   // for close, read, write
@@ -63,6 +65,7 @@ typedef struct data_s
 {
 	mlx_t*	mlx;
 	mlx_image_t*	img;
+	mlx_texture_t*	tex;
 	double fov;
 	double speed;
 	double rot_speed;
