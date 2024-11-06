@@ -9,6 +9,31 @@ int32_t ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a)
     return (r << 24 | g << 16 | b << 8 | a);
 }
 
+int32_t ft_get_r(int32_t pixel)
+{
+	return (pixel >> 24) & 0xff;
+}
+
+int32_t ft_get_g(int32_t pixel)
+{
+	return (pixel >> 16) & 0xff;
+}
+
+int32_t ft_get_b(int32_t pixel)
+{
+	return (pixel >> 8) & 0xff;
+}
+
+int32_t ft_get_a(int32_t pixel)
+{
+	return pixel & 0xff;
+}
+
+int32_t ft_shadow(int32_t pixel)
+{
+	return ft_pixel(ft_get_r(pixel) / 2, ft_get_g(pixel) / 2, ft_get_b(pixel) / 2, ft_get_a(pixel));
+}
+
 void ft_randomize(void* param)
 {
 	(void)param;
@@ -192,7 +217,7 @@ void ft_loop(void* param)
         case 4:  color = WHITE;  break;
         default: color = YELLOW; break;
       }
-      if(side == 1) {color = color / 2;}
+      if(side == 1) {color = ft_shadow(color);}
       verLine(x, drawStart, drawEnd, color, data);
     }
 	data->time += data->mlx->delta_time;
@@ -200,7 +225,7 @@ void ft_loop(void* param)
 	if ((long)data->time >= 5)
 	{
 		printf("%li FPS\n", (long)(data->frames / data->time));
-		data->time -= 5;
+		data->time = 0;
 		data->frames = 0;
 	}
 }
