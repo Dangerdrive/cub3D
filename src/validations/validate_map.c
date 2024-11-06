@@ -54,7 +54,6 @@ void	process_texture_line(t_map *map, char *temp, char *line)
 		exit_error("Error: map file has invalid line.\n");
 	}
 	check_colors(map, line, temp);
-	map->size_textures++;
 }
 
 void	read_textures_path(t_map *map, char *temp_line, int fd)
