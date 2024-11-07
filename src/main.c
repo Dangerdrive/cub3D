@@ -207,7 +207,7 @@ void ft_loop(void* param)
 			else                 mapPos.y -= step.y;
 		}
       }
-	  if (in_wall) side = abs(side - 2);
+	  if (in_wall) side = (side + 2) % 4;
       if((side % 2) == 1) perpWallDist = (sideDist.x - deltaDist.x);
       else                perpWallDist = (sideDist.y - deltaDist.y);
       long lineHeight = (long)(HEIGHT / perpWallDist);
