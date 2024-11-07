@@ -25,10 +25,13 @@ endif
 
 LEAKS	:=	valgrind --leak-check=full --show-leak-kinds=all --suppressions=./MLX42/suppress.sup ./fractol mandelbrot
 
-SRCS	:=	src/main.c src/vectors.c
+SRCS	:=	src/main.c \
+				src/raycasting/vec_basic.c \
+				src/raycasting/vec_advanced.c \
 
 OBJDIR	:=	obj
 OBJS	:=	$(SRCS:src/%.c=$(OBJDIR)/%.o)
+DIRS	:=	$(shell dirname $(OBJS))
 
 .PHONY:	all clean fclean re valgrind run prebuild
 
@@ -55,10 +58,11 @@ $(NAME): $(OBJS)
 	@$(CC) $(OBJS) -o $(NAME) -L$(LIBMLX) -lmlx42 $(LDFLAGS)
 
 $(OBJDIR)/%.o: src/%.c | $(OBJDIR)
+	@mkdir $(shell dirname $@) 2> /dev/null || true
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(OBJDIR):
-	@mkdir -p $(OBJDIR)
+	@mkdir -p $(DIRS) 2> /dev/null
 
 clean:
 	@rm -rf $(OBJDIR) $(NAME)

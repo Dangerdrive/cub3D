@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fde-alen <fde-alen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aliferre <aliferre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:20:58 by fde-alen          #+#    #+#             */
-/*   Updated: 2024/10/30 16:35:28 by fde-alen         ###   ########.fr       */
+/*   Updated: 2024/11/07 20:03:33 by aliferre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,21 +38,25 @@
 # define GRAY	0x808080FF
 # define BROWN 	0xA52A2AFF
 
-# define PI (acos(0)*2)
-# define DEG2RAD (acos(0)/90)
-# define RAD2DEG (90/acos(0))
+# define PI 3.14159265358979311599796346854E0 // acos(0)*2
+# define DEG2RAD 1.74532925199432954743716805979E-2 // acos(0)/90
+# define RAD2DEG 5.72957795130823228646477218717E1 // 90/acos(0)
 
-# define COLLISION_MARGIN (1.0/4)
+# define COLLISION_MARGIN 2.5E-1 // 1/4
 
-# define VEC_NORTH vec_new(0, 1)
-# define VEC_WEST vec_new(-1, 0)
-# define VEC_SOUTH vec_new(0, -1)
-# define VEC_EAST vec_new(1, 0)
+# define VEC_NORTH_Y -1 // Use vec_new(0, VEC_NORTH_Y)
+# define VEC_WEST_X 1 // Use vec_new(VEC_WEST_X, 0)
+# define VEC_SOUTH_Y 1 // Use vec_new(0, VEC_SOUTH_Y)
+# define VEC_EAST_X -1 // Use vec_new(VEC_EAST_X, 0)
 
-# define mapWidth 24
-# define mapHeight 24
-# define texWidth 64
-# define texHeight 64
+# define MAP_WIDTH 5
+# define MAP_HEIGHT 5
+# define TEX_WIDTH 64
+# define TEX_HEIGHT 64
+
+# define FOV 0.66
+# define SPEED 7.0
+# define ROT_SPEED 1.5
 
 # include <fcntl.h>    // for open
 # include <unistd.h>   // for close, read, write
@@ -62,44 +66,44 @@
 # include <math.h>
 # include <MLX42.h>
 
-typedef struct vector_s
+typedef int32_t		t_color;
+
+typedef struct s_vector
 {
 	double	x;
 	double	y;
-}	vector_t;
+}	t_vector;
 
-typedef struct data_s
+// tex order: looking at N, W, S, E
+typedef struct s_data
 {
-	mlx_t*	mlx;
-	mlx_image_t*	img;
-	mlx_texture_t*	no_tex;
-	mlx_texture_t*	tex[4]; // looking at N, W, S, E
-	double fov;
-	double speed;
-	double rot_speed;
-	double time;
-	long	frames;
-	long	ceil_color;
-	long	floor_color;
-	vector_t pos;  //x and y start position
-	vector_t dir; //initial direction vector
-	vector_t plane; //the 2d raycaster version of camera plane
-}	data_t;
+	mlx_t			*mlx;
+	int				map[MAP_HEIGHT][MAP_WIDTH];
 
-// vectors.c
-vector_t	vec_new(double x, double y);
-vector_t	vec_add(vector_t vec1, vector_t vec2);
-vector_t	vec_sub(vector_t vec1, vector_t vec2);
-vector_t	vec_scale(vector_t vec, double scalar);
-vector_t	vec_rotate(vector_t vec, double angle); // Positive angle: clock-wise rotation
-double		vec_dot(vector_t vec1, vector_t vec2);
-double		vec_length(vector_t vec);
-vector_t	vec_normal(vector_t vec);
-void		vec_print(vector_t vec);
-double		vec_angle(vector_t vec1, vector_t vec2);
-vector_t	vec_func(double (*func)(double*), size_t vec_amt, ...);
+	mlx_image_t		*img;
+	mlx_texture_t	*no_tex;
+	mlx_texture_t	*tex[4];
+
+	t_vector		pos;
+	t_vector		dir;
+	t_vector		plane;
+
+	double			time;
+	long			frames;
+
+	t_color			ceil_color;
+	t_color			floor_color;
+}	t_data;
+
+// ### vec_basic.c ###
+t_vector	vec_new(double x, double y);
+t_vector	vec_add(t_vector vec1, t_vector vec2);
+t_vector	vec_scale(t_vector vec, double scalar);
+t_vector	vec_rotate(t_vector vec, double angle);
+
+// ### vec_advanced.c ###
+// double		vec_dot(t_vector vec1, t_vector vec2);
+double		vec_angle(t_vector vec1, t_vector vec2);
+t_vector	vec_func(double (*func)(double*), size_t vec_amt, ...);
 
 #endif
-
-//gcc *.c MLX42Codam/libmlx42.a -Iinclude -O3 -ldl -lglfw -pthread -lm && ./a.out mandelbrot
-
