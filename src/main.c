@@ -125,17 +125,13 @@ void verLine(int x, long texX, long lineHeight, data_t* data, mlx_texture_t* tex
 	int	y;
 	
     long drawStart = -lineHeight / 2 + HEIGHT / 2;
-    // if(drawStart < 0) drawStart = 0;
     long drawEnd = lineHeight / 2 + HEIGHT / 2;
-    // if(drawEnd >= HEIGHT) drawEnd = HEIGHT - 1;
 	y = 0;
 	while (y < HEIGHT)
 	{
 		if (drawStart <= y && y < drawEnd)
 		{
 			long texY = (y - drawStart) * ((double)texHeight / lineHeight);
-			// if (x < 20)
-			// 	printf("x: %i, y: %i, texX: %li, texY: %li\n", x, y, texX, texY);
 			mlx_put_pixel(data->img, x, y, ft_image_pixel(texture, texX, texY));
 		}
 		else if (y <= HEIGHT / 2)
@@ -188,13 +184,13 @@ void ft_loop(void* param)
         {
           sideDist.x += deltaDist.x;
           mapPos.x += step.x;
-          side = 0;
+          side = 2 - step.x;
         }
         else
         {
           sideDist.y += deltaDist.y;
           mapPos.y += step.y;
-          side = 1;
+          side = 1 - step.y;
         }
 		if ((HEIGHT / (sideDist.x - deltaDist.x) < 1)
 		&& (HEIGHT / (sideDist.y - deltaDist.y) < 1))
@@ -207,21 +203,23 @@ void ft_loop(void* param)
 		|| mapPos.x < 0 || mapPos.x >= mapWidth
 		|| mapPos.y < 0 || mapPos.y >= mapHeight)) {
 			hit = 1;
-			if (side == 0) mapPos.x -= step.x;
-			else mapPos.y -= step.y;
+			if ((side % 2) == 1) mapPos.x -= step.x;
+			else                 mapPos.y -= step.y;
 		}
       }
-      if(side == 0) perpWallDist = (sideDist.x - deltaDist.x);
-      else          perpWallDist = (sideDist.y - deltaDist.y);
+	  if (in_wall) side = abs(side - 2);
+      if((side % 2) == 1) perpWallDist = (sideDist.x - deltaDist.x);
+      else                perpWallDist = (sideDist.y - deltaDist.y);
       long lineHeight = (long)(HEIGHT / perpWallDist);
 	  double wallX;
-	  if (side == 0) wallX = (data->pos.y + perpWallDist * rayDir.y);
-	  else           wallX = (data->pos.x + perpWallDist * rayDir.x);
+	  if ((side % 2) == 1) wallX = (data->pos.y + perpWallDist * rayDir.y);
+	  else                 wallX = (data->pos.x + perpWallDist * rayDir.x);
 	  wallX -= (long)wallX;
 	  long texX = (wallX * texWidth);
-    //   if(side == 0 && rayDir.x < 0) texX = texWidth - texX - 1;
-    //   if(side == 1 && rayDir.y < 0) texX = texWidth - texX - 1;
-      verLine(x, texX, lineHeight, data, data->tex);
+	  if (side == 1 || side == 2) texX = texWidth - texX - 1;
+	  if (side < 0 || side >= 4)
+	  	verLine(x, texX, lineHeight, data, data->no_tex);
+      verLine(x, texX, lineHeight, data, data->tex[side]);
     }
 	data->time += data->mlx->delta_time;
 	data->frames += 1;
@@ -242,13 +240,13 @@ void ft_input(void* param)
 	if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(data->mlx);
 	if (mlx_is_key_down(data->mlx, MLX_KEY_W))
-		dir = vec_add(dir, vec_new(0, -1));
+		dir = vec_add(dir, VEC_NORTH);
 	if (mlx_is_key_down(data->mlx, MLX_KEY_S))
-		dir = vec_add(dir, vec_new(0, 1));
-	if (mlx_is_key_down(data->mlx, MLX_KEY_A))
-		dir = vec_add(dir, vec_new(-1, 0));
+		dir = vec_add(dir, VEC_SOUTH);
 	if (mlx_is_key_down(data->mlx, MLX_KEY_D))
-		dir = vec_add(dir, vec_new(1, 0));
+		dir = vec_add(dir, VEC_EAST);
+	if (mlx_is_key_down(data->mlx, MLX_KEY_A))
+		dir = vec_add(dir, VEC_WEST);
 	if (mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
 		rot += 90;
 	if (mlx_is_key_down(data->mlx, MLX_KEY_LEFT))
@@ -256,15 +254,15 @@ void ft_input(void* param)
 	data->dir = vec_rotate(data->dir, rot * data->rot_speed * data->mlx->delta_time);
 	data->plane = vec_rotate(vec_scale(data->dir, data->fov), 90);
 	if (dir.x != 0 || dir.y != 0)
-		data->pos = vec_add(data->pos, vec_scale(vec_rotate(data->dir, vec_angle(dir, vec_new(0, -1))), data->speed * data->mlx->delta_time));
-	if (data->pos.x <= 0)
-		data->pos.x = nexttoward(1, mapWidth) - 1;
-	if (data->pos.y <= 0)
-		data->pos.y = nexttoward(1, mapWidth) - 1;
-	if (data->pos.x >= mapWidth)
-		data->pos.x = nexttoward(mapWidth, 0);
-	if (data->pos.y >= mapHeight)
-		data->pos.y = nexttoward(mapHeight, 0);
+		data->pos = vec_add(data->pos, vec_scale(vec_rotate(data->dir, vec_angle(VEC_NORTH, dir)), data->speed * data->mlx->delta_time));
+	if (data->pos.x < COLLISION_MARGIN)
+		data->pos.x = COLLISION_MARGIN;
+	if (data->pos.y < COLLISION_MARGIN)
+		data->pos.y = COLLISION_MARGIN;
+	if (data->pos.x >= (double)mapWidth - COLLISION_MARGIN)
+		data->pos.x = (double)mapWidth - COLLISION_MARGIN;
+	if (data->pos.y >= (double)mapHeight - COLLISION_MARGIN)
+		data->pos.y = (double)mapHeight - COLLISION_MARGIN;
 }
 
 // -----------------------------------------------------------------------------
@@ -294,7 +292,11 @@ int32_t main(void)
 
 	data->mlx = mlx;
 	data->img = mlx_new_image(mlx, WIDTH, HEIGHT);
-	data->tex = mlx_load_png("/nfs/homes/aliferre/Desktop/Projetos 42/cub3d/textures/placeholder.png");
+	data->no_tex = mlx_load_png("/nfs/homes/aliferre/Desktop/Projetos 42/cub3d/textures/placeholder_null.png");
+	data->tex[0] = mlx_load_png("/nfs/homes/aliferre/Desktop/Projetos 42/cub3d/textures/placeholder_0.png");
+	data->tex[1] = mlx_load_png("/nfs/homes/aliferre/Desktop/Projetos 42/cub3d/textures/placeholder_1.png");
+	data->tex[2] = mlx_load_png("/nfs/homes/aliferre/Desktop/Projetos 42/cub3d/textures/placeholder_2.png");
+	data->tex[3] = mlx_load_png("/nfs/homes/aliferre/Desktop/Projetos 42/cub3d/textures/placeholder_3.png");
 	data->fov = 0.66;
 	data->speed = 7;
 	data->rot_speed = 1.5;
@@ -303,7 +305,7 @@ int32_t main(void)
 	data->ceil_color = AQUA;
 	data->floor_color = BROWN;
 	data->pos = vec_new(22, 12);
-	data->dir = vec_new(-1, 0);
+	data->dir = VEC_NORTH;
 	data->plane = vec_rotate(vec_scale(data->dir, data->fov), 90);
 
 	// for (int x = 0; x < texWidth * 5; x++)

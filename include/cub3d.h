@@ -42,10 +42,17 @@
 # define DEG2RAD (acos(0)/90)
 # define RAD2DEG (90/acos(0))
 
-#define mapWidth 24
-#define mapHeight 24
-#define texWidth 64
-#define texHeight 64
+# define COLLISION_MARGIN (1.0/4)
+
+# define VEC_NORTH vec_new(0, 1)
+# define VEC_WEST vec_new(-1, 0)
+# define VEC_SOUTH vec_new(0, -1)
+# define VEC_EAST vec_new(1, 0)
+
+# define mapWidth 24
+# define mapHeight 24
+# define texWidth 64
+# define texHeight 64
 
 # include <fcntl.h>    // for open
 # include <unistd.h>   // for close, read, write
@@ -65,7 +72,8 @@ typedef struct data_s
 {
 	mlx_t*	mlx;
 	mlx_image_t*	img;
-	mlx_texture_t*	tex;
+	mlx_texture_t*	no_tex;
+	mlx_texture_t*	tex[4]; // looking at N, W, S, E
 	double fov;
 	double speed;
 	double rot_speed;
