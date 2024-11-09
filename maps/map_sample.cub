@@ -22,3 +22,13 @@ C 110,110,110
 101111111001011111111101
 100000000000000000000001
 111111111111111111111111
+
+void	handle_error_rgb(char *original, char **rgb, int len)
+{
+	free(original);
+	ft_strarr_free(rgb, len);
+	handle_error("Error: invalid color.\n");
+}
+
+
+add instructions after Error: invalid color.\n, to input a valid rgb color

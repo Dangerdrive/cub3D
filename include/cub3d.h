@@ -49,7 +49,7 @@ typedef struct s_data
 
 typedef struct s_map
 {
-	int 			**map_array;
+	int			**map_array;
 	char			*no_path;
 	char			*so_path;
 	char			*we_path;
@@ -62,9 +62,11 @@ typedef struct s_map
 
 
 /* validations*/
-void			exit_error(char *msg);
+void			exit_usage_error(char *msg);
 void			check_map(char *map_path);
 void			check_args(int argc, char **argv);
+void			check_rgb(uint32_t *color, char *rgb_color, char *original, char c);
+
 
 
 #endif

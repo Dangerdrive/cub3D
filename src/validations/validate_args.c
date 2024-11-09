@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-void exit_error(char *msg)
+void	exit_usage_error(char *msg)
 {
 	perror(msg);
 	printf("usage: \n" \
@@ -53,15 +53,15 @@ t_bool	extension_is_invalid(char *map_file)
 }
 
 
-void check_args(int argc, char **argv)
+void	check_args(int argc, char **argv)
 {
 	if (argc < 2)
-		exit_error("Error: no map used.\n");
+		exit_usage_error("Error: no map used.\n");
 	else if (argc > 2)
-		exit_error("Error: too many arguments\n");
+		exit_usage_error("Error: too many arguments\n");
 	else if (argc == 2)
 	{
 		if (extension_is_invalid(argv[1]))
-			exit_error("Error: invalid map extension\n");
+			exit_usage_error("Error: invalid map extension\n");
 	}
 }

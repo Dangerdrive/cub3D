@@ -32,7 +32,9 @@ LEAKS	:=	valgrind --leak-check=full --show-leak-kinds=all --suppressions=./MLX42
 
 SRCS	:=	src/main.c \
 			src/validations/validate_map.c \
-			src/validations/validate_args.c
+			src/validations/validate_args.c \
+			src/validations/check_rgb.c \
+			src/validations/copy_texture_path.c
 
 OBJDIR	:=	obj
 OBJS	:=	$(SRCS:src/%.c=$(OBJDIR)/%.o)
@@ -60,7 +62,7 @@ prebuild:
 	@cd $(LIBMLX) && cmake -B build && cmake --build build -j4
 
 $(NAME): $(OBJS) $(LIBFT)
-	@$(CC) $(OBJS) -o $(NAME) -L$(LIBMLX) -lmlx42 -L$(LIBFT) -lft $(LDFLAGS) 
+	@$(CC) $(OBJS) -o $(NAME) -L$(LIBMLX) -lmlx42 -L$(LIBFT) -lft $(LDFLAGS)
 
 $(OBJDIR)/%.o: src/%.c | $(OBJDIR)
 	@$(CC) $(CFLAGS) -c $< -o $@
