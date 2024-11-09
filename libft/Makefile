@@ -68,7 +68,15 @@ SRCS		=   $(addprefix $(SRCDIR)/, ft_atoi.c \
 				ft_toupper.c \
 				ft_uitoa_base.c \
 				ft_unumlen_base.c \
-				get_next_line.c)
+				get_next_line.c \
+				ft_print_ptr.c \
+				ft_print_char.c \
+				ft_print_str.c \
+				ft_print_hex.c \
+				ft_print_unsig.c \
+				ft_print_nbr.c \
+				ft_printf.c \
+				ft_printfd.c )
 
 OBJS		=   $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 
