@@ -43,21 +43,21 @@ typedef enum e_bool
 
 typedef struct s_data
 {
-	struct s_map	*map;
+	struct s_map_info	*map;
 
 }				t_data;
 
-typedef struct s_map
+typedef struct s_map_info
 {
-	int			**map_array;
+	char			**map_array;
 	char			*no_path;
 	char			*so_path;
 	char			*we_path;
 	char			*ea_path;
 	uint32_t		ceiling_color;
 	uint32_t		floor_color;
-
-}				t_map;
+	int				textures_count;
+}				t_map_info;
 
 
 

@@ -34,7 +34,9 @@ SRCS	:=	src/main.c \
 			src/validations/validate_map.c \
 			src/validations/validate_args.c \
 			src/validations/check_rgb.c \
-			src/validations/copy_texture_path.c
+			src/validations/copy_texture_path.c \
+			src/validations/read_map_file.c \
+			load_textures.c
 
 OBJDIR	:=	obj
 OBJS	:=	$(SRCS:src/%.c=$(OBJDIR)/%.o)
