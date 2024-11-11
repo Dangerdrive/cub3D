@@ -6,7 +6,7 @@
 /*   By: aliferre <aliferre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 18:04:42 by aliferre          #+#    #+#             */
-/*   Updated: 2024/11/11 18:46:10 by aliferre         ###   ########.fr       */
+/*   Updated: 2024/11/11 19:11:52 by aliferre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ t_data	*ft_init_data(void)
 	data = malloc(sizeof(t_data));
 	if (!data)
 		return (NULL);
-	data->mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true);
+	data->mlx = mlx_init(WIDTH, HEIGHT, "MLX42", false);
 	if (!data->mlx)
 		return (NULL);
 	data->img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
