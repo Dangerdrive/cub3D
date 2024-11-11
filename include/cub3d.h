@@ -6,7 +6,7 @@
 /*   By: aliferre <aliferre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:20:58 by fde-alen          #+#    #+#             */
-/*   Updated: 2024/11/11 18:16:51 by aliferre         ###   ########.fr       */
+/*   Updated: 2024/11/11 18:46:29 by aliferre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ typedef struct s_data
 // ### data.c ### (static: 2, total: 3)
 
 t_data		*ft_init_data(void);
+void		ft_free_data(t_data *data);
 
 // ### hooks.c ### (static: 1, total: 3)
 
@@ -109,8 +110,8 @@ void		ft_input(void *param);
 // ### render_helper.c ### (static: 1, total: 4)
 
 t_color		ft_image_pixel(mlx_texture_t *img, long x, long y);
-double		get_delta_dist(double *vals);
-double		get_side_dist(double *vals);
+double		ft_get_delta_dist(double *vals);
+double		ft_get_side_dist(double *vals);
 
 // ### render.c ### (static: 4, total: 5)
 

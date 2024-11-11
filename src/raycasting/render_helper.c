@@ -6,7 +6,7 @@
 /*   By: aliferre <aliferre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 18:01:22 by aliferre          #+#    #+#             */
-/*   Updated: 2024/11/11 18:01:40 by aliferre         ###   ########.fr       */
+/*   Updated: 2024/11/11 18:59:34 by aliferre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,13 @@ t_color	ft_image_pixel(mlx_texture_t *img, long x, long y)
 }
 
 // Args: ray_dir
-double	get_delta_dist(double *vals)
+double	ft_get_delta_dist(double *vals)
 {
-	return (fabs(1 / vals[0]));
+	return (fabs(1.0 / vals[0]));
 }
 
 // Args: ray_dir, pos, map_pos, delta_dist
-double	get_side_dist(double *vals)
+double	ft_get_side_dist(double *vals)
 {
 	double	ret;
 

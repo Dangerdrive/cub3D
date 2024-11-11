@@ -23,7 +23,7 @@ ifeq ($(OS),Windows_NT)
     LDFLAGS :=	-lglfw3 -lopengl32 -lgdi32 -L$(LIBMLX)/build
 endif
 
-LEAKS	:=	valgrind --leak-check=full --show-leak-kinds=all --suppressions=./MLX42/suppress.sup ./fractol mandelbrot
+LEAKS	:=	valgrind --leak-check=full --show-leak-kinds=all --suppressions=./suppress.sup ./$(NAME)
 
 SRCS	:=	src/main.c \
 				src/raycasting/vec_basic.c \

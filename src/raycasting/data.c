@@ -6,7 +6,7 @@
 /*   By: aliferre <aliferre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 18:04:42 by aliferre          #+#    #+#             */
-/*   Updated: 2024/11/11 18:05:48 by aliferre         ###   ########.fr       */
+/*   Updated: 2024/11/11 18:46:10 by aliferre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,18 @@ t_data	*ft_init_data(void)
 	data->dir = vec_new(0, VEC_NORTH_Y);
 	data->plane = vec_rotate(vec_scale(data->dir, FOV), 90);
 	return (data);
+}
+
+void	ft_free_data(t_data *data)
+{
+	if (!data)
+		return ;
+	mlx_delete_texture(data->no_tex);
+	mlx_delete_texture(data->tex[0]);
+	mlx_delete_texture(data->tex[1]);
+	mlx_delete_texture(data->tex[2]);
+	mlx_delete_texture(data->tex[3]);
+	mlx_delete_image(data->mlx, data->img);
+	mlx_terminate(data->mlx);
+	free(data);
 }

@@ -6,13 +6,13 @@
 /*   By: aliferre <aliferre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 17:57:16 by aliferre          #+#    #+#             */
-/*   Updated: 2024/11/11 18:12:17 by aliferre         ###   ########.fr       */
+/*   Updated: 2024/11/11 19:06:41 by aliferre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	ver_line(t_vector x_height, long tex_x, \
+static void	ft_ver_line(t_vector x_height, long tex_x, \
 				t_data *data, mlx_texture_t *texture)
 {
 	int		y;
@@ -84,8 +84,8 @@ static int	ft_hit_loop(t_data *data, t_vector delta_dist, \
 			map_pos.y += 2 * (ray_dir.y >= 0) - 1;
 			side = 1 + 2 * (ray_dir.y >= 0) - 1;
 		}
-		if (((HEIGHT / ((*side_dist).x - delta_dist.x) < 1)
-				&& (HEIGHT / ((*side_dist).y - delta_dist.y) < 1))
+		if ((((double)HEIGHT / ((*side_dist).x - delta_dist.x) < 1)
+				&& ((double)HEIGHT / ((*side_dist).y - delta_dist.y) < 1))
 			|| ft_hit_loop_break(data, vec_new(2 * (ray_dir.x >= 0) - 1, 2 \
 							* (ray_dir.y >= 0) - 1), &map_pos, side) == 1)
 			break ;
@@ -101,9 +101,9 @@ static void	ft_draw_column(t_data *data, t_vector x_side, \
 	long		tex_x;
 
 	if (((int)x_side.y % 2) == 1)
-		line_height = (HEIGHT / diff_dist.x);
+		line_height = ((double)HEIGHT / diff_dist.x);
 	else
-		line_height = (HEIGHT / diff_dist.y);
+		line_height = ((double)HEIGHT / diff_dist.y);
 	if (((int)x_side.y % 2) == 1)
 		tex_x = modf(data->pos.y + diff_dist.x * ray_dir.y, &unused) \
 				* TEX_WIDTH;
@@ -113,8 +113,8 @@ static void	ft_draw_column(t_data *data, t_vector x_side, \
 	if (x_side.y == 1 || x_side.y == 2)
 		tex_x = TEX_WIDTH - tex_x - 1;
 	if (x_side.y < 0 || x_side.y >= 4)
-		ver_line(vec_new(x_side.x, line_height), tex_x, data, data->no_tex);
-	ver_line(vec_new(x_side.x, line_height), tex_x, data, \
+		ft_ver_line(vec_new(x_side.x, line_height), tex_x, data, data->no_tex);
+	ft_ver_line(vec_new(x_side.x, line_height), tex_x, data, \
 					data->tex[(int)x_side.y]);
 }
 
@@ -128,8 +128,8 @@ void	ft_display_column(t_data *data, long x)
 
 	ray_dir = vec_add(data->dir, vec_scale(data->plane, 2.0 * x / WIDTH - 1));
 	map_pos = vec_new((long)data->pos.x, (long)data->pos.y);
-	delta_dist = vec_func(get_delta_dist, 1, ray_dir);
-	side_dist = vec_func(get_side_dist, 4, ray_dir, \
+	delta_dist = vec_func(ft_get_delta_dist, 1, ray_dir);
+	side_dist = vec_func(ft_get_side_dist, 4, ray_dir, \
 				data->pos, map_pos, delta_dist);
 	side = ft_hit_loop(data, delta_dist, ray_dir, &side_dist);
 	if (data->map[(long)data->pos.x][(long)data->pos.y] > 0)
