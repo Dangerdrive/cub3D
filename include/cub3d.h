@@ -6,7 +6,7 @@
 /*   By: aliferre <aliferre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:20:58 by fde-alen          #+#    #+#             */
-/*   Updated: 2024/11/07 20:03:33 by aliferre         ###   ########.fr       */
+/*   Updated: 2024/11/11 14:49:21 by aliferre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@
 # define MAP_HEIGHT 5
 # define TEX_WIDTH 64
 # define TEX_HEIGHT 64
+# define TEX_FOLDER "/nfs/homes/aliferre/Desktop/Projetos 42/cub3d/textures/"
 
 # define FOV 0.66
 # define SPEED 7.0
