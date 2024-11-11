@@ -28,6 +28,10 @@ LEAKS	:=	valgrind --leak-check=full --show-leak-kinds=all --suppressions=./MLX42
 SRCS	:=	src/main.c \
 				src/raycasting/vec_basic.c \
 				src/raycasting/vec_advanced.c \
+				src/raycasting/render.c \
+				src/raycasting/render_helper.c \
+				src/raycasting/data.c \
+				src/raycasting/hooks.c \
 
 OBJDIR	:=	obj
 OBJS	:=	$(SRCS:src/%.c=$(OBJDIR)/%.o)
