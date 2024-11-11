@@ -6,7 +6,7 @@
 /*   By: aliferre <aliferre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:20:58 by fde-alen          #+#    #+#             */
-/*   Updated: 2024/11/11 18:46:29 by aliferre         ###   ########.fr       */
+/*   Updated: 2024/11/11 20:36:23 by aliferre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,25 +38,20 @@
 # define GRAY		0x808080FF
 # define BROWN 		0xA52A2AFF
 
-# define PI			3.14159265358979311599796346854E0	// acos(0)*2
-# define DEG2RAD	1.74532925199432954743716805979E-2	// acos(0)/90
-# define RAD2DEG	5.72957795130823228646477218717E1	// 90/acos(0)
+# define DEG2RAD	1.74532925199432954743716805979E-2	// PI / 180
+# define RAD2DEG	5.72957795130823228646477218717E1	// 180 / PI
 
 # define COLLISION_MARGIN	2.5E-1	// 1/4
 
 # define VEC_NORTH_Y	-1	// Use vec_new(0, VEC_NORTH_Y)
-# define VEC_WEST_X		1	// Use vec_new(VEC_WEST_X, 0)
+# define VEC_WEST_X		-1	// Use vec_new(VEC_WEST_X, 0)
 # define VEC_SOUTH_Y	1	// Use vec_new(0, VEC_SOUTH_Y)
-# define VEC_EAST_X		-1	// Use vec_new(VEC_EAST_X, 0)
+# define VEC_EAST_X		1	// Use vec_new(VEC_EAST_X, 0)
 
-# define MAP_WIDTH	5
-# define MAP_HEIGHT	5
-# define TEX_WIDTH	64
-# define TEX_HEIGHT	64
 # define TEX_FOLDER	"/nfs/homes/aliferre/Desktop/Projetos 42/cub3d/textures/"
 
 # define FOV		0.66
-# define SPEED		7.0
+# define SPEED		6.0
 # define ROT_SPEED	1.5
 
 # include <fcntl.h>		// for open
@@ -80,7 +75,10 @@ typedef struct s_vector
 typedef struct s_data
 {
 	mlx_t			*mlx;
-	int				map[MAP_HEIGHT][MAP_WIDTH];
+
+	long			map_height;
+	long			map_width;
+	int				**map;
 
 	mlx_image_t		*img;
 	mlx_texture_t	*no_tex;

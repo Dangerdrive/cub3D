@@ -6,7 +6,7 @@
 /*   By: aliferre <aliferre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 18:04:20 by aliferre          #+#    #+#             */
-/*   Updated: 2024/11/11 18:07:06 by aliferre         ###   ########.fr       */
+/*   Updated: 2024/11/11 20:50:37 by aliferre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	ft_move(t_data *data, t_vector dir, double rot)
 {
-	data->dir = vec_rotate(data->dir, rot * ROT_SPEED * data->mlx->delta_time);
+	data->dir = vec_rotate(data->dir, -rot * ROT_SPEED * data->mlx->delta_time);
 	data->plane = vec_rotate(vec_scale(data->dir, FOV), 90);
 	if (dir.x != 0 || dir.y != 0)
 		data->pos = vec_add(data->pos, vec_scale(vec_rotate(data->dir, \
@@ -24,10 +24,10 @@ static void	ft_move(t_data *data, t_vector dir, double rot)
 		data->pos.x = COLLISION_MARGIN;
 	if (data->pos.y < COLLISION_MARGIN)
 		data->pos.y = COLLISION_MARGIN;
-	if (data->pos.x >= (double)MAP_WIDTH - COLLISION_MARGIN)
-		data->pos.x = (double)MAP_WIDTH - COLLISION_MARGIN;
-	if (data->pos.y >= (double)MAP_HEIGHT - COLLISION_MARGIN)
-		data->pos.y = (double)MAP_HEIGHT - COLLISION_MARGIN;
+	if (data->pos.x >= (double)data->map_width - COLLISION_MARGIN)
+		data->pos.x = (double)data->map_width - COLLISION_MARGIN;
+	if (data->pos.y >= (double)data->map_height - COLLISION_MARGIN)
+		data->pos.y = (double)data->map_height - COLLISION_MARGIN;
 }
 
 void	ft_loop(void *param)

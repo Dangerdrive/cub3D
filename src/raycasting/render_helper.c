@@ -6,7 +6,7 @@
 /*   By: aliferre <aliferre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 18:01:22 by aliferre          #+#    #+#             */
-/*   Updated: 2024/11/11 18:59:34 by aliferre         ###   ########.fr       */
+/*   Updated: 2024/11/11 19:17:35 by aliferre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_color	ft_image_pixel(mlx_texture_t *img, long x, long y)
 	long	pos;
 	uint8_t	*pixels;
 
-	pos = 4 * (y * TEX_WIDTH + x);
+	pos = 4 * (y * img->width + x);
 	pixels = img->pixels + pos;
 	return (ft_pixel(pixels[0], pixels[1], pixels[2], pixels[3]));
 }
