@@ -43,13 +43,13 @@ typedef enum e_bool
 
 typedef struct s_data
 {
-	struct s_map_info	*map;
+	struct s_map_info	*map_info;
 
 }				t_data;
 
 typedef struct s_map_info
 {
-	char			**map_array;
+	char			**map;
 	char			*no_path;
 	char			*so_path;
 	char			*we_path;

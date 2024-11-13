@@ -1,5 +1,25 @@
 #include "cub3d.h"
 
+
+void	set_map_dimensions(t_map_info *map_info)
+{
+	int	lines;
+	int	max_columns;
+	int	columns;
+
+	lines = 0;
+	max_columns = 0;
+	while (map_info->map[lines])
+	{
+		columns = ft_strlen(map_info->map[lines]) - 1;
+		if (columns > max_columns)
+			max_columns = columns;
+		lines++;
+	}
+	map_info->lines = lines;
+	map_info->columns = max_columns;
+}
+
 void	alloc_map(t_map_info *map_info, char *temp, int fd)
 {
 	int	map_size;

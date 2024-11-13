@@ -59,19 +59,20 @@ t_map_info	*load_map_file(char *map_path)
 {
 	int			fd;
 	char		*temp_line;
-	t_map_info	*map;
+	t_map_info	*map_info;
 
 	fd = open(map_path, O_RDONLY);
 	if (fd < 0)
 		exit_usage_error("Error: map file could not be opened\n");
 	read_textures_path(map, temp_line, fd);//improve code path
 //TODO
-	alloc_map(map, temp_line, fd);
-	fd = open_file(map_file);//
+	alloc_map(map_info, temp_line, fd);
+	fd = open_file(map_path);//
 	load_map_content(temp_line, fd);//
-	if (map->map_array == NULL)//
+	if (map_info->map == NULL)//
 		exit_usage_error("Error: invalid map.\n");//add frees
 	// get_max_columns(map);
 	// get_max_lines(map);//
-	return (map);
+	set_map_limits(map_info);
+	return (map_info);
 }

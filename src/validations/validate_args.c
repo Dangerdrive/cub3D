@@ -10,27 +10,6 @@ void	exit_usage_error(char *msg)
 	exit(EXIT_FAILURE);
 }
 
-// t_bool	extension_is_invalid(char *map_file)
-// {
-// 	char	*valid_extension;
-// 	int		i;
-// 	int		len;
-// 	t_bool	is_invalid;
-
-// 	i = 0;
-// 	valid_extension = ".cub";
-// 	len = ft_strlen(map_file);
-// 	len = len - 4;
-// 	while (map_file[len] && valid_extension[i] && map_file[len] == valid_extension[i])
-// 	{
-// 		i++;
-// 		len++;
-// 	}
-// 	if (valid_extension[i] == '\0')
-// 		return(false);
-// 	return(true);
-// }
-
 t_bool	extension_is_invalid(char *map_file)
 {
 	char	*valid_extension;
