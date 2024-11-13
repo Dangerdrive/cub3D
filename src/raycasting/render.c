@@ -6,7 +6,7 @@
 /*   By: aliferre <aliferre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 17:57:16 by aliferre          #+#    #+#             */
-/*   Updated: 2024/11/11 20:48:55 by aliferre         ###   ########.fr       */
+/*   Updated: 2024/11/13 10:00:38 by aliferre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,13 @@ static int	ft_hit_loop(t_data *data, t_vector delta_dist, \
 		{
 			(*side_dist).x += delta_dist.x;
 			map_pos.x += 2 * (ray_dir.x >= 0) - 1;
-			side = 2 + 2 * (ray_dir.x >= 0) - 1;
+			side = 2 - (2 * (ray_dir.x >= 0) - 1);
 		}
 		else
 		{
 			(*side_dist).y += delta_dist.y;
 			map_pos.y += 2 * (ray_dir.y >= 0) - 1;
-			side = 1 + 2 * (ray_dir.y >= 0) - 1;
+			side = 1 + (2 * (ray_dir.y >= 0) - 1);
 		}
 		if ((((double)HEIGHT / ((*side_dist).x - delta_dist.x) < 1)
 				&& ((double)HEIGHT / ((*side_dist).y - delta_dist.y) < 1))

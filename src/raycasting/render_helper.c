@@ -6,13 +6,13 @@
 /*   By: aliferre <aliferre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 18:01:22 by aliferre          #+#    #+#             */
-/*   Updated: 2024/11/11 19:17:35 by aliferre         ###   ########.fr       */
+/*   Updated: 2024/11/13 10:32:07 by aliferre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static t_color	ft_pixel(t_color r, t_color g, t_color b, t_color a)
+t_color	ft_pixel(t_color r, t_color g, t_color b, t_color a)
 {
 	return (r << 24 | g << 16 | b << 8 | a);
 }

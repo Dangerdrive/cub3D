@@ -6,7 +6,7 @@
 /*   By: aliferre <aliferre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:20:58 by fde-alen          #+#    #+#             */
-/*   Updated: 2024/11/11 20:36:23 by aliferre         ###   ########.fr       */
+/*   Updated: 2024/11/13 10:32:23 by aliferre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@
 # define COLLISION_MARGIN	2.5E-1	// 1/4
 
 # define VEC_NORTH_Y	-1	// Use vec_new(0, VEC_NORTH_Y)
-# define VEC_WEST_X		-1	// Use vec_new(VEC_WEST_X, 0)
-# define VEC_SOUTH_Y	1	// Use vec_new(0, VEC_SOUTH_Y)
 # define VEC_EAST_X		1	// Use vec_new(VEC_EAST_X, 0)
+# define VEC_SOUTH_Y	1	// Use vec_new(0, VEC_SOUTH_Y)
+# define VEC_WEST_X		-1	// Use vec_new(VEC_WEST_X, 0)
 
 # define TEX_FOLDER	"/nfs/homes/aliferre/Desktop/Projetos 42/cub3d/textures/"
 
@@ -59,7 +59,7 @@
 # include <stdlib.h>	// for malloc, free, exit
 # include <stdio.h>		// for perror
 # include <string.h>	// for strerror
-# include <math.h>
+# include <math.h>		// for fabs, modf, cos, sin, atan2
 # include <MLX42.h>
 
 typedef int32_t		t_color;
@@ -70,7 +70,7 @@ typedef struct s_vector
 	double	y;
 }	t_vector;
 
-// tex order: looking at N, W, S, E
+// tex order: looking at N, E, S, W
 
 typedef struct s_data
 {
@@ -105,8 +105,9 @@ void		ft_free_data(t_data *data);
 void		ft_loop(void *param);
 void		ft_input(void *param);
 
-// ### render_helper.c ### (static: 1, total: 4)
+// ### render_helper.c ### (static: 0, total: 4)
 
+t_color		ft_pixel(t_color r, t_color g, t_color b, t_color a);
 t_color		ft_image_pixel(mlx_texture_t *img, long x, long y);
 double		ft_get_delta_dist(double *vals);
 double		ft_get_side_dist(double *vals);

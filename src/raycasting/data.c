@@ -6,18 +6,35 @@
 /*   By: aliferre <aliferre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 18:04:42 by aliferre          #+#    #+#             */
-/*   Updated: 2024/11/11 20:45:36 by aliferre         ###   ########.fr       */
+/*   Updated: 2024/11/13 10:34:53 by aliferre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+static int	ft_load_tex(t_data *data)
+{
+	data->ceil_color = ft_pixel(0, 255, 255, 255);
+	data->floor_color = ft_pixel(127, 63, 0, 255);
+	data->no_tex = mlx_load_png(TEX_FOLDER "placeholder_null.png");
+	data->tex[0] = mlx_load_png(TEX_FOLDER "placeholder_0.png");
+	data->tex[1] = mlx_load_png(TEX_FOLDER "placeholder_1.png");
+	data->tex[2] = mlx_load_png(TEX_FOLDER "placeholder_2.png");
+	data->tex[3] = mlx_load_png(TEX_FOLDER "placeholder_3.png");
+	if (!data->no_tex || !data->tex[0] || !data->tex[1] \
+		|| !data->tex[2] || !data->tex[3])
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
+}
+
 static int	ft_load_map(t_data *data)
 {
 	int	y;
 
-	data->map_width = 7;
-	data->map_height = 5;
+	if (ft_load_tex(data) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	data->map_width = 5;
+	data->map_height = 7;
 	data->map = malloc(data->map_height * sizeof(int *));
 	if (!data->map)
 		return (EXIT_FAILURE);
@@ -28,35 +45,14 @@ static int	ft_load_map(t_data *data)
 		if (!data->map[y])
 			return (EXIT_FAILURE);
 		data->map[y][0] = 1;
-		data->map[y][1] = (y == 0 || y == 4);
-		data->map[y][2] = (y <= 2 || y == 4);
-		data->map[y][3] = (y == 0 || y == 4);
-		data->map[y][4] = (y == 0 || y == 2 || y == 4);
-		data->map[y][5] = (y == 0 || y == 2 || y == 4);
-		data->map[y][6] = 1;
+		data->map[y][1] = (y == 0 || y == 6);
+		data->map[y][2] = (y <= 2 || y == 4 || y == 6);
+		data->map[y][3] = (y == 0 || y == 4 || y == 6);
+		data->map[y][4] = 1;
 		y++;
 	}
-	data->pos = vec_new(5, 1);
-	data->dir = vec_new(VEC_WEST_X, 0);
-	return (EXIT_SUCCESS);
-}
-
-// 1111111
-// 10100W1
-// 1010111
-// 1000001
-// 1111111
-
-static int	ft_load_tex(t_data *data)
-{
-	data->no_tex = mlx_load_png(TEX_FOLDER "placeholder_null.png");
-	data->tex[0] = mlx_load_png(TEX_FOLDER "placeholder_0.png");
-	data->tex[1] = mlx_load_png(TEX_FOLDER "placeholder_1.png");
-	data->tex[2] = mlx_load_png(TEX_FOLDER "placeholder_2.png");
-	data->tex[3] = mlx_load_png(TEX_FOLDER "placeholder_3.png");
-	if (!data->no_tex || !data->tex[0] || !data->tex[1] \
-		|| !data->tex[2] || !data->tex[3])
-		return (EXIT_FAILURE);
+	data->pos = vec_new(3, 1);
+	data->dir = vec_new(0, VEC_SOUTH_Y);
 	return (EXIT_SUCCESS);
 }
 
@@ -71,15 +67,13 @@ t_data	*ft_init_data(void)
 	if (!data->mlx)
 		return (NULL);
 	data->img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
-	if (!data->img
-		|| ft_load_map(data) == EXIT_FAILURE
-		|| ft_load_tex(data) == EXIT_FAILURE)
+	if (!data->img)
+		return (NULL);
+	if (ft_load_map(data) == EXIT_FAILURE)
 		return (NULL);
 	data->pos = vec_add(data->pos, vec_new(0.5, 0.5));
 	data->time = 0;
 	data->frames = 0;
-	data->ceil_color = AQUA;
-	data->floor_color = BROWN;
 	data->plane = vec_rotate(vec_scale(data->dir, FOV), 90);
 	return (data);
 }
