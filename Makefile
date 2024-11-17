@@ -4,9 +4,7 @@ NAME	:=	cub3d
 CC		:=	cc
 LIBMLX	:=	./MLX42
 LIBFT	:=	./libft/libft.a
-CFLAGS	:=	-Wextra -Wall -Wunreachable-code -Ofast -I./include -I$(LIBMLX)/include/MLX42 -I./libft
-
-
+CFLAGS	:=	-Wextra -Wall -Wunreachable-code -g -Ofast -I./include -I$(LIBMLX)/include/MLX42 -I./libft
 
 UNAME_S :=	$(shell uname -s)
 
@@ -28,7 +26,7 @@ ifeq ($(OS),Windows_NT)
     LDFLAGS :=	-lglfw3 -lopengl32 -lgdi32 -L$(LIBMLX)/build
 endif
 
-LEAKS	:=	valgrind --leak-check=full --show-leak-kinds=all --suppressions=./MLX42/suppress.sup ./fractol mandelbrot
+LEAKS	:=	valgrind --leak-check=full --show-leak-kinds=all --suppressions=./suppress.sup ./$(NAME)
 
 SRCS	:=	src/main.c \
 			src/validations/validate_map.c \
@@ -37,9 +35,16 @@ SRCS	:=	src/main.c \
 			src/validations/copy_texture_path.c \
 			src/validations/read_map_file.c \
 			load_textures.c
+				src/raycasting/vec_basic.c \
+				src/raycasting/vec_advanced.c \
+				src/raycasting/render.c \
+				src/raycasting/render_helper.c \
+				src/raycasting/data.c \
+				src/raycasting/hooks.c \
 
 OBJDIR	:=	obj
 OBJS	:=	$(SRCS:src/%.c=$(OBJDIR)/%.o)
+DIRS	:=	$(shell dirname $(OBJS))
 
 .PHONY:	all clean fclean re valgrind run prebuild
 
@@ -67,10 +72,11 @@ $(NAME): $(OBJS) $(LIBFT)
 	@$(CC) $(OBJS) -o $(NAME) -L$(LIBMLX) -lmlx42 -L$(LIBFT) -lft $(LDFLAGS)
 
 $(OBJDIR)/%.o: src/%.c | $(OBJDIR)
+	@mkdir $(shell dirname $@) 2> /dev/null || true
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(OBJDIR):
-	@mkdir -p $(OBJDIR)
+	@mkdir -p $(DIRS) 2> /dev/null
 
 $(LIBFT):
 	@make -C ./libft/
