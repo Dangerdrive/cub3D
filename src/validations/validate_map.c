@@ -1,7 +1,14 @@
 #include "cub3d.h"
 
 
-void	set_map_dimensions(t_map_info *map_info)
+void	exit_map_error(t_data *data, char *error_msg)
+{
+	ft_dprintf(STDERR_FILENO, "Error: %s\n", error_msg);
+	ft_free_data(data);
+	exit(EXIT_FAILURE);
+}
+
+void	set_map_dimensions(t_data *data)
 {
 	int	lines;
 	int	max_columns;
@@ -9,18 +16,18 @@ void	set_map_dimensions(t_map_info *map_info)
 
 	lines = 0;
 	max_columns = 0;
-	while (map_info->map[lines])
+	while (data->map[lines])
 	{
-		columns = ft_strlen(map_info->map[lines]) - 1;
+		columns = ft_strlen(data->map[lines]) - 1;
 		if (columns > max_columns)
 			max_columns = columns;
 		lines++;
 	}
-	map_info->lines = lines;
-	map_info->columns = max_columns;
+	data->map_height = lines;
+	data->map_width = max_columns;
 }
 
-void	alloc_map(t_map_info *map_info, char *temp, int fd)
+void	alloc_map(t_data *data, char *temp, int fd)
 {
 	int	map_size;
 
@@ -34,8 +41,14 @@ void	alloc_map(t_map_info *map_info, char *temp, int fd)
 	}
 	close(fd);
 	if (map_size == 0)
-		handle_error("Error: no map information found.\n");//
-	map_info->map = ft_calloc(sizeof(char *), (map_size + 1));
-	if (!map_info->map)
-		handle_error("Error: map allocation error.\n");//
+	{
+		free(temp);
+		exit_map_error(data, "no map information found.");
+	}
+	data->map = ft_calloc(sizeof(char *), (map_size + 1));
+	if (!data->map)
+	{
+		free(temp);
+		exit_map_error(data, "map allocation error.");
+	}
 }

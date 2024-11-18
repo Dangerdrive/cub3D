@@ -1,22 +1,21 @@
 #include "cub3d.h"
 
-void	check_colors(t_map_info *map_info, char *line, char *temp)
+void	ft_load_tex(t_data *data)
 {
-	static int	ceiling;
-	static int	floor;
-
-	if (ft_strncmp("F", temp, 1) == 0)
-		floor++;
-	if (ft_strncmp("C", temp, 1) == 0)
-		ceiling++;
-	if (ceiling > 1 || floor > 1)
-	{
-		free(line);
-		handle_error("Error: duplicated color.\n");//
-	}
+	// data->ceil_color = ft_pixel(0, 255, 255, 255);
+	// data->floor_color = ft_pixel(127, 63, 0, 255);
+	data->no_tex = mlx_load_png(TEX_FOLDER "placeholder_null.png");
+	data->tex[0] = mlx_load_png(data->no_path);
+	data->tex[1] = mlx_load_png(data->so_path);
+	data->tex[2] = mlx_load_png(data->we_path);
+	data->tex[3] = mlx_load_png(data->ea_path);
+	if (!data->no_tex || !data->tex[0] || !data->tex[1] \
+		|| !data->tex[2] || !data->tex[3])
+		exit_map_error(data, "loading png file failed.");
+	// return (EXIT_SUCCESS);
 }
 
-void	read_texture(t_map_info *map_info, char *temp, char *line)
+void	read_texture(t_data *map_info, char *temp, char *line)
 {
 	if (ft_strncmp("NO", temp, 2) == 0)
 		copy_texture_path(&(map_info->no_path), temp, "NO", line);
@@ -28,30 +27,30 @@ void	read_texture(t_map_info *map_info, char *temp, char *line)
 		copy_texture_path(&(map_info->ea_path), temp, "EA", line);
 }
 
-void	read_color(t_map_info *_info, char *temp, char *line)
+void	read_color(t_data *_info, char *temp, char *line)
 {
 	if (ft_strncmp("F", temp, 1) == 0)
 		check_rgb(&map_info->floor_color, temp, line, 'F');
 	else if (ft_strncmp("C", temp, 1) == 0)
-		check_rgb(&map_info->ceiling_color, temp, line, 'C');
+		check_rgb(&map_info->ceil_color, temp, line, 'C');
 }
 
-void	process_texture_line(t_map_info *map_info, char *temp, char *line)
+void	process_texture_line(t_data *data, char *temp, char *line)
 {
 	if (starts_with_texture_prefix(temp))
-		read_texture(map_info, temp, line);
+		read_texture(data, temp, line);
 	else if (starts_with_color_prefix(temp))
-		read_color(map_info, temp, line);
+		read_color(data, temp, line);
 	else if (is_invalid_line(temp))
 	{
 		free(line);
-		exit_usage_error("Error: map file has invalid line.\n");//
+		exit_map_error(data, "map file has invalid line.");
 	}
-	check_colors(map_info, line, temp);
-	map_info->textures_count++;
+	check_colors(data, line, temp);
+	data->textures_count++;
 }
 
-void	read_textures_path(t_map_info *map_info, char *temp_line, int fd)
+void	parse_textures(t_data *data, char *temp_line, int fd)
 {
 	char	*line;
 
@@ -61,12 +60,12 @@ void	read_textures_path(t_map_info *map_info, char *temp_line, int fd)
 		line = temp_line;
 		while (ft_isblank(*temp_line))
 			temp_line++;
-		process_texture_line(map_info, temp_line, line);
+		process_texture_line(data, temp_line, line);
 		free(line);
-		if (all_textures_loaded(map_info))
+		if (all_textures_loaded(data))
 			break ;
 		temp_line = get_next_line(fd);
 	}
 	if (!temp_line)
-		exit_usage_error("Error: map file could not be read.\n");
+		exit_map_error(data, "map file could not be read.\n");
 }

@@ -34,13 +34,13 @@ SRCS	:=	src/main.c \
 			src/validations/check_rgb.c \
 			src/validations/copy_texture_path.c \
 			src/validations/read_map_file.c \
-			load_textures.c
-				src/raycasting/vec_basic.c \
-				src/raycasting/vec_advanced.c \
-				src/raycasting/render.c \
-				src/raycasting/render_helper.c \
-				src/raycasting/data.c \
-				src/raycasting/hooks.c \
+			src/validations/load_textures.c \
+			src/raycasting/vec_basic.c \
+			src/raycasting/vec_advanced.c \
+			src/raycasting/render.c \
+			src/raycasting/render_helper.c \
+			src/raycasting/data.c \
+			src/raycasting/hooks.c \
 
 OBJDIR	:=	obj
 OBJS	:=	$(SRCS:src/%.c=$(OBJDIR)/%.o)

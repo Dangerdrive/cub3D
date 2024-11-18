@@ -19,8 +19,8 @@ t_bool	is_invalid_line(char *temp)
 	return (temp[0] != '\n' && temp[0] != '\0');
 }
 
-t_bool	all_textures_loaded(t_map_info *map)
+t_bool	all_textures_loaded(t_data *map)
 {
 	return (map->no_path && map->so_path && map->we_path && map->ea_path
-		&& map->ceiling_color && map->floor_color);
+		&& map->ceil_color && map->floor_color);
 }

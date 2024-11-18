@@ -7,3 +7,10 @@ Make Your Own Raycaster Part 1
 https://www.youtube.com/watch?v=gYRrGTC7GtA&ab_channel=3DSage
 
 https://medium.com/@afatir.ahmedfatir/cub3d-tutorial-af5dd31d2fcf
+
+
+em void	ft_load_tex(t_data *data)
+
+	data->no_tex = mlx_load_png(TEX_FOLDER "placeholder_null.png");
+
+nao entendi o uso do no_tex.

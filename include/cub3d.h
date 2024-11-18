@@ -6,7 +6,7 @@
 /*   By: fde-alen <fde-alen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:20:58 by fde-alen          #+#    #+#             */
-/*   Updated: 2024/11/17 17:52:10 by fde-alen         ###   ########.fr       */
+/*   Updated: 2024/11/17 22:43:18 by fde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,34 +69,6 @@ typedef enum e_bool
 	TRUE
 }			t_bool;
 
-typedef struct s_data
-{
-	struct s_map_info	*map_info;
-
-}				t_data;
-
-typedef struct s_map_info
-{
-	char			**map;
-	char			*no_path;
-	char			*so_path;
-	char			*we_path;
-	char			*ea_path;
-	uint32_t		ceiling_color;
-	uint32_t		floor_color;
-	int				textures_count;
-}				t_map_info;
-
-
-
-/* validations*/
-void			exit_usage_error(char *msg);
-void			check_map(char *map_path);
-void			check_args(int argc, char **argv);
-void			check_rgb(uint32_t *color, char *rgb_color, char *original, char c);
-
-
-
 typedef int32_t		t_color;
 
 typedef struct s_vector
@@ -111,13 +83,17 @@ typedef struct s_data
 {
 	mlx_t			*mlx;
 
-	long			map_height;
+	long			map_height;//precisa ser long?
 	long			map_width;
 	int				**map;
 
 	mlx_image_t		*img;
-	mlx_texture_t	*no_tex;
+	mlx_texture_t	*no_tex;//qual uso?
 	mlx_texture_t	*tex[4];
+	char			*no_path;
+	char			*so_path;
+	char			*we_path;
+	char			*ea_path;
 
 	t_vector		pos;
 	t_vector		dir;
@@ -128,11 +104,39 @@ typedef struct s_data
 
 	t_color			ceil_color;
 	t_color			floor_color;
+	int				textures_count;
+
+	int		map_start_line;
+	t_bool	is_map;
+	t_bool	map_ended;
 }	t_data;
+
+// typedef struct s_map_info
+// {
+	// char			**map;
+	// char			*no_path;
+	// char			*so_path;
+	// char			*we_path;
+	// char			*ea_path;
+	// uint32_t		ceil_color;
+	// uint32_t		floor_color;
+	// int				textures_count;
+// }				t_data;
+
+
+/* validations*/
+void			exit_usage_error(char *msg);
+void			check_map(char *map_path);
+void			check_args(int argc, char **argv);
+void			check_rgb(uint32_t *color, char *rgb_color, char *original, char c);
+void	set_map_dimensions(t_data *data);
+t_data	*load_map_file(t_data *data, char *map_path);
+void	alloc_map(t_data *data, char *temp, int fd);
+void	set_map_dimensions(t_data *data);
 
 // ### data.c ### (static: 2, total: 3)
 
-t_data		*ft_init_data(void);
+t_data	*ft_init_data(char *map_path);
 void		ft_free_data(t_data *data);
 
 // ### hooks.c ### (static: 1, total: 3)
@@ -143,7 +147,7 @@ void		ft_input(void *param);
 // ### render_helper.c ### (static: 0, total: 4)
 
 t_color		ft_pixel(t_color r, t_color g, t_color b, t_color a);
-t_color		ft_image_pixel(mlx_texture_t *img, long x, long y);CFLAGS	:=	-Wextra -Wall -Wunreachable-code  -Ofast -I./include -I$(LIBMLX)/include/MLX42
+t_color		ft_image_pixel(mlx_texture_t *img, long x, long y);
 
 // ### render.c ### (static: 4, total: 5)
 

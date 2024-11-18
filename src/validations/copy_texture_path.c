@@ -1,13 +1,14 @@
 #include "cub3d.h"
 
-void	exit_texture_error(char *error_msg, char *line)
+void	exit_texture_error(t_data *data, char *error_msg, char *line)
 {
 	free(line);
-	printf(error_msg);
+	ft_dprintf(STDERR_FILENO, "Texture error: %s\n", error_msg);
+	ft_free_data(data);
 	exit(EXIT_FAILURE);
 }
 
-void	trim_line(char *str, char *line)
+void	trim_line(t_data *data, char *str, char *line)
 {
 	size_t	i;
 	size_t	whitespace_count;
@@ -22,11 +23,11 @@ void	trim_line(char *str, char *line)
 		i++;
 	}
 	if (str[i] != '\0' && str[i] != '\n')
-		exit_texture_error("Error: invalid texture path.\n", line);
+		exit_texture_error(data, "invalid texture path.", line);
 	str[i - whitespace_count] = '\0';
 }
 
-void	check_spaces(char *temp, char *prefix, char *line)
+void	check_spaces(t_data *data, char *temp, char *prefix, char *line)
 {
 	int	i;
 
@@ -36,17 +37,17 @@ void	check_spaces(char *temp, char *prefix, char *line)
 	if (ft_isspace(temp[i]))
 		return ;
 	else
-		exit_texture_error("Error: invalid texture path.\n", line);
+		exit_texture_error(data, "invalid texture path.", line);
 }
 
-void	copy_texture_path(char **texture, char *path, char *prefix,
-	char *line)
+void	copy_texture_path(t_data *data, char **texture, char *path,
+	char *prefix, char *line)
 {
 	int	prefix_count;
 
 	prefix_count = 0;
 	if (*texture != NULL)
-		exit_texture_error("Error: duplicated texture path.\n", line);
+		exit_texture_error(data, "duplicated texture path.", line);
 	check_spaces(path, prefix, line);
 	while (ft_isspace(*path) || ft_strncmp(prefix, path, 2) == 0)
 	{
@@ -59,6 +60,6 @@ void	copy_texture_path(char **texture, char *path, char *prefix,
 	}
 	trim_line(path, line);
 	if (!check_path(path) || prefix_count != 1)
-		exit_texture_error("Error: invalid texture path.\n", line);
+		exit_texture_error(data, "invalid texture path.\n", line);
 	*texture = ft_strdup(path);
 }

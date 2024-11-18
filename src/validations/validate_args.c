@@ -2,11 +2,13 @@
 
 void	exit_usage_error(char *msg)
 {
-	perror(msg);
-	printf("usage: \n" \
+	char	*usage;
+
+	usage = "usage: \n" \
 			"\t./cub3d <directory><map.cub>\n" \
 			"example:" \
-			"\t./cub3d maps/map_sample.cub\n");
+			"\t./cub3d maps/map_sample.cub\n";
+	ft_dprintf(STDERR_FILENO, "%s\n %s", msg, usage);
 	exit(EXIT_FAILURE);
 }
 

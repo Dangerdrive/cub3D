@@ -12,6 +12,22 @@ void	exit_rgb_error(char *original, char **rgb, int arr_len)
 	exit(EXIT_FAILURE);
 }
 
+void	check_colors(t_data *data, char *line, char *temp)
+{
+	static int	ceiling;
+	static int	floor;
+
+	if (ft_strncmp("F", temp, 1) == 0)
+		floor++;
+	if (ft_strncmp("C", temp, 1) == 0)
+		ceiling++;
+	if (ceiling > 1 || floor > 1)
+	{
+		free(line);
+		exit_map_error(data, "duplicated color.");
+	}
+}
+
 void	sanitize_rgb_input(char *rgb_color, char *original, char c)
 {
 	int	qtd;
@@ -55,12 +71,7 @@ void	split_rgb(char ***rgb, char *rgb_color, char *original, char c)
 		exit_rgb_error(original, *rgb);
 }
 
-uint32_t	convert_rgb(int r, int g, int b)
-{
-	return (r << 24 | g << 16 | b << 8 | 255);
-}
-
-void	check_rgb(uint32_t *color, char *rgb_color, char *original, char c)
+void	check_rgb(t_color *color, char *rgb_color, char *original, char c)
 {
 	char	**rgb;
 	int		i;
@@ -82,6 +93,6 @@ void	check_rgb(uint32_t *color, char *rgb_color, char *original, char c)
 			exit_rgb_error(original, rgb);
 		i++;
 	}
-	*color = convert_rgb(ft_atoi(rgb[0]), ft_atoi(rgb[1]), ft_atoi(rgb[2]));
+	*color = ft_pixel(ft_atoi(rgb[0]), ft_atoi(rgb[1]), ft_atoi(rgb[2]), 255);
 	ft_strarr_free(rgb, i);
 }

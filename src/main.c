@@ -6,17 +6,19 @@
 /*   By: fde-alen <fde-alen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 18:46:46 by aliferre          #+#    #+#             */
-/*   Updated: 2024/11/17 17:47:07 by fde-alen         ###   ########.fr       */
+/*   Updated: 2024/11/17 21:37:50 by fde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	main(void)
+int	main(int argc, char **argv)
 {
 	t_data	*data;
 
-	data = ft_init_data();
+	check_args(argc, argv);
+	load_map_file
+	data = ft_init_data(argv[2]);
 	if (!data
 		|| mlx_image_to_window(data->mlx, data->img, 0, 0) == -1
 		|| !mlx_loop_hook(data->mlx, ft_input, data)
