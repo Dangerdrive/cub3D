@@ -60,6 +60,6 @@ void	copy_texture_path(t_data *data, char **texture, char *path,
 	}
 	trim_line(path, line);
 	if (!check_path(path) || prefix_count != 1)
-		exit_texture_error(data, "invalid texture path.\n", line);
+		exit_texture_error(data, "invalid texture path.", line);
 	*texture = ft_strdup(path);
 }

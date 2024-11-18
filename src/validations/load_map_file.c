@@ -54,10 +54,16 @@ t_data	*load_map_file(t_data *data, char *map_path)
 	parse_textures(map_path, temp_line, fd);
 	ft_load_tex(data);
 	alloc_map(data, temp_line, fd);
-	fd = open_file(map_path);//
+	fd = open(map_path, O_RDONLY);
+	if (fd < 0)
+		exit_map_error(data, "map file could not be opened");
 	load_map_content(data, temp_line, fd);
 	if (data->map == NULL)
 		exit_map_error(data, "no map found.");
 	set_map_dimensions(data);
+	//replace_tabs(data);
+	// analyze_map_content(data);//
+	// check_map_content(data);//
+	// surrounded_by_walls(data);//
 	return (data);
 }
