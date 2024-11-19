@@ -6,7 +6,7 @@
 /*   By: fde-alen <fde-alen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 17:57:16 by aliferre          #+#    #+#             */
-/*   Updated: 2024/11/19 16:55:05 by fde-alen         ###   ########.fr       */
+/*   Updated: 2024/11/19 17:15:44 by fde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,9 +101,9 @@ static void	ft_draw_column(t_data *data, t_vector x_side, \
 	long			tex_x;
 	mlx_texture_t	*tex;
 
-	tex = data->no_tex;
-	if (x_side.y >= 0 && x_side.y < 4)
-		tex = data->tex[(int)x_side.y];
+	if (x_side.y < 0 || x_side.y >= 4)
+		return ;
+	tex = data->tex[(int)x_side.y];
 	if (((int)x_side.y % 2) == 1)
 		line_height = ((double)HEIGHT / diff_dist.x);
 	else
@@ -127,11 +127,11 @@ void	ft_display_column(t_data *data, long x)
 	t_vector	side_dist;
 	t_vector	delta_dist;
 
-	ray_dir = vec_add(data->dir, vec_scale(data->plane, -2.0 * (x + 1) / WIDTH + 1));
+	ray_dir = vec_add(data->dir, \
+						vec_scale(data->plane, -2.0 * (x + 1) / WIDTH + 1));
 	map_pos = vec_new((long)data->pos.x, (long)data->pos.y);
-	delta_dist = vec_func(ft_get_delta_dist, 1, ray_dir);
-	side_dist = vec_func(ft_get_side_dist, 4, ray_dir, \
-				data->pos, map_pos, delta_dist);
+	delta_dist = ft_get_delta_dist(ray_dir);
+	side_dist = ft_get_side_dist(ray_dir, data->pos, map_pos, delta_dist);
 	side = ft_hit_loop(data, delta_dist, ray_dir, &side_dist);
 	if (data->map[(long)data->pos.y][(long)data->pos.x] > 0)
 		side = (side + 2) % 4;

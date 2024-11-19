@@ -6,7 +6,7 @@
 /*   By: fde-alen <fde-alen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 18:04:42 by aliferre          #+#    #+#             */
-/*   Updated: 2024/11/19 16:45:32 by fde-alen         ###   ########.fr       */
+/*   Updated: 2024/11/19 17:23:37 by fde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,6 @@ void	ft_free_data(t_data *data)
 
 	if (!data)
 		return ;
-	mlx_delete_texture(data->no_tex);
 	mlx_delete_texture(data->tex[0]);
 	mlx_delete_texture(data->tex[1]);
 	mlx_delete_texture(data->tex[2]);

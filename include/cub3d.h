@@ -6,7 +6,7 @@
 /*   By: fde-alen <fde-alen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:20:58 by fde-alen          #+#    #+#             */
-/*   Updated: 2024/11/18 22:53:39 by fde-alen         ###   ########.fr       */
+/*   Updated: 2024/11/19 17:17:11 by fde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,10 @@
 
 # define COLLISION_MARGIN	2.5E-1	// 1/4
 
-# define VEC_NORTH_Y	-1, 0	// Use vec_new(0, VEC_NORTH_Y)
-# define VEC_EAST_X		1	// Use vec_new(VEC_EAST_X, 0)
-# define VEC_SOUTH_Y	1	// Use vec_new(0, VEC_SOUTH_Y)
-# define VEC_WEST_X		-1	// Use vec_new(VEC_WEST_X, 0)
+# define VEC_NORTH	0
+# define VEC_EAST	1
+# define VEC_SOUTH	2
+# define VEC_WEST	3
 
 # define TEX_FOLDER	"/nfs/homes/aliferre/Desktop/Projetos 42/cub3d/textures/"
 
@@ -88,7 +88,6 @@ typedef struct s_data
 	int				**map;
 
 	mlx_image_t		*img;
-	mlx_texture_t	*no_tex;//qual uso?
 	mlx_texture_t	*tex[4];
 	char			*no_path;
 	char			*so_path;
@@ -174,19 +173,22 @@ void		ft_input(void *param);
 
 t_color		ft_pixel(t_color r, t_color g, t_color b, t_color a);
 t_color		ft_image_pixel(mlx_texture_t *img, long x, long y);
+t_vector	ft_get_delta_dist(t_vector ray_dir);
+t_vector	ft_get_side_dist(t_vector ray_dir, t_vector pos, \
+							t_vector map_pos, t_vector delta_dist);
 
 // ### render.c ### (static: 4, total: 5)
 
 void		ft_display_column(t_data *data, long x);
 
-// ### vec_advanced.c ### (static: 1, total: 3)
+// ### vec_advanced.c ### (static: 1, total: 2)
 
 double		vec_angle(t_vector vec1, t_vector vec2);
-t_vector	vec_func(double (*func)(double*), size_t vec_amt, ...);
 
-// ### vec_basic.c ### (static: 0, total: 4)
+// ### vec_basic.c ### (static: 0, total: 5)
 
 t_vector	vec_new(double x, double y);
+t_vector	vec_dir(int dir);
 t_vector	vec_add(t_vector vec1, t_vector vec2);
 t_vector	vec_scale(t_vector vec, double scalar);
 t_vector	vec_rotate(t_vector vec, double angle);
