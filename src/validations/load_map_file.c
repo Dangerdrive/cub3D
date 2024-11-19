@@ -71,3 +71,9 @@ t_data	*load_map_file(t_data *data, char *map_path)
 	// surrounded_by_walls(data);//
 	return (data);
 }
+
+	// if (data->map == NULL)
+	// 	exit_map_error(data, "no map found.");
+	// set_map_dimensions(data);
+	// replace_map_tabs(data);
+//talvez colocar isso em load map_content

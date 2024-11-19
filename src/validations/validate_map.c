@@ -64,7 +64,7 @@ static t_bool	char_is_invalid(char c)
 static void	set_player_start(t_data *data, char *d)
 {
 	data->player_count++;//iniciar valor //checar valor
-	data->dir = set_player_dir(data, data->map[i][j]);
+	data->dir = set_player_dir(data, d);
 	data->pos = vec_new(j, i);
 }
 

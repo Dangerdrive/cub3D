@@ -29,18 +29,22 @@ endif
 LEAKS	:=	valgrind --leak-check=full --show-leak-kinds=all --suppressions=./suppress.sup ./$(NAME)
 
 SRCS	:=	src/main.c \
-			src/validations/validate_map.c \
-			src/validations/validate_args.c \
-			src/validations/check_rgb.c \
-			src/validations/copy_texture_path.c \
-			src/validations/read_map_file.c \
-			src/validations/load_textures.c \
+			src/raycasting/data.c \
 			src/raycasting/vec_basic.c \
 			src/raycasting/vec_advanced.c \
 			src/raycasting/render.c \
 			src/raycasting/render_helper.c \
-			src/raycasting/data.c \
 			src/raycasting/hooks.c \
+			src/validations/check_rgb.c \
+			src/validations/copy_texture_path.c \
+			src/validations/load_map_file.c \
+			src/validations/load_map.c \
+			src/validations/load_textures_utils.c \
+			src/validations/load_textures.c \
+			src/validations/replace_map_tabs.c \
+			src/validations/validate_args.c \
+			src/validations/validate_map_extern_walls.c \
+			src/validations/validate_map.c 
 
 OBJDIR	:=	obj
 OBJS	:=	$(SRCS:src/%.c=$(OBJDIR)/%.o)
