@@ -4,18 +4,18 @@ void	ft_load_tex(t_data *data)
 {
 	// data->ceil_color = ft_pixel(0, 255, 255, 255);
 	// data->floor_color = ft_pixel(127, 63, 0, 255);
-	data->no_tex = mlx_load_png(TEX_FOLDER "placeholder_null.png");
+	//data->no_tex = mlx_load_png(TEX_FOLDER "placeholder_null.png");//
 	data->tex[0] = mlx_load_png(data->no_path);
 	data->tex[1] = mlx_load_png(data->so_path);
 	data->tex[2] = mlx_load_png(data->we_path);
 	data->tex[3] = mlx_load_png(data->ea_path);
-	if (!data->no_tex || !data->tex[0] || !data->tex[1] \
+	if (/*!data->no_tex ||*/ !data->tex[0] || !data->tex[1] \
 		|| !data->tex[2] || !data->tex[3])
 		exit_map_error(data, "loading png file failed.");
 	// return (EXIT_SUCCESS);
 }
 
-void	read_texture(t_data *map_info, char *temp, char *line)
+static void	read_texture(t_data *map_info, char *temp, char *line)
 {
 	if (ft_strncmp("NO", temp, 2) == 0)
 		copy_texture_path(&(map_info->no_path), temp, "NO", line);
@@ -27,7 +27,7 @@ void	read_texture(t_data *map_info, char *temp, char *line)
 		copy_texture_path(&(map_info->ea_path), temp, "EA", line);
 }
 
-void	read_color(t_data *_info, char *temp, char *line)
+static void	read_color(t_data *_info, char *temp, char *line)
 {
 	if (ft_strncmp("F", temp, 1) == 0)
 		check_rgb(&map_info->floor_color, temp, line, 'F');
@@ -35,7 +35,23 @@ void	read_color(t_data *_info, char *temp, char *line)
 		check_rgb(&map_info->ceil_color, temp, line, 'C');
 }
 
-void	process_texture_line(t_data *data, char *temp, char *line)
+static void	check_colors(t_data *data, char *line, char *temp)
+{
+	static int	ceiling;
+	static int	floor;
+
+	if (ft_strncmp("F", temp, 1) == 0)
+		floor++;
+	if (ft_strncmp("C", temp, 1) == 0)
+		ceiling++;
+	if (ceiling > 1 || floor > 1)
+	{
+		free(line);
+		exit_map_error(data, "duplicated color.");
+	}
+}
+
+static void	process_texture_line(t_data *data, char *temp, char *line)
 {
 	if (starts_with_texture_prefix(temp))
 		read_texture(data, temp, line);

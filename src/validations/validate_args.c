@@ -12,7 +12,7 @@ void	exit_usage_error(char *msg)
 	exit(EXIT_FAILURE);
 }
 
-t_bool	extension_is_invalid(char *map_file)
+static t_bool	extension_is_invalid(char *map_file)
 {
 	char	*valid_extension;
 	int		file_len;
@@ -32,7 +32,6 @@ t_bool	extension_is_invalid(char *map_file)
 	}
 	return (false);
 }
-
 
 void	check_args(int argc, char **argv)
 {

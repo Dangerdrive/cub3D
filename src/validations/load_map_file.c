@@ -1,47 +1,51 @@
 #include "cub3d.h"
 
-void	handle_map_line(t_data *data, char *temp)
+static void	alloc_map(t_data *data, char *temp, int fd)
 {
-	static int	i;
+	int	map_size;
 
-	if (*data->map_ended)
-	{
-		free(temp);
-		exit_map_error(data, "invalid map");
-	}
-	if (data->map_start_line >= data->textures_count)
-	{
-		data->map[i] = ft_strdup(temp);
-		i++;
-		*data->is_map = true;
-	}
-}
-
-void	load_map_content(t_data *data, char *temp, int fd)//load map
-{
-	// int		map_start_line;
-	// t_bool	is_map;
-	// t_bool	map_ended;
-
-	data->map_start_line = 0;
-	data->is_map = false;
-	data->map_ended = false;
+	map_size = 0;
 	temp = get_next_line(fd);
 	while (temp)
 	{
-		if (temp[0] == '\n')
-		{
-			if (data->is_map && !data->map_ended)
-				data->map_ended = true;
-		}
-		else
-			handle_map_line(data, temp);
-		data->map_start_line++;
+		map_size++;
 		free(temp);
 		temp = get_next_line(fd);
 	}
 	close(fd);
+	if (map_size == 0)
+	{
+		free(temp);
+		exit_map_error(data, "no map information found.");
+	}
+	data->map = ft_calloc(sizeof(char *), (map_size + 1));
+	if (!data->map)
+	{
+		free(temp);
+		exit_map_error(data, "map allocation error.");
+	}
 }
+
+static void	set_map_dimensions(t_data *data)
+{
+	int	lines;
+	int	max_columns;
+	int	columns;
+
+	lines = 0;
+	max_columns = 0;
+	while (data->map[lines])
+	{
+		columns = ft_strlen(data->map[lines]) - 1;
+		if (columns > max_columns)
+			max_columns = columns;
+		lines++;
+	}
+	data->map_height = lines;
+	data->map_width = max_columns;
+}
+
+
 
 t_data	*load_map_file(t_data *data, char *map_path)
 {
@@ -61,7 +65,7 @@ t_data	*load_map_file(t_data *data, char *map_path)
 	if (data->map == NULL)
 		exit_map_error(data, "no map found.");
 	set_map_dimensions(data);
-	//replace_tabs(data);
+	replace_map_tabs(data);
 	// analyze_map_content(data);//
 	// check_map_content(data);//
 	// surrounded_by_walls(data);//

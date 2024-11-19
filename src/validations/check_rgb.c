@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-void	exit_rgb_error(char *original, char **rgb, int arr_len)
+static void	exit_rgb_error(char *original, char **rgb, int arr_len)
 {
 	free(original);
 	ft_strarr_free(rgb, arr_len);
@@ -12,23 +12,7 @@ void	exit_rgb_error(char *original, char **rgb, int arr_len)
 	exit(EXIT_FAILURE);
 }
 
-void	check_colors(t_data *data, char *line, char *temp)
-{
-	static int	ceiling;
-	static int	floor;
-
-	if (ft_strncmp("F", temp, 1) == 0)
-		floor++;
-	if (ft_strncmp("C", temp, 1) == 0)
-		ceiling++;
-	if (ceiling > 1 || floor > 1)
-	{
-		free(line);
-		exit_map_error(data, "duplicated color.");
-	}
-}
-
-void	sanitize_rgb_input(char *rgb_color, char *original, char c)
+static void	sanitize_rgb_input(char *rgb_color, char *original, char c)
 {
 	int	qtd;
 	int	space;
@@ -47,7 +31,7 @@ void	sanitize_rgb_input(char *rgb_color, char *original, char c)
 		exit_rgb_error(original, NULL, 0);
 }
 
-void	split_rgb(char ***rgb, char *rgb_color, char *original, char c)
+static void	split_rgb(char ***rgb, char *rgb_color, char *original, char c)
 {
 	char	*temp_strim;
 	int		i;

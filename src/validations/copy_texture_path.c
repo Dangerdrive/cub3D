@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-void	exit_texture_error(t_data *data, char *error_msg, char *line)
+static void	exit_texture_error(t_data *data, char *error_msg, char *line)
 {
 	free(line);
 	ft_dprintf(STDERR_FILENO, "Texture error: %s\n", error_msg);
@@ -8,7 +8,7 @@ void	exit_texture_error(t_data *data, char *error_msg, char *line)
 	exit(EXIT_FAILURE);
 }
 
-void	trim_line(t_data *data, char *str, char *line)
+static void	trim_line(t_data *data, char *str, char *line)
 {
 	size_t	i;
 	size_t	whitespace_count;
@@ -27,7 +27,7 @@ void	trim_line(t_data *data, char *str, char *line)
 	str[i - whitespace_count] = '\0';
 }
 
-void	check_spaces(t_data *data, char *temp, char *prefix, char *line)
+static void	check_spaces(t_data *data, char *temp, char *prefix, char *line)
 {
 	int	i;
 

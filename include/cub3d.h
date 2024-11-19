@@ -6,7 +6,7 @@
 /*   By: fde-alen <fde-alen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:20:58 by fde-alen          #+#    #+#             */
-/*   Updated: 2024/11/17 22:43:18 by fde-alen         ###   ########.fr       */
+/*   Updated: 2024/11/18 22:53:39 by fde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@
 
 # define COLLISION_MARGIN	2.5E-1	// 1/4
 
-# define VEC_NORTH_Y	-1	// Use vec_new(0, VEC_NORTH_Y)
+# define VEC_NORTH_Y	-1, 0	// Use vec_new(0, VEC_NORTH_Y)
 # define VEC_EAST_X		1	// Use vec_new(VEC_EAST_X, 0)
 # define VEC_SOUTH_Y	1	// Use vec_new(0, VEC_SOUTH_Y)
 # define VEC_WEST_X		-1	// Use vec_new(VEC_WEST_X, 0)
@@ -106,9 +106,9 @@ typedef struct s_data
 	t_color			floor_color;
 	int				textures_count;
 
-	int		map_start_line;
-	t_bool	is_map;
-	t_bool	map_ended;
+	int				map_start_line;
+	t_bool			is_map;
+	t_bool			map_ended;
 }	t_data;
 
 // typedef struct s_map_info
@@ -125,19 +125,45 @@ typedef struct s_data
 
 
 /* validations*/
-void			exit_usage_error(char *msg);
 void			check_map(char *map_path);
+
+// ### check_rgb.c ### (static: 3, total: 4)
+
+void			check_rgb(t_color *color, char *rgb_color, char *original, char c);
+
+
+// ### copy_texture_path.c ### (static: 4, total: 5)
+
+void			copy_texture_path(t_data *data, char **texture, char *path,
+					char *prefix, char *line);//
+
+// ### copy_texture_path.c ###
+
+t_data			*load_map_file(t_data *data, char *map_path);
+
+
+// ### load_textures.c ### (static: 3, total: 5)
+
+void			parse_textures(t_data *data, char *temp_line, int fd);
+void			ft_load_tex(t_data *data);
+
+// ### replace_map_tabs.c ### (static: 2, total: 3)
+
+void			replace_map_tabs(t_data *data);
+
+// ### validate_args.c ### (static: 1, total: 3)
+
+void			exit_usage_error(char *msg);
 void			check_args(int argc, char **argv);
-void			check_rgb(uint32_t *color, char *rgb_color, char *original, char c);
-void	set_map_dimensions(t_data *data);
-t_data	*load_map_file(t_data *data, char *map_path);
-void	alloc_map(t_data *data, char *temp, int fd);
-void	set_map_dimensions(t_data *data);
 
-// ### data.c ### (static: 2, total: 3)
+// ### validate_map.c ###
 
-t_data	*ft_init_data(char *map_path);
-void		ft_free_data(t_data *data);
+void			exit_map_error(t_data *data, char *error_msg);
+
+// ### data.c ###
+
+t_data			*ft_init_data(char *map_path);
+void			ft_free_data(t_data *data);
 
 // ### hooks.c ### (static: 1, total: 3)
 
