@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vectors.c                                          :+:      :+:    :+:   */
+/*   vec_basic.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aliferre <aliferre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 18:10:22 by aliferre          #+#    #+#             */
-/*   Updated: 2024/11/07 18:31:02 by aliferre         ###   ########.fr       */
+/*   Updated: 2024/11/19 14:24:24 by aliferre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,19 @@ t_vector	vec_new(double x, double y)
 	vec.x = x;
 	vec.y = y;
 	return (vec);
+}
+
+t_vector	vec_dir(int dir)
+{
+	if (dir == VEC_NORTH)
+		return (vec_new(0, -1));
+	if (dir == VEC_EAST)
+		return (vec_new(1, 0));
+	if (dir == VEC_SOUTH)
+		return (vec_new(0, 1));
+	if (dir == VEC_WEST)
+		return (vec_new(-1, 0));
+	return (vec_new(0, 0));
 }
 
 t_vector	vec_add(t_vector vec1, t_vector vec2)

@@ -6,7 +6,7 @@
 /*   By: aliferre <aliferre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 18:04:42 by aliferre          #+#    #+#             */
-/*   Updated: 2024/11/13 10:34:53 by aliferre         ###   ########.fr       */
+/*   Updated: 2024/11/19 14:20:23 by aliferre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static int	ft_load_map(t_data *data)
 		y++;
 	}
 	data->pos = vec_new(3, 1);
-	data->dir = vec_new(0, VEC_SOUTH_Y);
+	data->dir = vec_dir(VEC_SOUTH);
 	return (EXIT_SUCCESS);
 }
 

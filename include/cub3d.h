@@ -6,7 +6,7 @@
 /*   By: aliferre <aliferre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:20:58 by fde-alen          #+#    #+#             */
-/*   Updated: 2024/11/13 10:32:23 by aliferre         ###   ########.fr       */
+/*   Updated: 2024/11/19 14:20:46 by aliferre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,10 @@
 
 # define COLLISION_MARGIN	2.5E-1	// 1/4
 
-# define VEC_NORTH_Y	-1	// Use vec_new(0, VEC_NORTH_Y)
-# define VEC_EAST_X		1	// Use vec_new(VEC_EAST_X, 0)
-# define VEC_SOUTH_Y	1	// Use vec_new(0, VEC_SOUTH_Y)
-# define VEC_WEST_X		-1	// Use vec_new(VEC_WEST_X, 0)
+# define VEC_NORTH	0
+# define VEC_EAST	1
+# define VEC_SOUTH	2
+# define VEC_WEST	3
 
 # define TEX_FOLDER	"/nfs/homes/aliferre/Desktop/Projetos 42/cub3d/textures/"
 
@@ -124,6 +124,7 @@ t_vector	vec_func(double (*func)(double*), size_t vec_amt, ...);
 // ### vec_basic.c ### (static: 0, total: 4)
 
 t_vector	vec_new(double x, double y);
+t_vector	vec_dir(int dir);
 t_vector	vec_add(t_vector vec1, t_vector vec2);
 t_vector	vec_scale(t_vector vec, double scalar);
 t_vector	vec_rotate(t_vector vec, double angle);
