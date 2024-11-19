@@ -6,7 +6,7 @@
 /*   By: aliferre <aliferre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:20:58 by fde-alen          #+#    #+#             */
-/*   Updated: 2024/11/19 14:20:46 by aliferre         ###   ########.fr       */
+/*   Updated: 2024/11/19 14:26:54 by aliferre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ typedef struct s_data
 	int				**map;
 
 	mlx_image_t		*img;
-	mlx_texture_t	*no_tex;
 	mlx_texture_t	*tex[4];
 
 	t_vector		pos;

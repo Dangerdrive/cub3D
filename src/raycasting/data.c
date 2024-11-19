@@ -6,7 +6,7 @@
 /*   By: aliferre <aliferre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 18:04:42 by aliferre          #+#    #+#             */
-/*   Updated: 2024/11/19 14:20:23 by aliferre         ###   ########.fr       */
+/*   Updated: 2024/11/19 14:27:12 by aliferre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,11 @@ static int	ft_load_tex(t_data *data)
 {
 	data->ceil_color = ft_pixel(0, 255, 255, 255);
 	data->floor_color = ft_pixel(127, 63, 0, 255);
-	data->no_tex = mlx_load_png(TEX_FOLDER "placeholder_null.png");
 	data->tex[0] = mlx_load_png(TEX_FOLDER "placeholder_0.png");
 	data->tex[1] = mlx_load_png(TEX_FOLDER "placeholder_1.png");
 	data->tex[2] = mlx_load_png(TEX_FOLDER "placeholder_2.png");
 	data->tex[3] = mlx_load_png(TEX_FOLDER "placeholder_3.png");
-	if (!data->no_tex || !data->tex[0] || !data->tex[1] \
+	if (!data->tex[0] || !data->tex[1] \
 		|| !data->tex[2] || !data->tex[3])
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
@@ -84,7 +83,6 @@ void	ft_free_data(t_data *data)
 
 	if (!data)
 		return ;
-	mlx_delete_texture(data->no_tex);
 	mlx_delete_texture(data->tex[0]);
 	mlx_delete_texture(data->tex[1]);
 	mlx_delete_texture(data->tex[2]);

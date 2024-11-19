@@ -6,7 +6,7 @@
 /*   By: aliferre <aliferre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 17:57:16 by aliferre          #+#    #+#             */
-/*   Updated: 2024/11/19 14:23:28 by aliferre         ###   ########.fr       */
+/*   Updated: 2024/11/19 14:28:35 by aliferre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,9 +101,9 @@ static void	ft_draw_column(t_data *data, t_vector x_side, \
 	long			tex_x;
 	mlx_texture_t	*tex;
 
-	tex = data->no_tex;
-	if (x_side.y >= 0 && x_side.y < 4)
-		tex = data->tex[(int)x_side.y];
+	if (x_side.y < 0 || x_side.y >= 4)
+		return ;
+	tex = data->tex[(int)x_side.y];
 	if (((int)x_side.y % 2) == 1)
 		line_height = ((double)HEIGHT / diff_dist.x);
 	else
