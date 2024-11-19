@@ -6,7 +6,7 @@
 /*   By: aliferre <aliferre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:20:58 by fde-alen          #+#    #+#             */
-/*   Updated: 2024/11/19 14:26:54 by aliferre         ###   ########.fr       */
+/*   Updated: 2024/11/19 14:48:41 by aliferre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,19 +108,19 @@ void		ft_input(void *param);
 
 t_color		ft_pixel(t_color r, t_color g, t_color b, t_color a);
 t_color		ft_image_pixel(mlx_texture_t *img, long x, long y);
-double		ft_get_delta_dist(double *vals);
-double		ft_get_side_dist(double *vals);
+t_vector	ft_get_delta_dist(t_vector ray_dir);
+t_vector	ft_get_side_dist(t_vector ray_dir, t_vector pos, \
+							t_vector map_pos, t_vector delta_dist);
 
 // ### render.c ### (static: 4, total: 5)
 
 void		ft_display_column(t_data *data, long x);
 
-// ### vec_advanced.c ### (static: 1, total: 3)
+// ### vec_advanced.c ### (static: 1, total: 2)
 
 double		vec_angle(t_vector vec1, t_vector vec2);
-t_vector	vec_func(double (*func)(double*), size_t vec_amt, ...);
 
-// ### vec_basic.c ### (static: 0, total: 4)
+// ### vec_basic.c ### (static: 0, total: 5)
 
 t_vector	vec_new(double x, double y);
 t_vector	vec_dir(int dir);

@@ -6,7 +6,7 @@
 /*   By: aliferre <aliferre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 17:57:16 by aliferre          #+#    #+#             */
-/*   Updated: 2024/11/19 14:28:35 by aliferre         ###   ########.fr       */
+/*   Updated: 2024/11/19 14:46:27 by aliferre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,9 +130,8 @@ void	ft_display_column(t_data *data, long x)
 	ray_dir = vec_add(data->dir, \
 						vec_scale(data->plane, -2.0 * (x + 1) / WIDTH + 1));
 	map_pos = vec_new((long)data->pos.x, (long)data->pos.y);
-	delta_dist = vec_func(ft_get_delta_dist, 1, ray_dir);
-	side_dist = vec_func(ft_get_side_dist, 4, ray_dir, \
-				data->pos, map_pos, delta_dist);
+	delta_dist = ft_get_delta_dist(ray_dir);
+	side_dist = ft_get_side_dist(ray_dir, data->pos, map_pos, delta_dist);
 	side = ft_hit_loop(data, delta_dist, ray_dir, &side_dist);
 	if (data->map[(long)data->pos.y][(long)data->pos.x] > 0)
 		side = (side + 2) % 4;

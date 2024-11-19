@@ -6,7 +6,7 @@
 /*   By: aliferre <aliferre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 18:01:22 by aliferre          #+#    #+#             */
-/*   Updated: 2024/11/13 10:32:07 by aliferre         ###   ########.fr       */
+/*   Updated: 2024/11/19 14:48:25 by aliferre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,20 @@ t_color	ft_image_pixel(mlx_texture_t *img, long x, long y)
 	return (ft_pixel(pixels[0], pixels[1], pixels[2], pixels[3]));
 }
 
-// Args: ray_dir
-double	ft_get_delta_dist(double *vals)
+t_vector	ft_get_delta_dist(t_vector ray_dir)
 {
-	return (fabs(1.0 / vals[0]));
+	return (vec_new(fabs(1.0 / ray_dir.x), fabs(1.0 / ray_dir.y)));
 }
 
-// Args: ray_dir, pos, map_pos, delta_dist
-double	ft_get_side_dist(double *vals)
+t_vector	ft_get_side_dist(t_vector ray_dir, t_vector pos, \
+							t_vector map_pos, t_vector delta_dist)
 {
-	double	ret;
+	t_vector	ret;
 
-	ret = vals[2] - vals[1] + 1;
-	if (vals[0] < 0)
-		ret = 1 - ret;
-	return (ret * vals[3]);
+	ret = vec_add(vec_add(map_pos, vec_scale(pos, -1)), vec_new(1, 1));
+	if (ray_dir.x < 0)
+		ret.x = 1 - ret.x;
+	if (ray_dir.y < 0)
+		ret.y = 1 - ret.y;
+	return (vec_new(ret.x * delta_dist.x, ret.y * delta_dist.y));
 }
