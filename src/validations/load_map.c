@@ -4,7 +4,7 @@ static void	handle_map_line(t_data *data, char *temp)
 {
 	static int	i;
 
-	if (*data->map_ended)
+	if (data->map_ended)
 	{
 		free(temp);
 		exit_map_error(data, "invalid map");
@@ -13,7 +13,7 @@ static void	handle_map_line(t_data *data, char *temp)
 	{
 		data->map[i] = ft_strdup(temp);
 		i++;
-		*data->is_map = true;
+		data->is_map = true;
 	}
 }
 

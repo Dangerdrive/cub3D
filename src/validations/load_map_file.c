@@ -52,10 +52,11 @@ t_data	*load_map_file(t_data *data, char *map_path)
 	int			fd;
 	char		*temp_line;
 
+	temp_line = NULL;
 	fd = open(map_path, O_RDONLY);
 	if (fd < 0)
 		exit_map_error(data, "map file could not be opened");
-	parse_textures(map_path, temp_line, fd);
+	parse_textures(data, temp_line, fd);
 	ft_load_tex(data);
 	alloc_map(data, temp_line, fd);
 	fd = open(map_path, O_RDONLY);
@@ -66,14 +67,6 @@ t_data	*load_map_file(t_data *data, char *map_path)
 		exit_map_error(data, "no map found.");
 	set_map_dimensions(data);
 	replace_map_tabs(data);
-	// analyze_map_content(data);//
-	// check_map_content(data);//
-	// surrounded_by_walls(data);//
+	validate_map(data);
 	return (data);
 }
-
-	// if (data->map == NULL)
-	// 	exit_map_error(data, "no map found.");
-	// set_map_dimensions(data);
-	// replace_map_tabs(data);
-//talvez colocar isso em load map_content

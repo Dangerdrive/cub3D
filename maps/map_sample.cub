@@ -1,15 +1,15 @@
-NO ./textures/texture_example.png
+NO ./textures/placeholder_0.png
 
-SO ./textures/texture_example.png
+SO ./textures/placeholder_1.png
 
-WE ./textures/texture_example.png
+WE ./textures/placeholder_2.png
 
-EA ./textures/texture_example.png
+EA ./textures/placeholder_3.png
 
 F 30,30,30
 C 110,110,110
 
-111111111111111111111111
+111111111111111111111110
 1S0000000001000000000001
 101111111001011111111101
 101000001000010000001001
@@ -23,12 +23,4 @@ C 110,110,110
 100000000000000000000001
 111111111111111111111111
 
-void	handle_error_rgb(char *original, char **rgb, int len)
-{
-	free(original);
-	ft_strarr_free(rgb, len);
-	handle_error("Error: invalid color.\n");
-}
 
-
-add instructions after Error: invalid color.\n, to input a valid rgb color

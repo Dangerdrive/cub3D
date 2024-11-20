@@ -6,7 +6,7 @@
 /*   By: fde-alen <fde-alen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:20:58 by fde-alen          #+#    #+#             */
-/*   Updated: 2024/11/19 17:17:11 by fde-alen         ###   ########.fr       */
+/*   Updated: 2024/11/19 20:46:34 by fde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ typedef struct s_data
 
 	long			map_height;//precisa ser long?
 	long			map_width;
-	int				**map;
+	char			**map;
 
 	mlx_image_t		*img;
 	mlx_texture_t	*tex[4];
@@ -108,6 +108,9 @@ typedef struct s_data
 	int				map_start_line;
 	t_bool			is_map;
 	t_bool			map_ended;
+
+	int				invalid_chars;
+	int				player_count;
 }	t_data;
 
 // typedef struct s_map_info
@@ -136,15 +139,26 @@ void			check_rgb(t_color *color, char *rgb_color, char *original, char c);
 void			copy_texture_path(t_data *data, char **texture, char *path,
 					char *prefix, char *line);//
 
-// ### copy_texture_path.c ###
+
+// ### load_map_file.c ###
 
 t_data			*load_map_file(t_data *data, char *map_path);
 
+// ### load_map.c ###
+
+void			load_map_content(t_data *data, char *temp, int fd);
 
 // ### load_textures.c ### (static: 3, total: 5)
 
 void			parse_textures(t_data *data, char *temp_line, int fd);
 void			ft_load_tex(t_data *data);
+
+// ### load_textures.c ###
+
+t_bool	starts_with_texture_prefix(char *temp);
+t_bool	starts_with_color_prefix(char *temp);
+t_bool	is_invalid_line(char *temp);
+t_bool	all_textures_loaded(t_data *map);
 
 // ### replace_map_tabs.c ### (static: 2, total: 3)
 
@@ -155,9 +169,17 @@ void			replace_map_tabs(t_data *data);
 void			exit_usage_error(char *msg);
 void			check_args(int argc, char **argv);
 
+// ### validate_map_extern_walls.c ###
+
+void			validate_map_extern_walls(t_data *data);
+
+
 // ### validate_map.c ###
 
 void			exit_map_error(t_data *data, char *error_msg);
+void			validate_map(t_data *data);
+
+
 
 // ### data.c ###
 

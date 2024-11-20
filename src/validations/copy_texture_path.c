@@ -15,9 +15,9 @@ static void	trim_line(t_data *data, char *str, char *line)
 
 	i = 0;
 	whitespace_count = 0;
-	while (str[i] && !ft_isspace(str[i]))
+	while (str[i] && !ft_isblank(str[i]))
 		i++;
-	while (str[i] && ft_isspace(str[i]))
+	while (str[i] && ft_isblank(str[i]))
 	{
 		whitespace_count++;
 		i++;
@@ -34,10 +34,21 @@ static void	check_spaces(t_data *data, char *temp, char *prefix, char *line)
 	i = 0;
 	if (ft_strncmp(prefix, temp, 2) == 0)
 		i += 2;
-	if (ft_isspace(temp[i]))
+	if (ft_isblank(temp[i]))
 		return ;
 	else
 		exit_texture_error(data, "invalid texture path.", line);
+}
+
+t_bool	can_open_texture(char *path)
+{
+	int	fd;
+
+	fd = open(path, O_RDONLY);
+	if (fd == -1)
+		return (false);
+	close(fd);
+	return (true);
 }
 
 void	copy_texture_path(t_data *data, char **texture, char *path,
@@ -48,8 +59,8 @@ void	copy_texture_path(t_data *data, char **texture, char *path,
 	prefix_count = 0;
 	if (*texture != NULL)
 		exit_texture_error(data, "duplicated texture path.", line);
-	check_spaces(path, prefix, line);
-	while (ft_isspace(*path) || ft_strncmp(prefix, path, 2) == 0)
+	check_spaces(data, path, prefix, line);
+	while (ft_isblank(*path) || ft_strncmp(prefix, path, 2) == 0)
 	{
 		if (ft_strncmp(prefix, path, 2) == 0)
 		{
@@ -58,8 +69,8 @@ void	copy_texture_path(t_data *data, char **texture, char *path,
 		}
 		path++;
 	}
-	trim_line(path, line);
-	if (!check_path(path) || prefix_count != 1)
+	trim_line(data, path, line);
+	if (!can_open_texture(path) || prefix_count != 1)
 		exit_texture_error(data, "invalid texture path.", line);
 	*texture = ft_strdup(path);
 }

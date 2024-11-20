@@ -21,12 +21,7 @@ ifeq ($(UNAME_S),Darwin)
 	endif
 endif
 
-#flags para Windows 11 (precisa testar)
-ifeq ($(OS),Windows_NT)
-    LDFLAGS :=	-lglfw3 -lopengl32 -lgdi32 -L$(LIBMLX)/build
-endif
-
-LEAKS	:=	valgrind --leak-check=full --show-leak-kinds=all --suppressions=./suppress.sup ./$(NAME)
+LEAKS	:=	valgrind --leak-check=full --show-leak-kinds=all --suppressions=./suppress.sup ./$(NAME) maps/map_sample.cub
 
 SRCS	:=	src/main.c \
 			src/raycasting/data.c \
@@ -44,7 +39,7 @@ SRCS	:=	src/main.c \
 			src/validations/replace_map_tabs.c \
 			src/validations/validate_args.c \
 			src/validations/validate_map_extern_walls.c \
-			src/validations/validate_map.c 
+			src/validations/validate_map.c
 
 OBJDIR	:=	obj
 OBJS	:=	$(SRCS:src/%.c=$(OBJDIR)/%.o)
@@ -73,7 +68,7 @@ prebuild:
 	@cd $(LIBMLX) && cmake -B build && cmake --build build -j4
 
 $(NAME): $(OBJS) $(LIBFT)
-	@$(CC) $(OBJS) -o $(NAME) -L$(LIBMLX) -lmlx42 -L$(LIBFT) -lft $(LDFLAGS)
+	@$(CC) $(OBJS) -o $(NAME) -L./libft -lft -L$(LIBMLX)/build -lmlx42 $(LDFLAGS)
 
 $(OBJDIR)/%.o: src/%.c | $(OBJDIR)
 	@mkdir $(shell dirname $@) 2> /dev/null || true

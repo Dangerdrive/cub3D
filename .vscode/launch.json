@@ -1,0 +1,32 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug cub3d",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/cub3d",  // Path to the compiled executable
+            "args": ["maps/map_sample.cub"],  // Example argument (you can adjust based on your needs)
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "MIMode": "gdb", // Use gdb as debugger
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "build cub3d", // Task that will run before debugging (build the project)
+            "miDebuggerPath": "/usr/bin/gdb",  // Path to gdb debugger (adjust if necessary)
+            "internalConsoleOptions": "openOnSessionStart",
+            "args": [
+                "maps/map_sample.cub"
+            ],
+            "env": {
+                "LD_LIBRARY_PATH": "/usr/local/lib",  // Adjust this path if needed for libraries
+                "DYLD_LIBRARY_PATH": "/usr/local/lib"
+            }
+        }
+    ]
+}
