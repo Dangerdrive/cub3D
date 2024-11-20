@@ -17,12 +17,8 @@ static void	handle_map_line(t_data *data, char *temp)
 	}
 }
 
-void	load_map_content(t_data *data, char *temp, int fd)//load map
+void	load_map_content(t_data *data, char *temp, int fd)
 {
-	// int		map_start_line;
-	// t_bool	is_map;
-	// t_bool	map_ended;
-
 	data->map_start_line = 0;
 	data->is_map = false;
 	data->map_ended = false;

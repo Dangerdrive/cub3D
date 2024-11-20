@@ -45,8 +45,6 @@ static void	set_map_dimensions(t_data *data)
 	data->map_width = max_columns;
 }
 
-
-
 t_data	*load_map_file(t_data *data, char *map_path)
 {
 	int			fd;

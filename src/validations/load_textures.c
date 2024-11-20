@@ -23,6 +23,18 @@ static void	read_texture(t_data *data, char *temp, char *line)
 		copy_texture_path(data, &(data->ea_path), temp, "EA", line);
 }
 
+// static void	read_texture(t_data *data, char *temp, char *line)
+// {
+// 	if (ft_strncmp("NO", temp, 2) == 0)
+// 		copy_texture_path(data, &(data->no_path), temp, line);
+// 	else if (ft_strncmp("SO", temp, 2) == 0)
+// 		copy_texture_path(data, &(data->so_path), temp, line);
+// 	else if (ft_strncmp("WE", temp, 2) == 0)
+// 		copy_texture_path(data, &(data->we_path), temp, line);
+// 	else if (ft_strncmp("EA", temp, 2) == 0)
+// 		copy_texture_path(data, &(data->ea_path), temp, line);
+// }
+
 static void	read_color(t_data *data, char *temp, char *line)
 {
 	if (ft_strncmp("F", temp, 1) == 0)
