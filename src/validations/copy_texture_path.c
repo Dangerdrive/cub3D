@@ -109,7 +109,10 @@ void	copy_texture_path(t_data *data, char **texture, char *path,
 		path++;
 	}
 	trim_line(data, path, line);
-	if (!can_open_texture(path) || prefix_count != 1)
-		exit_texture_error(data, "invalid texture path.", line);
+	if (!can_open_texture(path))
+		exit_texture_error(data, "cannot open texture.", line);
+	if (prefix_count != 1)
+		exit_texture_error(data, "invalid number of texture per direction.",
+			line);
 	*texture = ft_strdup(path);
 }

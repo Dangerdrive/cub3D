@@ -6,7 +6,7 @@
 /*   By: fde-alen <fde-alen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:20:58 by fde-alen          #+#    #+#             */
-/*   Updated: 2024/11/19 23:41:29 by fde-alen         ###   ########.fr       */
+/*   Updated: 2024/11/20 16:06:43 by fde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,12 @@
 # define SPEED		6.0
 # define ROT_SPEED	1.5
 
-# include <fcntl.h>		// for open
-# include <unistd.h>	// for close, read, write
-# include <stdlib.h>	// for malloc, free, exit
-# include <stdio.h>		// for perror
-# include <string.h>	// for strerror
-# include <math.h>		// for fabs, modf, cos, sin, atan2
+# include <fcntl.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <stdio.h>
+# include <string.h>
+# include <math.h>
 # include <MLX42.h>
 # include <libft.h>
 
