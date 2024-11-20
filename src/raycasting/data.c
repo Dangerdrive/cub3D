@@ -6,7 +6,7 @@
 /*   By: fde-alen <fde-alen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 18:04:42 by aliferre          #+#    #+#             */
-/*   Updated: 2024/11/19 20:31:01 by fde-alen         ###   ########.fr       */
+/*   Updated: 2024/11/19 23:41:29 by fde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,8 @@ void	init_data(t_data *data)
 	data->frames = 0;
 	data->ceil_color = 0;
 	data->floor_color = 0;
-	data->textures_count = 0;
-	data->map_start_line = 0;
+	data->map_start = 0;
+	data->map_end = 0;
 	data->is_map = false;
 	data->map_ended = false;
 	data->invalid_chars = 0;

@@ -6,7 +6,7 @@
 /*   By: fde-alen <fde-alen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:20:58 by fde-alen          #+#    #+#             */
-/*   Updated: 2024/11/19 23:26:02 by fde-alen         ###   ########.fr       */
+/*   Updated: 2024/11/19 23:41:29 by fde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,9 +103,9 @@ typedef struct s_data
 
 	t_color			ceil_color;
 	t_color			floor_color;
-	int				textures_count;
 
-	int				map_start_line;
+	int				map_start;
+	int				map_end;
 	t_bool			is_map;
 	t_bool			map_ended;
 

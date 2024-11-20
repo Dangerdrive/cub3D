@@ -9,7 +9,7 @@ static void	handle_map_line(t_data *data, char *temp)
 		free(temp);
 		exit_map_error(data, "invalid map");
 	}
-	if (data->map_start_line >= data->textures_count)
+	if (data->map_end >= data->map_start)
 	{
 		data->map[i] = ft_strdup(temp);
 		i++;
@@ -19,7 +19,7 @@ static void	handle_map_line(t_data *data, char *temp)
 
 void	load_map_content(t_data *data, char *temp, int fd)
 {
-	data->map_start_line = 0;
+	data->map_end = 0;
 	data->is_map = false;
 	data->map_ended = false;
 	temp = get_next_line(fd);
@@ -32,7 +32,7 @@ void	load_map_content(t_data *data, char *temp, int fd)
 		}
 		else
 			handle_map_line(data, temp);
-		data->map_start_line++;
+		data->map_end++;
 		free(temp);
 		temp = get_next_line(fd);
 	}
