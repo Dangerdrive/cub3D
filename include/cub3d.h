@@ -6,7 +6,7 @@
 /*   By: aliferre <aliferre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:20:58 by fde-alen          #+#    #+#             */
-/*   Updated: 2024/11/21 15:27:24 by aliferre         ###   ########.fr       */
+/*   Updated: 2024/11/21 17:35:31 by aliferre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ typedef struct s_data
 
 	t_color			ceil_color;
 	t_color			floor_color;
+	char			color;
 
 	int				map_start;
 	int				map_end;
@@ -119,8 +120,8 @@ typedef struct s_data
 
 // ### check_rgb.c ### (static: 3, total: 4)
 
-void		check_rgb(t_color *color, char *rgb_color, char *original,
-				char c);
+void		check_rgb(t_data *data, t_color *color,
+				char *rgb_color, char *original_input);
 
 // ### copy_texture_path.c ### (static: 4, total: 5)
 

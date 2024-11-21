@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   load_textures.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fde-alen <fde-alen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aliferre <aliferre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 00:19:41 by fde-alen          #+#    #+#             */
-/*   Updated: 2024/11/21 00:19:42 by fde-alen         ###   ########.fr       */
+/*   Updated: 2024/11/21 17:37:44 by aliferre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,15 @@ static void	read_texture(t_data *data, char *temp, char *line)
 static void	read_color(t_data *data, char *temp, char *line)
 {
 	if (ft_strncmp("F", temp, 1) == 0)
-		check_rgb(&data->floor_color, temp, line, 'F');
+	{
+		data->color = 'F';
+		check_rgb(data, &data->floor_color, temp, line);
+	}
 	else if (ft_strncmp("C", temp, 1) == 0)
-		check_rgb(&data->ceil_color, temp, line, 'C');
+	{
+		data->color = 'C';
+		check_rgb(data, &data->ceil_color, temp, line);
+	}
 }
 
 static void	check_colors(t_data *data, char *line, char *temp)
