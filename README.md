@@ -88,18 +88,11 @@ Error: map contains invalid number of players
 
 valgrind --leak-check=full --show-leak-kinds=all --suppressions=./suppress.sup ./cub3d maps/error_maps/content_map/3.0-unidentified_content.cub
 Error: invalid map
-==11401== 414 bytes in 1 blocks are still reachable in loss record 1,696 of 1,722
-==11401==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==11401==    by 0x10DA91: extract_remaining (get_next_line.c:164)
-==11401==    by 0x10DB7F: get_next_line (get_next_line.c:198)
-==11401==    by 0x10C168: load_map_content (load_map.c:37)
-==11401==    by 0x10BFCB: load_map_file (load_map_file.c:63)
-==11401==    by 0x10AA99: ft_init_data (data.c:129)
-==11401==    by 0x10A7D5: main (main.c:20)
 
 
 valgrind --leak-check=full --show-leak-kinds=all --suppressions=./suppress.sup ./cub3d maps/error_maps/content_map/3.1-wrong_char.cub
 Error: map contains invalid characters
+
 valgrind --leak-check=full --show-leak-kinds=all --suppressions=./suppress.sup ./cub3d maps/error_maps/content_map/4.0-element_after_map.cub
 Error: map file has invalid line.
 ==12003== 426 bytes in 1 blocks are still reachable in loss record 1,695 of 1,721
