@@ -77,15 +77,16 @@ valgrind --leak-check=full --show-leak-kinds=all --suppressions=./suppress.sup
 3-open_wall_down.cub   6-open_inside.cub
 
 
-./cub3d maps/error_maps/content_map/1.0-incomplete_map.cub
+valgrind --leak-check=full --show-leak-kinds=all --suppressions=./suppress.sup ./cub3d maps/error_maps/content_map/1.0-incomplete_map.cub
 Error: invalid map edges.
-No Leaks
 
-./cub3d maps/error_maps/content_map/2.0-map_no_player.cub
+valgrind --leak-check=full --show-leak-kinds=all --suppressions=./suppress.sup ./cub3d maps/error_maps/content_map/2.0-map_no_player.cub
 Error: map contains invalid number of players
-./cub3d maps/error_maps/content_map/2.1-double_player.cub
+
+valgrind --leak-check=full --show-leak-kinds=all --suppressions=./suppress.sup ./cub3d maps/error_maps/content_map/2.1-double_player.cub
 Error: map contains invalid number of players
-./cub3d maps/error_maps/content_map/3.0-unidentified_content.cub
+
+valgrind --leak-check=full --show-leak-kinds=all --suppressions=./suppress.sup ./cub3d maps/error_maps/content_map/3.0-unidentified_content.cub
 Error: invalid map
 ==11401== 414 bytes in 1 blocks are still reachable in loss record 1,696 of 1,722
 ==11401==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
@@ -203,11 +204,16 @@ valgrind --leak-check=full --show-leak-kinds=all --suppressions=./suppress.sup .
 
 
 valgrind --leak-check=full --show-leak-kinds=all --suppressions=./suppress.sup ./cub3d maps/error_maps/wall/1-open_wall_left.cub
+Error: invalid map extern walls.
 valgrind --leak-check=full --show-leak-kinds=all --suppressions=./suppress.sup ./cub3d maps/error_maps/wall/2-open_wall_right.cub
+Error: invalid map extern walls.
 valgrind --leak-check=full --show-leak-kinds=all --suppressions=./suppress.sup ./cub3d maps/error_maps/wall/3-open_wall_down.cub
-valgrind --leak-check=full --show-leak-kinds=all --suppressions=./suppress.sup ./cub3d maps/error_maps/wall/4-open_wall.cub
+Error: invalid map extern walls.
 valgrind --leak-check=full --show-leak-kinds=all --suppressions=./suppress.sup ./cub3d maps/error_maps/wall/5-map_leaky_borders.cub
+Error: invalid map extern walls.
+
 valgrind --leak-check=full --show-leak-kinds=all --suppressions=./suppress.sup ./cub3d maps/error_maps/wall/6-open_inside.cub
+Error: invalid map edges.
 valgrind --leak-check=full --show-leak-kinds=all --suppressions=./suppress.sup ./cub3d maps/error_maps/wall/7-open_line.cub
 
 valgrind --leak-check=full --show-leak-kinds=all --suppressions=./suppress.sup

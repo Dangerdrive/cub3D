@@ -34,7 +34,7 @@ void	load_map_content(t_data *data, char *temp, int fd)
 			handle_map_line(data, temp);
 		data->map_end++;
 		free(temp);
-		temp = get_next_line(fd);//leak ./cub3d maps/error_maps/content_map/3.0-unidentified_content.cub
+		temp = get_next_line(fd);
 	}
 	close(fd);
 }

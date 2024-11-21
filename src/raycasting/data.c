@@ -6,7 +6,7 @@
 /*   By: fde-alen <fde-alen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 18:04:42 by aliferre          #+#    #+#             */
-/*   Updated: 2024/11/19 23:41:29 by fde-alen         ###   ########.fr       */
+/*   Updated: 2024/11/20 23:12:27 by fde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,7 @@ void	ft_free_data(t_data *data)
 	mlx_delete_image(data->mlx, data->img);
 	mlx_terminate(data->mlx);
 	i = -1;
-	while (++i < data->map_height)
+	while (++i <= data->map_height)
 		free(data->map[i]);
 	free(data->map);
 	free(data);
