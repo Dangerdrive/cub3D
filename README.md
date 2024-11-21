@@ -113,47 +113,48 @@ Texture error: duplicated texture path.
 
 valgrind --leak-check=full --show-leak-kinds=all --suppressions=./suppress.sup ./cub3d maps/error_maps/info/2.1-missing_texture.cub
 Error: map file has invalid line.
-==12961== 414 bytes in 1 blocks are still reachable in loss record 1,695 of 1,721
-==12961==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==12961==    by 0x10DA91: extract_remaining (get_next_line.c:164)
-==12961==    by 0x10DB7F: get_next_line (get_next_line.c:198)
-==12961==    by 0x10C4B9: parse_textures (load_textures.c:91)
-==12961==    by 0x10BF43: load_map_file (load_map_file.c:57)
-==12961==    by 0x10AA99: ft_init_data (data.c:129)
-==12961==    by 0x10A7D5: main (main.c:20)
 
 valgrind --leak-check=full --show-leak-kinds=all --suppressions=./suppress.sup ./cub3d maps/error_maps/info/2.2-wrong_texture_content.cub
 Texture error: invalid texture path.
-==13127== 573 bytes in 1 blocks are still reachable in loss record 1,697 of 1,721
-==13127==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==13127==    by 0x10DA91: extract_remaining (get_next_line.c:164)
-==13127==    by 0x10DB7F: get_next_line (get_next_line.c:198)
-==13127==    by 0x10C3BB: parse_textures (load_textures.c:81)
-==13127==    by 0x10BF43: load_map_file (load_map_file.c:57)
-==13127==    by 0x10AA99: ft_init_data (data.c:129)
-==13127==    by 0x10A7D5: main (main.c:20)
 
 valgrind --leak-check=full --show-leak-kinds=all --suppressions=./suppress.sup ./cub3d maps/error_maps/info/2.3-wrong_texture_ext.cub
 Texture error: invalid texture path.
-==13270== 538 bytes in 1 blocks are still reachable in loss record 1,697 of 1,721
-==13270==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==13270==    by 0x10DA91: extract_remaining (get_next_line.c:164)
-==13270==    by 0x10DB7F: get_next_line (get_next_line.c:198)
-==13270==    by 0x10C4B9: parse_textures (load_textures.c:91)
-==13270==    by 0x10BF43: load_map_file (load_map_file.c:57)
-==13270==    by 0x10AA99: ft_init_data (data.c:129)
-==13270==    by 0x10A7D5: main (main.c:20)
+
 valgrind --leak-check=full --show-leak-kinds=all --suppressions=./suppress.sup ./cub3d maps/error_maps/info/2.4-map_duplicate_WE.cub
+Texture error: duplicated direction.
+
 valgrind --leak-check=full --show-leak-kinds=all --suppressions=./suppress.sup ./cub3d maps/error_maps/info/2.5-map_texture_incomplete.cub
+Texture error: cannot open texture.
+
 valgrind --leak-check=full --show-leak-kinds=all --suppressions=./suppress.sup ./cub3d maps/error_maps/info/2.6-map_texture_more_then_complete.cub
+Texture error: invalid texture path.
+
 valgrind --leak-check=full --show-leak-kinds=all --suppressions=./suppress.sup ./cub3d maps/error_maps/info/2.7-map_wrong_SO_texture.cub
+Texture error: cannot open texture.
+
 valgrind --leak-check=full --show-leak-kinds=all --suppressions=./suppress.sup ./cub3d maps/error_maps/info/3.0-wrong_color_content.cub
+Error: invalid color(s).
+Please input valid RGB color(s) in theformat "R,G,B", where R, G, and B are integer values between 0 and 255.
+
+Check leaks
+
 valgrind --leak-check=full --show-leak-kinds=all --suppressions=./suppress.sup ./cub3d maps/error_maps/info/3.1-map_duplicate_color.cub
+Error: duplicated color.
+
 valgrind --leak-check=full --show-leak-kinds=all --suppressions=./suppress.sup ./cub3d maps/error_maps/info/3.2-map_missing_color.cub
+Error: map file has invalid line.
+
 valgrind --leak-check=full --show-leak-kinds=all --suppressions=./suppress.sup ./cub3d maps/error_maps/info/3.3-double_color.cub
+Error: duplicated color.
+
 valgrind --leak-check=full --show-leak-kinds=all --suppressions=./suppress.sup ./cub3d maps/error_maps/info/3.4-map_wrong_color.cub
+Error: invalid color(s).
+Please input valid RGB color(s) in theformat "R,G,B", where R, G, and B are integer values between 0 and 255.
+
+CHECK LEAKS
+
 valgrind --leak-check=full --show-leak-kinds=all --suppressions=./suppress.sup ./cub3d maps/error_maps/info/4.0-mixed_infos_OKAY.cub
-valgrind --leak-check=full --show-leak-kinds=all --suppressions=./suppress.sup ./cub3d s
+
 
 
 valgrind --leak-check=full --show-leak-kinds=all --suppressions=./suppress.sup ./cub3d maps/error_maps/wall/1-open_wall_left.cub
@@ -169,4 +170,3 @@ valgrind --leak-check=full --show-leak-kinds=all --suppressions=./suppress.sup .
 Error: invalid map edges.
 valgrind --leak-check=full --show-leak-kinds=all --suppressions=./suppress.sup ./cub3d maps/error_maps/wall/7-open_line.cub
 
-valgrind --leak-check=full --show-leak-kinds=all --suppressions=./suppress.sup
