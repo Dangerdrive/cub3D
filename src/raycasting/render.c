@@ -6,7 +6,7 @@
 /*   By: aliferre <aliferre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 17:57:16 by aliferre          #+#    #+#             */
-/*   Updated: 2024/11/21 15:22:34 by aliferre         ###   ########.fr       */
+/*   Updated: 2024/11/21 17:07:43 by aliferre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static void	ft_ver_line(t_vector x_height, long tex_x, \
 	long	draw_start;
 	long	draw_end;
 	long	tex_y;
+	t_color	color;
 
 	draw_end = x_height.y / 2 + HEIGHT / 2;
 	draw_start = -x_height.y / 2 + HEIGHT / 2;
@@ -28,8 +29,10 @@ static void	ft_ver_line(t_vector x_height, long tex_x, \
 		if (draw_start <= y && y < draw_end)
 		{
 			tex_y = (y - draw_start) * ((double)texture->height / x_height.y);
-			mlx_put_pixel(data->img, x_height.x, y, \
-							ft_image_pixel(texture, tex_x, tex_y));
+			color = ft_image_pixel(texture, tex_x, tex_y);
+			if (!ft_is_space_empty(data, data->pos))
+				color = ((color & 0xfefefe00) >> 1) + (color & 0xff);
+			mlx_put_pixel(data->img, x_height.x, y, color);
 		}
 		else if (y <= HEIGHT / 2)
 			mlx_put_pixel(data->img, x_height.x, y, data->ceil_color);
@@ -42,9 +45,6 @@ static void	ft_ver_line(t_vector x_height, long tex_x, \
 static int	ft_hit_loop_break(t_data *data, t_vector step, \
 								t_vector *map_pos, int side)
 {
-	if ((*map_pos).x < 0 || (*map_pos).x >= data->map_width
-		|| (*map_pos).y < 0 || (*map_pos).y >= data->map_height)
-		return (0);
 	if (ft_is_space_empty(data, data->pos)
 		&& !ft_is_space_empty(data, *map_pos))
 		return (1);
@@ -130,7 +130,7 @@ void	ft_display_column(t_data *data, long x)
 	delta_dist = ft_get_delta_dist(ray_dir);
 	side_dist = ft_get_side_dist(ray_dir, data->pos, map_pos, delta_dist);
 	side = ft_hit_loop(data, delta_dist, ray_dir, &side_dist);
-	if (data->map[(long)data->pos.y][(long)data->pos.x] > 0)
+	if (!ft_is_space_empty(data, data->pos))
 		side = (side + 2) % 4;
 	ft_draw_column(data, vec_new(x, side), \
 				vec_add(side_dist, vec_scale(delta_dist, -1)), ray_dir);

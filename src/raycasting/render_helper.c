@@ -6,7 +6,7 @@
 /*   By: aliferre <aliferre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 18:01:22 by aliferre          #+#    #+#             */
-/*   Updated: 2024/11/21 15:22:51 by aliferre         ###   ########.fr       */
+/*   Updated: 2024/11/21 17:08:48 by aliferre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,10 @@ bool	ft_is_space_empty(t_data *data, t_vector pos)
 {
 	char	c;
 
+	if (pos.x < 0 || pos.x >= data->map_width
+		|| pos.y < 0 || pos.y >= data->map_height)
+		return (true);
 	c = data->map[(long)pos.y][(long)pos.x];
-	return (c == '0' || c == 'N' || c == 'E' || c == 'S' || c == 'W');
+	return (c == 'N' || c == 'E' || c == 'S' || c == 'W'
+		|| c == '0' || c == ' ' || c == '2');
 }
