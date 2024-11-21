@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aliferre <aliferre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fde-alen <fde-alen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:20:58 by fde-alen          #+#    #+#             */
-/*   Updated: 2024/11/21 17:35:31 by aliferre         ###   ########.fr       */
+/*   Updated: 2024/11/21 19:19:56 by fde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 # define CUB3D_H
 
 # define WIDTH	720
-# define HEIGHT	720
+# define HEIGHT	480
 
 # define BLACK		0x000000FF
 # define WHITE		0xFFFFFFFF
@@ -47,8 +47,6 @@
 # define VEC_EAST	1
 # define VEC_SOUTH	2
 # define VEC_WEST	3
-
-# define TEX_FOLDER	"/nfs/homes/aliferre/Desktop/Projetos 42/cub3d/textures/"
 
 # define FOV		0.66
 # define SPEED		6.0
@@ -104,6 +102,7 @@ typedef struct s_data
 	t_color			ceil_color;
 	t_color			floor_color;
 	char			color;
+	char			*prefix;
 
 	int				map_start;
 	int				map_end;
@@ -126,7 +125,7 @@ void		check_rgb(t_data *data, t_color *color,
 // ### copy_texture_path.c ### (static: 4, total: 5)
 
 void		copy_texture_path(t_data *data, char **texture, char *path,
-				char *prefix, char *line);
+				char *line);
 
 // ### load_map_file.c ###
 

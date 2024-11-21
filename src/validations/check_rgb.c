@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   check_rgb.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aliferre <aliferre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fde-alen <fde-alen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 00:19:00 by fde-alen          #+#    #+#             */
-/*   Updated: 2024/11/21 18:04:46 by aliferre         ###   ########.fr       */
+/*   Updated: 2024/11/21 19:22:34 by fde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	exit_rgb_error(t_data *data, char *original_input, char **rgb, int arr_len)
+static void	exit_rgb_error(t_data *data, char *original_input, char **rgb,
+			int arr_len)
 {
 	free(original_input);
 	ft_strarr_free(rgb, arr_len);
@@ -24,7 +25,8 @@ static void	exit_rgb_error(t_data *data, char *original_input, char **rgb, int a
 	exit(EXIT_FAILURE);
 }
 
-static void	sanitize_rgb_input(t_data *data, char *rgb_color, char *original_input)
+static void	sanitize_rgb_input(t_data *data, char *rgb_color,
+				char *original_input)
 {
 	int	qtd;
 	int	space;
@@ -68,7 +70,8 @@ static void	split_rgb(t_data *data, char ***rgb, char *rgb_color,
 		exit_rgb_error(data, original_input, *rgb, ft_strarr_len(*rgb));
 }
 
-void	check_rgb(t_data *data, t_color *color, char *rgb_color, char *original_input)
+void	check_rgb(t_data *data, t_color *color, char *rgb_color,
+			char *original_input)
 {
 	char	**rgb;
 	int		i;

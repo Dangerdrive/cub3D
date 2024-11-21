@@ -6,7 +6,7 @@
 /*   By: fde-alen <fde-alen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 00:19:10 by fde-alen          #+#    #+#             */
-/*   Updated: 2024/11/21 00:19:11 by fde-alen         ###   ########.fr       */
+/*   Updated: 2024/11/21 19:17:07 by fde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,57 +63,18 @@ t_bool	can_open_texture(char *path)
 	return (true);
 }
 
-// static char	*get_prefix(char **texture)
-// {
-// 	if (ft_strncmp("NO", *texture, 2) == 0)
-// 		return ("NO");
-// 	if (ft_strncmp("SO", *texture, 2) == 0)
-// 		return ("SO");
-// 	if (ft_strncmp("WE", *texture, 2) == 0)
-// 		return ("WE");
-// 	if (ft_strncmp("EA", *texture, 2) == 0)
-// 		return ("EA");
-// 	return (NULL);
-// }
-
-// void	copy_texture_path(t_data *data, char **texture, char *path,
-// 	char *line)
-// {
-// 	int		prefix_count;
-// 	char	*prefix;
-
-// 	prefix_count = 0;
-// 	prefix = get_prefix(texture);
-// 	if (*texture != NULL)
-// 		exit_texture_error(data, "duplicated texture.", line);
-// 	check_spaces(data, path, prefix, line);
-// 	while (ft_isblank(*path) || ft_strncmp(prefix, path, 2) == 0)
-// 	{
-// 		if (ft_strncmp(prefix, path, 2) == 0)
-// 		{
-// 			prefix_count++;
-// 			path++;
-// 		}
-// 		path++;
-// 	}
-// 	trim_line(data, path, line);
-// 	if (!can_open_texture(path) || prefix_count != 1)
-// 		exit_texture_error(data, "invalid texture path.", line);
-// 	*texture = ft_strdup(path);
-// }
-
 void	copy_texture_path(t_data *data, char **texture, char *path,
-	char *prefix, char *line)
+		char *line)
 {
 	int	prefix_count;
 
 	prefix_count = 0;
 	if (*texture != NULL)
 		exit_texture_error(data, "duplicated direction.", line);
-	check_spaces(data, path, prefix, line);
-	while (ft_isblank(*path) || ft_strncmp(prefix, path, 2) == 0)
+	check_spaces(data, path, data->prefix, line);
+	while (ft_isblank(*path) || ft_strncmp(data->prefix, path, 2) == 0)
 	{
-		if (ft_strncmp(prefix, path, 2) == 0)
+		if (ft_strncmp(data->prefix, path, 2) == 0)
 		{
 			prefix_count++;
 			path++;

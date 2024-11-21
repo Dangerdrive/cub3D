@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   load_textures.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aliferre <aliferre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fde-alen <fde-alen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 00:19:41 by fde-alen          #+#    #+#             */
-/*   Updated: 2024/11/21 17:37:44 by aliferre         ###   ########.fr       */
+/*   Updated: 2024/11/21 19:19:40 by fde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,38 +26,24 @@ void	ft_load_tex(t_data *data)
 static void	read_texture(t_data *data, char *temp, char *line)
 {
 	if (ft_strncmp("NO", temp, 2) == 0)
-		copy_texture_path(data, &(data->no_path), temp, "NO", line);
-	else if (ft_strncmp("SO", temp, 2) == 0)
-		copy_texture_path(data, &(data->so_path), temp, "SO", line);
-	else if (ft_strncmp("WE", temp, 2) == 0)
-		copy_texture_path(data, &(data->we_path), temp, "WE", line);
-	else if (ft_strncmp("EA", temp, 2) == 0)
-		copy_texture_path(data, &(data->ea_path), temp, "EA", line);
-}
-
-// static void	read_texture(t_data *data, char *temp, char *line)
-// {
-// 	if (ft_strncmp("NO", temp, 2) == 0)
-// 		copy_texture_path(data, &(data->no_path), temp, line);
-// 	else if (ft_strncmp("SO", temp, 2) == 0)
-// 		copy_texture_path(data, &(data->so_path), temp, line);
-// 	else if (ft_strncmp("WE", temp, 2) == 0)
-// 		copy_texture_path(data, &(data->we_path), temp, line);
-// 	else if (ft_strncmp("EA", temp, 2) == 0)
-// 		copy_texture_path(data, &(data->ea_path), temp, line);
-// }
-
-static void	read_color(t_data *data, char *temp, char *line)
-{
-	if (ft_strncmp("F", temp, 1) == 0)
 	{
-		data->color = 'F';
-		check_rgb(data, &data->floor_color, temp, line);
+		data->prefix = "NO";
+		copy_texture_path(data, &(data->no_path), temp, line);
 	}
-	else if (ft_strncmp("C", temp, 1) == 0)
+	else if (ft_strncmp("SO", temp, 2) == 0)
 	{
-		data->color = 'C';
-		check_rgb(data, &data->ceil_color, temp, line);
+		data->prefix = "SO";
+		copy_texture_path(data, &(data->so_path), temp, line);
+	}
+	else if (ft_strncmp("WE", temp, 2) == 0)
+	{
+		data->prefix = "WE";
+		copy_texture_path(data, &(data->we_path), temp, line);
+	}
+	else if (ft_strncmp("EA", temp, 2) == 0)
+	{
+		data->prefix = "EA";
+		copy_texture_path(data, &(data->ea_path), temp, line);
 	}
 }
 
@@ -82,7 +68,18 @@ static void	process_texture_line(t_data *data, char *temp, char *line)
 	if (starts_with_texture_prefix(temp))
 		read_texture(data, temp, line);
 	else if (starts_with_color_prefix(temp))
-		read_color(data, temp, line);
+	{
+		if (ft_strncmp("F", temp, 1) == 0)
+		{
+			data->color = 'F';
+			check_rgb(data, &data->floor_color, temp, line);
+		}
+		else if (ft_strncmp("C", temp, 1) == 0)
+		{
+			data->color = 'C';
+			check_rgb(data, &data->ceil_color, temp, line);
+		}
+	}
 	else if (is_invalid_line(temp))
 	{
 		free(line);
