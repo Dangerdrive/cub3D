@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fde-alen <fde-alen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aliferre <aliferre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:20:58 by fde-alen          #+#    #+#             */
-/*   Updated: 2024/11/21 00:06:45 by fde-alen         ###   ########.fr       */
+/*   Updated: 2024/11/21 15:08:07 by aliferre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,13 +178,14 @@ void		ft_free_data(t_data *data);
 void		ft_loop(void *param);
 void		ft_input(void *param);
 
-// ### render_helper.c ### (static: 0, total: 4)
+// ### render_helper.c ### (static: 0, total: 5)
 
 t_color			ft_pixel(t_color r, t_color g, t_color b, t_color a);
 t_color			ft_image_pixel(mlx_texture_t *img, long x, long y);
 t_vector		ft_get_delta_dist(t_vector ray_dir);
 t_vector		ft_get_side_dist(t_vector ray_dir, t_vector pos, \
 						t_vector map_pos, t_vector delta_dist);
+bool			ft_is_space_empty(t_data* data, t_vector pos);
 
 // ### render.c ### (static: 4, total: 5)
 

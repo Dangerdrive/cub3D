@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fde-alen <fde-alen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aliferre <aliferre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 17:57:16 by aliferre          #+#    #+#             */
-/*   Updated: 2024/11/19 17:15:44 by fde-alen         ###   ########.fr       */
+/*   Updated: 2024/11/21 15:14:19 by aliferre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,14 @@ static void	ft_ver_line(t_vector x_height, long tex_x, \
 static int	ft_hit_loop_break(t_data *data, t_vector step, \
 								t_vector *map_pos, int side)
 {
-	if (data->map[(long)data->pos.y][(long)data->pos.x] > 0
-		&& ((*map_pos).x < 0 || (*map_pos).x >= data->map_width
-			|| (*map_pos).y < 0 || (*map_pos).y >= data->map_height))
+	if ((*map_pos).x < 0 || (*map_pos).x >= data->map_width
+			|| (*map_pos).y < 0 || (*map_pos).y >= data->map_height)
 		return (0);
-	if (data->map[(long)data->pos.y][(long)data->pos.x] == 0
-		&& data->map[(long)(*map_pos).y][(long)(*map_pos).x] > 0)
+	if (ft_is_space_empty(data, data->pos)
+		&& !ft_is_space_empty(data, *map_pos))
 		return (1);
-	if (data->map[(long)data->pos.y][(long)data->pos.x] > 0
-		&& (data->map[(long)(*map_pos).y][(long)(*map_pos).x] == 0
-		|| (*map_pos).x < 0 || (*map_pos).x >= data->map_width
-		|| (*map_pos).y < 0 || (*map_pos).y >= data->map_height))
+	if (!ft_is_space_empty(data, data->pos)
+		&& ft_is_space_empty(data, *map_pos))
 	{
 		if ((side % 2) == 1)
 			(*map_pos).x -= step.x;

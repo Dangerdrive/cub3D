@@ -1,14 +1,10 @@
-// DOENS'T ACTUALLY DO ANYTHING YET
-// JUST REPRESENTS THE MAP THAT WAS
-// HARD-CODED IN RAYCASTING/DATA.C
+NO	./textures/placeholder_0.png
+EA	./textures/placeholder_1.png
+SO	./textures/placeholder_2.png
+WE	./textures/placeholder_3.png
 
-NO	/nfs/homes/aliferre/Desktop/Projetos 42/cub3d/textures/placeholder_0.png
-EA	/nfs/homes/aliferre/Desktop/Projetos 42/cub3d/textures/placeholder_1.png
-SO	/nfs/homes/aliferre/Desktop/Projetos 42/cub3d/textures/placeholder_2.png
-WE	/nfs/homes/aliferre/Desktop/Projetos 42/cub3d/textures/placeholder_3.png
-
-F	0,255,255
-C	127,63,0
+C	0,255,255
+F	127,63,0
 
 11111
 101S1

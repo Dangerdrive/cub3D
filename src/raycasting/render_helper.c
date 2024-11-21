@@ -6,7 +6,7 @@
 /*   By: aliferre <aliferre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 18:01:22 by aliferre          #+#    #+#             */
-/*   Updated: 2024/11/19 14:48:25 by aliferre         ###   ########.fr       */
+/*   Updated: 2024/11/21 15:06:17 by aliferre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,12 @@ t_vector	ft_get_side_dist(t_vector ray_dir, t_vector pos, \
 	if (ray_dir.y < 0)
 		ret.y = 1 - ret.y;
 	return (vec_new(ret.x * delta_dist.x, ret.y * delta_dist.y));
+}
+
+bool	ft_is_space_empty(t_data* data, t_vector pos)
+{
+	char	c;
+
+	c = data->map[(long)pos.y][(long)pos.x];
+	return (c == '0' || c == 'N' || c == 'E' || c == 'S' || c == 'W');
 }
