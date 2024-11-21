@@ -6,13 +6,11 @@
 /*   By: fde-alen <fde-alen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 18:04:42 by aliferre          #+#    #+#             */
-/*   Updated: 2024/11/21 00:13:39 by fde-alen         ###   ########.fr       */
+/*   Updated: 2024/11/21 00:16:53 by fde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-
 
 // static int	ft_load_map(t_data *data)
 // {
@@ -108,7 +106,6 @@ void	ft_free_data(t_data *data)
 	free(data->map);
 	free(data);
 }
-
 
 void	init_data(t_data *data)
 {

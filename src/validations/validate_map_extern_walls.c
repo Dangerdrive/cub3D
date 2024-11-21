@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   validate_map_extern_walls.c                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fde-alen <fde-alen@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/21 00:20:15 by fde-alen          #+#    #+#             */
+/*   Updated: 2024/11/21 00:20:16 by fde-alen         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 static void	expand_map_with_padding(t_data *data)
@@ -24,7 +36,7 @@ static void	expand_map_with_padding(t_data *data)
 		}
 		i++;
 	}
-	ft_strarr_free(data->map, i);//check
+	ft_strarr_free(data->map, i);
 	data->map = new_map;
 }
 
