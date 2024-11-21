@@ -6,7 +6,7 @@
 /*   By: fde-alen <fde-alen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 18:04:42 by aliferre          #+#    #+#             */
-/*   Updated: 2024/11/20 23:30:49 by fde-alen         ###   ########.fr       */
+/*   Updated: 2024/11/21 00:13:39 by fde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,69 +72,6 @@
 // 	return (EXIT_SUCCESS);
 // }
 
-void	init_data(t_data *data)
-{
-	int	i;
-
-	data->mlx = NULL;
-	data->map_height = 0;
-	data->map_width = 0;
-	data->map = NULL;
-	data->img = NULL;
-	i = 0;
-	while (i < 4)
-	{
-		data->tex[i] = NULL;
-		i++;
-	}
-	data->no_path = NULL;
-	data->so_path = NULL;
-	data->we_path = NULL;
-	data->ea_path = NULL;
-	data->pos.x = 0.0;
-	data->pos.y = 0.0;
-	data->dir.x = 0.0;
-	data->dir.y = 0.0;
-	data->plane.x = 0.0;
-	data->plane.y = 0.0;
-	data->time = 0.0;
-	data->frames = 0;
-	data->ceil_color = 0;
-	data->floor_color = 0;
-	data->map_start = 0;
-	data->map_end = 0;
-	data->is_map = false;
-	data->map_ended = false;
-	data->invalid_chars = 0;
-	data->player_count = 0;
-}
-
-
-
-t_data	*ft_init_data(char *map_path)
-{
-	t_data	*data;
-
-	data = malloc(sizeof(t_data));
-	if (!data)
-		return (NULL);
-	init_data(data);
-	data->mlx = mlx_init(WIDTH, HEIGHT, "cub3D", false);
-	if (!data->mlx)
-		return (NULL);
-	data->img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
-	if (!data->img)
-		return (NULL);
-	data->map = NULL;
-	if (load_map_file(data, map_path) == NULL)//
-		return (NULL);
-	data->pos = vec_add(data->pos, vec_new(0.5, 0.5));
-	data->time = 0;
-	data->frames = 0;
-	data->plane = vec_rotate(vec_scale(data->dir, FOV), 90);
-	return (data);
-}
-
 void	ft_free_textures(t_data *data)
 {
 	int	i;
@@ -170,4 +107,60 @@ void	ft_free_data(t_data *data)
 		free(data->map[i]);
 	free(data->map);
 	free(data);
+}
+
+
+void	init_data(t_data *data)
+{
+	int	i;
+
+	data->map_height = 0;
+	data->map_width = 0;
+	data->map = NULL;
+	i = -1;
+	while (++i < 4)
+		data->tex[i] = NULL;
+	data->no_path = NULL;
+	data->so_path = NULL;
+	data->we_path = NULL;
+	data->ea_path = NULL;
+	data->pos = vec_new(0, 0);
+	data->dir = vec_new(0, 0);
+	data->plane = vec_new(0, 0);
+	data->time = 0.0;
+	data->frames = 0;
+	data->ceil_color = 0;
+	data->floor_color = 0;
+	data->map_start = 0;
+	data->map_end = 0;
+	data->is_map = false;
+	data->map_ended = false;
+	data->invalid_chars = 0;
+	data->player_count = 0;
+}
+
+t_data	*ft_init_cub(char *map_path)
+{
+	t_data	*data;
+
+	data = malloc(sizeof(t_data));
+	if (!data)
+		return (NULL);
+	data->img = NULL;
+	data->mlx = NULL;
+	init_data(data);
+	data->mlx = mlx_init(WIDTH, HEIGHT, "cub3D", false);
+	if (!data->mlx)
+		return (NULL);
+	data->img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
+	if (!data->img)
+		return (NULL);
+	data->map = NULL;
+	if (load_map_file(data, map_path) == NULL)
+		return (NULL);
+	data->pos = vec_add(data->pos, vec_new(0.5, 0.5));
+	data->time = 0;
+	data->frames = 0;
+	data->plane = vec_rotate(vec_scale(data->dir, FOV), 90);
+	return (data);
 }

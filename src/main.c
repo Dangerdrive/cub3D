@@ -6,7 +6,7 @@
 /*   By: fde-alen <fde-alen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 18:46:46 by aliferre          #+#    #+#             */
-/*   Updated: 2024/11/19 19:12:12 by fde-alen         ###   ########.fr       */
+/*   Updated: 2024/11/21 00:06:45 by fde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	main(int argc, char **argv)
 	t_data	*data;
 
 	check_args(argc, argv);
-	data = ft_init_data(argv[1]);
+	data = ft_init_cub(argv[1]);
 	if (!data
 		|| mlx_image_to_window(data->mlx, data->img, 0, 0) == -1
 		|| !mlx_loop_hook(data->mlx, ft_input, data)

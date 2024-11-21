@@ -6,7 +6,7 @@
 /*   By: fde-alen <fde-alen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:20:58 by fde-alen          #+#    #+#             */
-/*   Updated: 2024/11/20 23:36:22 by fde-alen         ###   ########.fr       */
+/*   Updated: 2024/11/21 00:06:45 by fde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,7 @@ void		validate_map(t_data *data);
 
 // ### data.c ###
 
-t_data		*ft_init_data(char *map_path);
+t_data		*ft_init_cub(char *map_path);
 void		ft_free_data(t_data *data);
 
 // ### hooks.c ### (static: 1, total: 3)
