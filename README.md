@@ -95,35 +95,18 @@ Error: map contains invalid characters
 
 valgrind --leak-check=full --show-leak-kinds=all --suppressions=./suppress.sup ./cub3d maps/error_maps/content_map/4.0-element_after_map.cub
 Error: map file has invalid line.
-==12003== 426 bytes in 1 blocks are still reachable in loss record 1,695 of 1,721
-==12003==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==12003==    by 0x10DA91: extract_remaining (get_next_line.c:164)
-==12003==    by 0x10DB7F: get_next_line (get_next_line.c:198)
-==12003==    by 0x10C4B9: parse_textures (load_textures.c:91)
-==12003==    by 0x10BF43: load_map_file (load_map_file.c:57)
-==12003==    by 0x10AA99: ft_init_data (data.c:129)
-==12003==    by 0x10A7D5: main (main.c:20)
 
 valgrind --leak-check=full --show-leak-kinds=all --suppressions=./suppress.sup ./cub3d maps/error_maps/content_map/4.1-map_after_map.cub
 Error: invalid map
-==12269== 2 bytes in 1 blocks are still reachable in loss record 2 of 1,722
-==12269==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==12269==    by 0x10DA91: extract_remaining (get_next_line.c:164)
-==12269==    by 0x10DB7F: get_next_line (get_next_line.c:198)
-==12269==    by 0x10C168: load_map_content (load_map.c:37)
-==12269==    by 0x10BFCB: load_map_file (load_map_file.c:63)
-==12269==    by 0x10AA99: ft_init_data (data.c:129)
-==12269==    by 0x10A7D5: main (main.c:20)
-
-==12269== 460 bytes in 14 blocks are definitely lost in loss record 1,696 of 1,722
-==12269==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==12269==    by 0x10CF61: ft_calloc (ft_calloc.c:31)
-==12269==    by 0x10D3A8: ft_strdup (ft_strdup.c:30)
-==12269==    by 0x10C1A5: handle_map_line (load_map.c:14)
-==12269==    by 0x10C1A5: load_map_content (load_map.c:34)
-==12269==    by 0x10BFCB: load_map_file (load_map_file.c:63)
-==12269==    by 0x10AA99: ft_init_data (data.c:129)
-==12269==    by 0x10A7D5: main (main.c:20)
+==29755== 460 bytes in 14 blocks are definitely lost in loss record 1,695 of 1,721
+==29755==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==29755==    by 0x10CF91: ft_calloc (ft_calloc.c:31)
+==29755==    by 0x10D3D8: ft_strdup (ft_strdup.c:30)
+==29755==    by 0x10C1D5: handle_map_line (load_map.c:14)
+==29755==    by 0x10C1D5: load_map_content (load_map.c:34)
+==29755==    by 0x10BFFB: load_map_file (load_map_file.c:63)
+==29755==    by 0x10AA99: ft_init_data (data.c:129)
+==29755==    by 0x10A7D5: main (main.c:20)
 
 valgrind --leak-check=full --show-leak-kinds=all --suppressions=./suppress.sup ./cub3d maps/error_maps/info/1.0-invalid_ext.cbb
 Error: invalid map extension

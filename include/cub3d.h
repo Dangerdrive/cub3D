@@ -6,7 +6,7 @@
 /*   By: fde-alen <fde-alen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:20:58 by fde-alen          #+#    #+#             */
-/*   Updated: 2024/11/20 16:06:43 by fde-alen         ###   ########.fr       */
+/*   Updated: 2024/11/20 23:36:22 by fde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,7 @@ void		copy_texture_path(t_data *data, char **texture, char *path,
 
 // ### load_map_file.c ###
 
+void		set_map_dimensions(t_data *data);
 t_data		*load_map_file(t_data *data, char *map_path);
 
 // ### load_map.c ###

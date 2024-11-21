@@ -26,7 +26,7 @@ static void	alloc_map(t_data *data, char *temp, int fd)
 	}
 }
 
-static void	set_map_dimensions(t_data *data)
+void	set_map_dimensions(t_data *data)
 {
 	int	lines;
 	int	max_columns;

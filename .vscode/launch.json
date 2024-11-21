@@ -21,7 +21,7 @@
             "miDebuggerPath": "/usr/bin/gdb",  // Path to gdb debugger (adjust if necessary)
             "internalConsoleOptions": "openOnSessionStart",
             "args": [
-                "./cub3d maps/error_maps/content_map/4.0-element_after_map.cub"
+                "./cub3d maps/error_maps/content_map/4.1-map_after_map.cub"
             ],
             "env": {
                 "LD_LIBRARY_PATH": "/usr/local/lib",  // Adjust this path if needed for libraries

@@ -7,6 +7,7 @@ static void	handle_map_line(t_data *data, char *temp)
 	if (data->map_ended)
 	{
 		free(temp);
+		set_map_dimensions(data);
 		exit_map_error(data, "invalid map");
 	}
 	if (data->map_end >= data->map_start)
