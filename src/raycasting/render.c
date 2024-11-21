@@ -6,7 +6,7 @@
 /*   By: aliferre <aliferre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 17:57:16 by aliferre          #+#    #+#             */
-/*   Updated: 2024/11/21 17:07:43 by aliferre         ###   ########.fr       */
+/*   Updated: 2024/11/21 18:42:16 by aliferre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,14 @@ static void	ft_ver_line(t_vector x_height, long tex_x, \
 		{
 			tex_y = (y - draw_start) * ((double)texture->height / x_height.y);
 			color = ft_image_pixel(texture, tex_x, tex_y);
-			if (!ft_is_space_empty(data, data->pos))
-				color = ((color & 0xfefefe00) >> 1) + (color & 0xff);
-			mlx_put_pixel(data->img, x_height.x, y, color);
 		}
 		else if (y <= HEIGHT / 2)
-			mlx_put_pixel(data->img, x_height.x, y, data->ceil_color);
+			color = data->ceil_color;
 		else
-			mlx_put_pixel(data->img, x_height.x, y, data->floor_color);
+			color = data->floor_color;
+		if (!ft_is_space_empty(data, data->pos))
+			color = ((color & 0xfefefe00) >> 1) + (color & 0xff);
+		mlx_put_pixel(data->img, x_height.x, y, color);
 		y++;
 	}
 }
