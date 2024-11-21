@@ -92,5 +92,4 @@ void	parse_textures(t_data *data, char *temp_line, int fd)
 	}
 	if (!temp_line)
 		exit_map_error(data, "map file could not be read.\n");
-	//free(temp_line);
 }

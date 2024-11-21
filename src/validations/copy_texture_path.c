@@ -97,7 +97,7 @@ void	copy_texture_path(t_data *data, char **texture, char *path,
 
 	prefix_count = 0;
 	if (*texture != NULL)
-		exit_texture_error(data, "duplicated texture path.", line);
+		exit_texture_error(data, "duplicated direction.", line);
 	check_spaces(data, path, prefix, line);
 	while (ft_isblank(*path) || ft_strncmp(prefix, path, 2) == 0)
 	{

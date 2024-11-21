@@ -98,41 +98,18 @@ Error: map file has invalid line.
 
 valgrind --leak-check=full --show-leak-kinds=all --suppressions=./suppress.sup ./cub3d maps/error_maps/content_map/4.1-map_after_map.cub
 Error: invalid map
-==29755== 460 bytes in 14 blocks are definitely lost in loss record 1,695 of 1,721
-==29755==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==29755==    by 0x10CF91: ft_calloc (ft_calloc.c:31)
-==29755==    by 0x10D3D8: ft_strdup (ft_strdup.c:30)
-==29755==    by 0x10C1D5: handle_map_line (load_map.c:14)
-==29755==    by 0x10C1D5: load_map_content (load_map.c:34)
-==29755==    by 0x10BFFB: load_map_file (load_map_file.c:63)
-==29755==    by 0x10AA99: ft_init_data (data.c:129)
-==29755==    by 0x10A7D5: main (main.c:20)
 
 valgrind --leak-check=full --show-leak-kinds=all --suppressions=./suppress.sup ./cub3d maps/error_maps/info/1.0-invalid_ext.cbb
 Error: invalid map extension
+
 valgrind --leak-check=full --show-leak-kinds=all --suppressions=./suppress.sup ./cub3d maps/error_maps/info/1.1-empty_file.cub
 Error: map file could not be read.
+
 valgrind --leak-check=full --show-leak-kinds=all --suppressions=./suppress.sup ./cub3d maps/error_maps/info/1.2-only_map.cub
 Error: map file has invalid line.
-==12627== 65 bytes in 1 blocks are still reachable in loss record 1,661 of 1,721
-==12627==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==12627==    by 0x10DA91: extract_remaining (get_next_line.c:164)
-==12627==    by 0x10DB7F: get_next_line (get_next_line.c:198)
-==12627==    by 0x10C3BB: parse_textures (load_textures.c:81)
-==12627==    by 0x10BF43: load_map_file (load_map_file.c:57)
-==12627==    by 0x10AA99: ft_init_data (data.c:129)
-==12627==    by 0x10A7D5: main (main.c:20)
 
 valgrind --leak-check=full --show-leak-kinds=all --suppressions=./suppress.sup ./cub3d maps/error_maps/info/2.0-double_texture.cub
 Texture error: duplicated texture path.
-==12805== 473 bytes in 1 blocks are still reachable in loss record 1,695 of 1,721
-==12805==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==12805==    by 0x10DA91: extract_remaining (get_next_line.c:164)
-==12805==    by 0x10DB7F: get_next_line (get_next_line.c:198)
-==12805==    by 0x10C4B9: parse_textures (load_textures.c:91)
-==12805==    by 0x10BF43: load_map_file (load_map_file.c:57)
-==12805==    by 0x10AA99: ft_init_data (data.c:129)
-==12805==    by 0x10A7D5: main (main.c:20)
 
 valgrind --leak-check=full --show-leak-kinds=all --suppressions=./suppress.sup ./cub3d maps/error_maps/info/2.1-missing_texture.cub
 Error: map file has invalid line.
