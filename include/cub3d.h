@@ -6,7 +6,7 @@
 /*   By: aliferre <aliferre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:20:58 by fde-alen          #+#    #+#             */
-/*   Updated: 2024/11/21 15:08:07 by aliferre         ###   ########.fr       */
+/*   Updated: 2024/11/21 15:27:24 by aliferre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,18 +113,19 @@ typedef struct s_data
 	int				player_count;
 }	t_data;
 
+// ###################
+// ### VALIDATIONS ###
+// ###################
 
 // ### check_rgb.c ### (static: 3, total: 4)
 
 void		check_rgb(t_color *color, char *rgb_color, char *original,
 				char c);
 
-
 // ### copy_texture_path.c ### (static: 4, total: 5)
 
 void		copy_texture_path(t_data *data, char **texture, char *path,
-					char *prefix, char *line);
-
+				char *prefix, char *line);
 
 // ### load_map_file.c ###
 
@@ -160,13 +161,14 @@ void		check_args(int argc, char **argv);
 
 void		validate_map_extern_walls(t_data *data);
 
-
 // ### validate_map.c ###
 
 void		exit_map_error(t_data *data, char *error_msg);
 void		validate_map(t_data *data);
 
-
+// ##################
+// ### RAYCASTING ###
+// ##################
 
 // ### data.c ###
 
@@ -180,27 +182,27 @@ void		ft_input(void *param);
 
 // ### render_helper.c ### (static: 0, total: 5)
 
-t_color			ft_pixel(t_color r, t_color g, t_color b, t_color a);
-t_color			ft_image_pixel(mlx_texture_t *img, long x, long y);
-t_vector		ft_get_delta_dist(t_vector ray_dir);
-t_vector		ft_get_side_dist(t_vector ray_dir, t_vector pos, \
-						t_vector map_pos, t_vector delta_dist);
-bool			ft_is_space_empty(t_data* data, t_vector pos);
+t_color		ft_pixel(t_color r, t_color g, t_color b, t_color a);
+t_color		ft_image_pixel(mlx_texture_t *img, long x, long y);
+t_vector	ft_get_delta_dist(t_vector ray_dir);
+t_vector	ft_get_side_dist(t_vector ray_dir, t_vector pos, \
+					t_vector map_pos, t_vector delta_dist);
+bool		ft_is_space_empty(t_data *data, t_vector pos);
 
 // ### render.c ### (static: 4, total: 5)
 
-void			ft_display_column(t_data *data, long x);
+void		ft_display_column(t_data *data, long x);
 
 // ### vec_advanced.c ### (static: 1, total: 2)
 
-double			vec_angle(t_vector vec1, t_vector vec2);
+double		vec_angle(t_vector vec1, t_vector vec2);
 
 // ### vec_basic.c ### (static: 0, total: 5)
 
-t_vector		vec_new(double x, double y);
-t_vector		vec_dir(int dir);
-t_vector		vec_add(t_vector vec1, t_vector vec2);
-t_vector		vec_scale(t_vector vec, double scalar);
-t_vector		vec_rotate(t_vector vec, double angle);
+t_vector	vec_new(double x, double y);
+t_vector	vec_dir(int dir);
+t_vector	vec_add(t_vector vec1, t_vector vec2);
+t_vector	vec_scale(t_vector vec, double scalar);
+t_vector	vec_rotate(t_vector vec, double angle);
 
 #endif

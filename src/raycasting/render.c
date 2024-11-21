@@ -6,7 +6,7 @@
 /*   By: aliferre <aliferre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 17:57:16 by aliferre          #+#    #+#             */
-/*   Updated: 2024/11/21 15:14:19 by aliferre         ###   ########.fr       */
+/*   Updated: 2024/11/21 15:22:34 by aliferre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	ft_hit_loop_break(t_data *data, t_vector step, \
 								t_vector *map_pos, int side)
 {
 	if ((*map_pos).x < 0 || (*map_pos).x >= data->map_width
-			|| (*map_pos).y < 0 || (*map_pos).y >= data->map_height)
+		|| (*map_pos).y < 0 || (*map_pos).y >= data->map_height)
 		return (0);
 	if (ft_is_space_empty(data, data->pos)
 		&& !ft_is_space_empty(data, *map_pos))
