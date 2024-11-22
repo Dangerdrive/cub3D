@@ -6,7 +6,7 @@
 /*   By: fde-alen <fde-alen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:20:58 by fde-alen          #+#    #+#             */
-/*   Updated: 2024/11/08 23:46:45 by fde-alen         ###   ########.fr       */
+/*   Updated: 2024/11/22 16:30:23 by fde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,25 @@ typedef struct s_list
 	void			*content;
 	struct s_list	*next;
 }	t_list;
+
+//gnl
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 3000
+# endif
+
+typedef struct s_char_node
+{
+	char				c;
+	struct s_char_node	*next;
+}	t_char_node;
+
+typedef struct s_file_state
+{
+	char	buffer[BUFFER_SIZE];
+	int		pos;
+	int		bytes;
+}	t_file_state;
 
 int					ft_atoi(const char *nptr);
 long				ft_atol(const char *nptr);

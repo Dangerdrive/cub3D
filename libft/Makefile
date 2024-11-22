@@ -69,6 +69,7 @@ SRCS		=   $(addprefix $(SRCDIR)/, ft_atoi.c \
 				ft_uitoa_base.c \
 				ft_unumlen_base.c \
 				get_next_line.c \
+				get_next_line_utils.c \
 				ft_print_ptr.c \
 				ft_print_char.c \
 				ft_print_str.c \
