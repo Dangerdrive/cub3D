@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aliferre <aliferre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fde-alen <fde-alen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 18:04:20 by aliferre          #+#    #+#             */
-/*   Updated: 2024/11/19 14:21:46 by aliferre         ###   ########.fr       */
+/*   Updated: 2024/11/21 21:47:06 by fde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,9 @@ void	ft_loop(void *param)
 	t_data		*data;
 	long		x;
 
+
 	data = param;
+	minimap(data);
 	x = -1;
 	while (++x < WIDTH)
 		ft_display_column(data, x);

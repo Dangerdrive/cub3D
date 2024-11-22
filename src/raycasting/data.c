@@ -6,7 +6,7 @@
 /*   By: fde-alen <fde-alen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 18:04:42 by aliferre          #+#    #+#             */
-/*   Updated: 2024/11/21 00:16:53 by fde-alen         ###   ########.fr       */
+/*   Updated: 2024/11/21 22:20:36 by fde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ void	ft_free_data(t_data *data)
 		return ;
 	ft_free_textures(data);
 	mlx_delete_image(data->mlx, data->img);
+	mlx_delete_image(data->mlx, data->mini_map);
 	mlx_terminate(data->mlx);
 	i = -1;
 	while (++i <= data->map_height && data->map_height > 0)
@@ -144,13 +145,15 @@ t_data	*ft_init_cub(char *map_path)
 	if (!data)
 		return (NULL);
 	data->img = NULL;
+	data->mini_map = NULL;
 	data->mlx = NULL;
 	init_data(data);
 	data->mlx = mlx_init(WIDTH, HEIGHT, "cub3D", false);
 	if (!data->mlx)
 		return (NULL);
 	data->img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
-	if (!data->img)
+	data->mini_map = mlx_new_image(data->mlx, WIDTH / 4, HEIGHT / 4);
+	if (!data->img || !data->mini_map)
 		return (NULL);
 	data->map = NULL;
 	if (load_map_file(data, map_path) == NULL)

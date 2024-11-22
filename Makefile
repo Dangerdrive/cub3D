@@ -39,7 +39,8 @@ SRCS	:=	src/main.c \
 			src/validations/replace_map_tabs.c \
 			src/validations/validate_args.c \
 			src/validations/validate_map_extern_walls.c \
-			src/validations/validate_map.c
+			src/validations/validate_map.c \
+			src/mini_map/minimap.c
 
 OBJDIR	:=	obj
 OBJS	:=	$(SRCS:src/%.c=$(OBJDIR)/%.o)

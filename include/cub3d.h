@@ -6,7 +6,7 @@
 /*   By: fde-alen <fde-alen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:20:58 by fde-alen          #+#    #+#             */
-/*   Updated: 2024/11/21 19:19:56 by fde-alen         ###   ########.fr       */
+/*   Updated: 2024/11/21 23:14:21 by fde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ typedef struct s_data
 	char			**map;
 
 	mlx_image_t		*img;
+	mlx_image_t		*mini_map;
 	mlx_texture_t	*tex[4];
 	char			*no_path;
 	char			*so_path;
@@ -113,9 +114,20 @@ typedef struct s_data
 	int				player_count;
 }	t_data;
 
+typedef struct s_mini
+{
+	uint32_t	start_x;
+	uint32_t	start_y;
+	uint32_t	x;
+	uint32_t	y;
+	t_color		color;
+}	t_mini;
+
 // ###################
 // ### VALIDATIONS ###
 // ###################
+
+void		minimap(void *param);
 
 // ### check_rgb.c ### (static: 3, total: 4)
 
