@@ -1,13 +1,14 @@
 MAKEFLAGS	+=	--no-print-directory
 
 NAME	:=	cub3d
+BONUS_NAME := cub3d_bonus
 CC		:=	cc
 LIBMLX	:=	./MLX42
 LIBFT	:=	./libft/libft.a
 CFLAGS	:=	-Wextra -Wall -Wunreachable-code -g -Ofast -I./include -I$(LIBMLX)/include/MLX42 -I./libft
+BONUS_CFLAGS :=	-Wextra -Wall -Wunreachable-code -g -Ofast -I./include_bonus -I$(LIBMLX)/include/MLX42 -I./libft
 
 UNAME_S :=	$(shell uname -s)
-
 
 ifeq ($(UNAME_S),Linux)
 	LDFLAGS :=	-ldl -lglfw -pthread -lm -L$(LIBMLX)/build
@@ -57,21 +58,22 @@ SRCS_BONUS	:=	src_bonus/main_bonus.c \
 			src_bonus/validations/replace_map_tabs_bonus.c \
 			src_bonus/validations/validate_args_bonus.c \
 			src_bonus/validations/validate_map_extern_walls_bonus.c \
-			src_bonus/validations/validate_map.c_bonus \
+			src_bonus/validations/validate_map_bonus.c \
 			src_bonus/mini_map/minimap_bonus.c
 
 OBJDIR	:=	obj
 OBJS	:=	$(SRCS:src/%.c=$(OBJDIR)/%.o)
-DIRS	:=	$(shell dirname $(OBJS))
+BONUS_OBJS := $(SRCS_BONUS:src_bonus/%.c=$(OBJDIR)/%.o)
+DIRS	:=	$(shell dirname $(OBJS) $(BONUS_OBJS))
 
-.PHONY:	all clean fclean re valgrind run prebuild
-
-bonus:	all
+.PHONY:	all clean fclean re valgrind run prebuild bonus
 
 valgrind:	all
 	@$(LEAKS)
 
 all:	prebuild $(NAME)
+
+bonus:	prebuild $(BONUS_NAME)
 
 prebuild:
 	@git submodule update --init --recursive;
@@ -89,9 +91,16 @@ prebuild:
 $(NAME): $(OBJS) $(LIBFT)
 	@$(CC) $(OBJS) -o $(NAME) -L./libft -lft -L$(LIBMLX)/build -lmlx42 $(LDFLAGS)
 
+$(BONUS_NAME): $(BONUS_OBJS) $(LIBFT)
+	@$(CC) $(BONUS_OBJS) -o $(BONUS_NAME) -L./libft -lft -L$(LIBMLX)/build -lmlx42 $(LDFLAGS)
+
 $(OBJDIR)/%.o: src/%.c | $(OBJDIR)
 	@mkdir $(shell dirname $@) 2> /dev/null || true
 	@$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJDIR)/%.o: src_bonus/%.c | $(OBJDIR)
+	@mkdir $(shell dirname $@) 2> /dev/null || true
+	@$(CC) $(BONUS_CFLAGS) -c $< -o $@
 
 $(OBJDIR):
 	@mkdir -p $(DIRS) 2> /dev/null
@@ -100,12 +109,3 @@ $(LIBFT):
 	@make -C ./libft/
 
 clean:
-	@rm -rf $(OBJDIR) $(NAME)
-
-fclean: clean
-	@rm -rf $(NAME)
-
-re:	fclean all
-
-run:	all
-	@./$(NAME) maps/map_sample.cub

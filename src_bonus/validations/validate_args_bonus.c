@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   validate_args.c                                    :+:      :+:    :+:   */
+/*   validate_args_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fde-alen <fde-alen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 00:19:59 by fde-alen          #+#    #+#             */
-/*   Updated: 2024/11/22 18:57:02 by fde-alen         ###   ########.fr       */
+/*   Updated: 2024/11/22 19:09:18 by fde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ void	exit_usage_error(char *msg)
 	char	*usage;
 
 	usage = "usage: \n" \
-			"\t./cub3d <directory><map.cub>\n" \
+			"\t./cub3d_bonus <directory><map.cub>\n" \
 			"example:" \
-			"\t./cub3d maps/map_sample.cub\n";
+			"\t./cub3d_bonus maps/map_sample.cub\n";
 	ft_dprintf(STDERR_FILENO, "%s\n %s", msg, usage);
 	exit(EXIT_FAILURE);
 }
