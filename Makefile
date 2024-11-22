@@ -41,6 +41,25 @@ SRCS	:=	src/main.c \
 			src/validations/validate_map_extern_walls.c \
 			src/validations/validate_map.c
 
+SRCS_BONUS	:=	src_bonus/main_bonus.c \
+			src_bonus/raycasting/data_bonus.c \
+			src_bonus/raycasting/vec_basic_bonus.c \
+			src_bonus/raycasting/vec_advanced_bonus.c \
+			src_bonus/raycasting/render_bonus.c \
+			src_bonus/raycasting/render_helper_bonus.c \
+			src_bonus/raycasting/hooks_bonus.c \
+			src_bonus/validations/check_rgb_bonus.c \
+			src_bonus/validations/copy_texture_path_bonus.c \
+			src_bonus/validations/load_map_file_bonus.c \
+			src_bonus/validations/load_map_bonus.c \
+			src_bonus/validations/load_textures_utils_bonus.c \
+			src_bonus/validations/load_textures_bonus.c \
+			src_bonus/validations/replace_map_tabs_bonus.c \
+			src_bonus/validations/validate_args_bonus.c \
+			src_bonus/validations/validate_map_extern_walls_bonus.c \
+			src_bonus/validations/validate_map.c_bonus \
+			src_bonus/mini_map/minimap_bonus.c
+
 OBJDIR	:=	obj
 OBJS	:=	$(SRCS:src/%.c=$(OBJDIR)/%.o)
 DIRS	:=	$(shell dirname $(OBJS))
